@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import barba from '@barba/core';
 import Particles from "./particales";
 import appearOnScroll from './appearOnScroll';
+import initCharacter from './character';
 
 
 let logo = document.querySelector("#logo")
@@ -12,6 +13,10 @@ const nav = document.querySelectorAll('.nav-header');
 const burger = document.querySelector('.burger');
 const navBar = document.querySelector('.nav-bar');
 const canvas = document.querySelector('#wallkingCycle')
+const charCanvas = document.querySelector('.nav-char-canvas');
+
+// Lazy-init: spin up Three.js character on first nav open
+let destroyCharacter = null;
 let mouse = document.querySelector('.cursor');
 
 const navTl = gsap.timeline({ defaults: { duration: .5, ease: 'power2.inOut' }});
@@ -53,6 +58,11 @@ function navToggle(e){
         btn.setAttribute('aria-label', 'Close menu');
         navBar.setAttribute('aria-hidden', 'false');
         navBar.classList.add('is-open');
+
+        // Lazy-init Three.js character on first open
+        if (!destroyCharacter && charCanvas) {
+            destroyCharacter = initCharacter(charCanvas);
+        }
 
         // Burger → X (white lines stay white; overlay is dark)
         gsap.to(".line1", { duration: .25, rotate: 45,  y:  5 });
