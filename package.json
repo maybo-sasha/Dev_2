@@ -1,0 +1,28 @@
+{
+  "name": "dev_2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@barba/core": "^2.9.7",
+    "@dogstudio/highway": "^2.2.1",
+    "@studio-freight/lenis": "^1.0.35",
+    "gsap": "^3.12.5",
+    "locomotive-scroll": "^4.1.4",
+    "magic": "^2.3.5-alpha.1",
+    "postprocessing": "^6.36.6",
+    "scroll": "^3.0.1",
+    "scrollmagic": "^2.0.8",
+    "scrollmagic-plugin-gsap": "^1.0.4",
+    "scrollmagic-plugins": "^1.0.8",
+    "three": "^0.172.0",
+    "three-bmfont-text": "^3.0.1"
+  }
+}
