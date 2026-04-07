@@ -38,17 +38,17 @@
         </div>
     </div>
 
+    <!-- Nav header (outside #wrapper so its z-index isn't trapped in wrapper's stacking context) -->
+    <nav class="nav-header">
+        <a id="logo" href="#">LOGO</a>
+        <div class="burger" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
+            <div class="line1"></div>
+            <div class="line2"></div>
+        </div>
+    </nav>
+
     <!-- Page wrapper (Barba.js) -->
     <div id="wrapper" data-barba="wrapper">
-
-        <!-- Nav header -->
-        <nav class="nav-header">
-            <a id="logo" href="#">LOGO</a>
-            <div class="burger" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
-                <div class="line1"></div>
-                <div class="line2"></div>
-            </div>
-        </nav>
 
         <!-- Home page container (Barba.js namespace) -->
         <main data-barba="container" data-barba-namespace="home">
