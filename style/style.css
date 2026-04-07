@@ -243,15 +243,18 @@ main {
     z-index: 1;
 }
 
-/* ── Left-aligned content ── */
+/* ── Right-aligned content (sits beside the character in the video) ── */
 .nav-content {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 8vw;
+    align-items: flex-end;   /* push block to the right */
+    margin-left: auto;       /* shove the whole column to the far right */
+    padding-right: 8vw;
     gap: 3rem;
+    text-align: right;
 }
 
 .burger {
@@ -280,7 +283,7 @@ main {
 
 .nav-links h3 a:hover {
     opacity: 0.6;
-    transform: translateX(0.5rem);
+    transform: translateX(-0.5rem);
 }
 
 .nav-about {
@@ -488,7 +491,7 @@ main {
     }
 
     .nav-content {
-        padding-left: 1.5rem;
+        padding-right: 1.5rem;
         gap: 2rem;
     }
 
