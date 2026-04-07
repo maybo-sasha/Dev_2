@@ -18,31 +18,37 @@
 
     <!-- Navigation overlay -->
     <div class="nav-bar" role="dialog" aria-label="Navigation" aria-modal="true" aria-hidden="true">
-        <div class="nav-links">
-            <h3><a href="#">Work</a></h3>
-            <h3><a href="#">About</a></h3>
-            <h3><a href="#">Contact</a></h3>
-        </div>
-        <div class="about">
-            <h2>Portfolio</h2>
-            <p>Creative developer building interactive web experiences.</p>
-        </div>
-        <div class="nav-video-wrap">
-            <video class="nav-video" src="./homePage/Comp.mp4" autoplay loop muted playsinline></video>
+        <!-- Full-bleed background video -->
+        <video class="nav-bg-video" src="./homePage/Comp.mp4" autoplay loop muted playsinline></video>
+
+        <!-- Dark scrim so text stays legible -->
+        <div class="nav-scrim"></div>
+
+        <!-- Left-aligned content -->
+        <div class="nav-content">
+            <nav class="nav-links" aria-label="Site navigation">
+                <h3><a href="#">Work</a></h3>
+                <h3><a href="#">About</a></h3>
+                <h3><a href="#">Contact</a></h3>
+            </nav>
+            <div class="nav-about">
+                <h2>Portfolio</h2>
+                <p>Creative developer building interactive web experiences.</p>
+            </div>
         </div>
     </div>
 
+    <!-- Nav header (outside #wrapper so its z-index isn't trapped in wrapper's stacking context) -->
+    <nav class="nav-header">
+        <a id="logo" href="#">LOGO</a>
+        <div class="burger" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
+            <div class="line1"></div>
+            <div class="line2"></div>
+        </div>
+    </nav>
+
     <!-- Page wrapper (Barba.js) -->
     <div id="wrapper" data-barba="wrapper">
-
-        <!-- Nav header -->
-        <nav class="nav-header">
-            <a id="logo" href="#">LOGO</a>
-            <div class="burger" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
-                <div class="line1"></div>
-                <div class="line2"></div>
-            </div>
-        </nav>
 
         <!-- Home page container (Barba.js namespace) -->
         <main data-barba="container" data-barba-namespace="home">

@@ -38,6 +38,11 @@ function cursorHoverAnim (e){
     }
 };
 
+// Circle-mask origin: top-right corner where the burger lives
+const MASK_ORIGIN = 'calc(100% - 5%) 5vh';
+const MASK_OPEN   = `circle(150vmax at ${MASK_ORIGIN})`;
+const MASK_CLOSED = `circle(0px at ${MASK_ORIGIN})`;
+
 function navToggle(e){
     const btn = e.currentTarget;
     const isOpen = btn.classList.contains('active');
@@ -47,19 +52,52 @@ function navToggle(e){
         btn.setAttribute('aria-expanded', 'true');
         btn.setAttribute('aria-label', 'Close menu');
         navBar.setAttribute('aria-hidden', 'false');
-        gsap.to(".line1", { duration: .2, rotate: "45", y: 5, background: "black" });
-        gsap.to(".line2", { duration: .2, rotate: "-45", y: -5, background: "black" });
-        gsap.to("#logo", { duration: 1, color: "black" });
-        gsap.to('.nav-bar', { duration: 1, clipPath: "circle(4500px at 100% -10%)" });
+        navBar.classList.add('is-open');
+
+        // Burger → X (white lines stay white; overlay is dark)
+        gsap.to(".line1", { duration: .25, rotate: 45,  y:  5 });
+        gsap.to(".line2", { duration: .25, rotate: -45, y: -5 });
+
+        // Expand circle mask from burger corner
+        gsap.to('.nav-bar', {
+            duration: 0.9,
+            clipPath: MASK_OPEN,
+            ease: 'power3.inOut',
+        });
+
+        // Stagger nav links in
+        gsap.fromTo('.nav-links h3 a',
+            { opacity: 0, y: 40 },
+            { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out', delay: 0.35 }
+        );
+        gsap.fromTo('.nav-about',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.6 }
+        );
     } else {
         btn.classList.remove('active');
         btn.setAttribute('aria-expanded', 'false');
         btn.setAttribute('aria-label', 'Open menu');
-        navBar.setAttribute('aria-hidden', 'true');
-        gsap.to(".line1", { duration: .2, rotate: "0", y: 0, background: "white" });
-        gsap.to(".line2", { duration: .2, rotate: "0", y: 0, background: "white" });
-        gsap.to("#logo", { duration: 1, color: "white" });
-        gsap.to('.nav-bar', { duration: 1, clipPath: "circle(50px at 100% -10%)" });
+
+        // Fade content out first, then collapse mask
+        gsap.to(['.nav-links h3 a', '.nav-about'], {
+            opacity: 0, y: -20, duration: 0.3, ease: 'power2.in',
+        });
+
+        gsap.to('.nav-bar', {
+            duration: 0.7,
+            clipPath: MASK_CLOSED,
+            ease: 'power3.inOut',
+            delay: 0.2,
+            onComplete: () => {
+                navBar.setAttribute('aria-hidden', 'true');
+                navBar.classList.remove('is-open');
+            }
+        });
+
+        // Restore burger lines
+        gsap.to(".line1", { duration: .25, rotate: 0, y: 0, delay: 0.2 });
+        gsap.to(".line2", { duration: .25, rotate: 0, y: 0, delay: 0.2 });
     }
 }
 
