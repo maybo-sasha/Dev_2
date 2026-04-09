@@ -2,7 +2,6 @@ import { gsap } from 'gsap';
 import barba from '@barba/core';
 import Particles from "./particales";
 import appearOnScroll from './appearOnScroll';
-import initCharacter from './character';
 
 
 let logo = document.querySelector("#logo")
@@ -13,10 +12,6 @@ const nav = document.querySelectorAll('.nav-header');
 const burger = document.querySelector('.burger');
 const navBar = document.querySelector('.nav-bar');
 const canvas = document.querySelector('#wallkingCycle')
-const charCanvas = document.querySelector('.nav-char-canvas');
-
-// Lazy-init: spin up Three.js character on first nav open
-let destroyCharacter = null;
 let mouse = document.querySelector('.cursor');
 
 const navTl = gsap.timeline({ defaults: { duration: .5, ease: 'power2.inOut' }});
@@ -58,11 +53,6 @@ function navToggle(e){
         btn.setAttribute('aria-label', 'Close menu');
         navBar.setAttribute('aria-hidden', 'false');
         navBar.classList.add('is-open');
-
-        // Lazy-init Three.js character on first open
-        if (!destroyCharacter && charCanvas) {
-            destroyCharacter = initCharacter(charCanvas);
-        }
 
         // Burger → X (white lines stay white; overlay is dark)
         gsap.to(".line1", { duration: .25, rotate: 45,  y:  5 });
@@ -278,7 +268,59 @@ barba.hooks.afterEnter(({ next }) => {
 });
 
 window.scrollTo(0, 0);
-burger.addEventListener('click', navToggle);
+const charBtns = document.querySelectorAll('.char-btn');
+let destroyCharacter = null;
+let activeChar = 'v18';
+
+const charModules = {
+    v18:    () => import('./character').then(m => m.default),
+    rocket: () => import('./characterRocket').then(m => m.default),
+};
+
+function getCanvas() {
+    return document.querySelector('.nav-char-canvas');
+}
+
+function loadCharacter(key) {
+    console.log('[loadCharacter] key:', key);
+    // Destroy previous instance
+    if (destroyCharacter) {
+        destroyCharacter();
+        destroyCharacter = null;
+    }
+
+    // Replace canvas with a fresh element to get a clean WebGL context
+    const oldCanvas = getCanvas();
+    if (!oldCanvas) return;
+    const newCanvas = document.createElement('canvas');
+    newCanvas.className = 'nav-char-canvas';
+    oldCanvas.replaceWith(newCanvas);
+
+    charModules[key]()
+        .then(init => {
+            console.log('[loadCharacter] module loaded, init:', typeof init);
+            destroyCharacter = init(newCanvas);
+            activeChar = key;
+        })
+        .catch(err => console.error('Character load error:', err));
+}
+
+charBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const key = btn.dataset.char;
+        if (key === activeChar) return;
+        charBtns.forEach(b => b.classList.toggle('active', b === btn));
+        loadCharacter(key);
+    });
+});
+
+burger.addEventListener('click', (e) => {
+    navToggle(e);
+    const nowOpen = e.currentTarget.classList.contains('active');
+    if (nowOpen && !destroyCharacter) {
+        loadCharacter(activeChar);
+    }
+});
 burger.addEventListener('keydown', navKeydown);
 window.addEventListener("mousemove", cursorAnim);
 window.addEventListener("mouseover", cursorHoverAnim);

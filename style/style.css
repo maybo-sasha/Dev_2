@@ -215,7 +215,7 @@ main {
     display: flex;
     align-items: center;
     z-index: 10;
-    background: var(--background); /* dark site bg — character renders over it */
+    background: #ffffff; /* white bg for nav overlay */
     clip-path: circle(0px at calc(100% - 5%) 5vh);
     overflow: hidden;
     pointer-events: none;
@@ -234,12 +234,47 @@ main {
     z-index: 0;
 }
 
-/* ── Gradient scrim: transparent on left (character side), dark on right (text side) ── */
+/* ── Scrim: black 20% overlay on the right between character and text ── */
 .nav-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, transparent 35%, rgba(0, 0, 0, 0.72) 58%);
+    background: linear-gradient(to right, transparent 35%, rgba(0, 0, 0, 0.20) 60%);
     z-index: 1;
+}
+
+/* ── Character switcher ── */
+.nav-char-switcher {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.char-btn {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.7);
+    color: #111;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    backdrop-filter: blur(4px);
+}
+
+.char-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(1.1);
+}
+
+.char-btn.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
 }
 
 /* ── Right-aligned content (sits beside the character in the video) ── */
