@@ -1,72 +1,133 @@
-import { gsap } from 'gsap';
-import Lenis from '@studio-freight/lenis';
+// Uses globals: gsap, Lenis (loaded via CDN)
 
-export default function appearOnScroll(params, lastchild, onScrollCallback) {
-    const options = {
-        threshold: 0.5,
-    };
-    const lenis = new Lenis();
-    let rafId;
+function appearOnScroll(params, _lastchild, onScrollCallback) {
 
-    function raf(time) {
-        lenis.raf(time);
-        rafId = requestAnimationFrame(raf);
-    }
+    // ── Inject fill spans + ambient glow divs ──────────────────────────
+    params.forEach(slide => {
+        const title = slide.querySelector('.project-title');
+        if (title && !title.querySelector('.title-fill')) {
+            const fill = document.createElement('span');
+            fill.className = 'title-fill';
+            fill.textContent = title.textContent.trim();
+            title.appendChild(fill);
+        }
 
-    rafId = requestAnimationFrame(raf);
-
-    // IntersectionObserver to track elements in view
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-
-                const img = entry.target.querySelector('img');
-                const projImgSection = entry.target.querySelector('.project-img');
-                const titleEl = entry.target.querySelector('.title');
-                const titleAnim = titleEl ? titleEl.children : null;
-                const borderLine = entry.target.querySelector('.borderLine');
-                const explorBtn = entry.target.querySelector('.explore');
-
-                const slideTl = gsap.timeline({ defaults: { duration: 0.5, ease: 'power2.inOut' } });
-
-                // scaleY instead of height — compositor-only, no layout recalc
-                slideTl.fromTo(projImgSection,
-                    { transformOrigin: 'bottom center', scaleY: 0.77 },
-                    { scaleY: 1 }
-                );
-                slideTl.fromTo(img, { y: "100%" }, { y: "0%", duration: 0.8 }, '-=0.5');
-                if (titleAnim) {
-                    slideTl.fromTo(titleAnim, { opacity: 0, y: "100%" }, { opacity: 1, y: "0%", duration: 0.8, stagger: 0.25 }, '-=0.5');
-                }
-                // scaleX instead of width — compositor-only, no layout recalc
-                slideTl.fromTo(borderLine,
-                    { opacity: 0, scaleX: 0, transformOrigin: 'left center' },
-                    { opacity: 1, scaleX: 1, duration: 0.7 },
-                    '-=0.5'
-                );
-                slideTl.fromTo(explorBtn, { opacity: 0, y: "100%" }, { opacity: 1, y: "70%", duration: 0.8, stagger: 0.25 });
-
-                if (onScrollCallback) {
-                    onScrollCallback(entry.target);
-                }
-
-                lenis.scrollTo(entry.target, {
-                    offset: -window.innerHeight / 2 + entry.target.offsetHeight / 2,
-                    duration: 1.5,
-                    immediate: false,
-                    lock: false,
-                });
-            } else {
-                entry.target.classList.remove('show');
-            }
-        });
-    }, options);
-
-    params.forEach(param => {
-        observer.observe(param);
     });
 
+    // ── Smooth scroll ──────────────────────────────────────────────────
+    const lenis = new Lenis({ lerp: 0.07, smoothWheel: true });
+    let rafId;
+    function raf(time) { lenis.raf(time); rafId = requestAnimationFrame(raf); }
+    rafId = requestAnimationFrame(raf);
+
+    // ── Scroll direction tracking ──────────────────────────────────────
+    let lastScrollY = window.scrollY;
+    let scrollDir = 1; // 1 = down, -1 = up
+    lenis.on('scroll', ({ scroll }) => {
+        scrollDir = scroll > lastScrollY ? 1 : -1;
+        lastScrollY = scroll;
+    });
+
+    // ── Active slide + fill reveal (persistent — never resets once shown) ──
+    const revealedFills = new Set();
+
+    function updateActive() {
+        const vh = window.innerHeight;
+        let closestDist = Infinity;
+        let closestSlide = null;
+
+        params.forEach(slide => {
+            const rect = slide.getBoundingClientRect();
+            const dist = Math.abs(rect.top + rect.height / 2 - vh / 2);
+            if (dist < closestDist) { closestDist = dist; closestSlide = slide; }
+        });
+
+        params.forEach(slide => {
+            slide.classList.toggle('is-active', slide === closestSlide);
+
+            if (slide === closestSlide && !revealedFills.has(slide)) {
+                revealedFills.add(slide);
+                const fill = slide.querySelector('.title-fill');
+                if (fill) {
+                    // scrolling down → wipe bottom-to-top; up → top-to-bottom
+                    const fromClip = scrollDir === 1
+                        ? 'inset(0 0 100% 0)'
+                        : 'inset(100% 0 0 0)';
+                    gsap.fromTo(fill,
+                        { clipPath: fromClip },
+                        { clipPath: 'inset(0% 0 0% 0)', duration: 0.75, ease: 'power3.inOut', delay: 0.1 }
+                    );
+                }
+            }
+            // Inactive slide: clip-path left as-is — fill stays visible once revealed
+        });
+    }
+
+    lenis.on('scroll', updateActive);
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+
+    // ── Parallax — title only ──────────────────────────────────────────
+    function updateParallax() {
+        const vh = window.innerHeight;
+        params.forEach(slide => {
+            const rect  = slide.getBoundingClientRect();
+            const prog  = (rect.top + rect.height / 2 - vh / 2) / vh;
+            const title = slide.querySelector('.project-title');
+            if (title) gsap.set(title, { y: prog * 120 });
+        });
+    }
+    lenis.on('scroll', updateParallax);
+    updateParallax();
+
+    // ── Entry animation ────────────────────────────────────────────────
+    function animateIn(slide) {
+        const card     = slide.querySelector('.project-card');
+        const title    = slide.querySelector('.project-title');
+        const category = slide.querySelector('.project-category');
+        const num      = slide.querySelector('.slide-num');
+
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        if (card) {
+            tl.fromTo(card,
+                { opacity: 0, y: 80, scale: 0.93 },
+                { opacity: 1, y: 0,  scale: 1, duration: 1.3 }
+            );
+        }
+        if (title) {
+            // Only animate opacity — parallax owns the y position
+            tl.fromTo(title,
+                { opacity: 0 },
+                { opacity: 1, duration: 0.9 },
+                '-=0.85'
+            );
+        }
+        const meta = [category, num].filter(Boolean);
+        if (meta.length) {
+            tl.fromTo(meta,
+                { opacity: 0, y: 10 },
+                { opacity: 1, y: 0, duration: 0.55, stagger: 0.08 },
+                '-=0.65'
+            );
+        }
+
+        if (onScrollCallback) onScrollCallback(slide);
+    }
+
+    // ── IntersectionObserver ───────────────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.animated) {
+                entry.target.dataset.animated = '1';
+                animateIn(entry.target);
+            }
+        });
+    }, { threshold: 0.18 });
+
+    params.forEach(s => observer.observe(s));
+
+    // ── Destroy ────────────────────────────────────────────────────────
     return function destroy() {
         cancelAnimationFrame(rafId);
         observer.disconnect();

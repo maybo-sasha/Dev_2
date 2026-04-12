@@ -3,7 +3,8 @@
 
 :root {
     --swup-blue: hsl(239, 50%, 30%);
-    --background: #17181a;
+    --background: #0f0f0f;
+    --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 html.lenis {
@@ -39,15 +40,11 @@ html.lenis {
     position: relative;
   }
   
-  canvas {
+#gl-canvas {
+    position: fixed;
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-  }
-
-#gl-canvas {
-    position: fixed;
     filter: grayscale(1);
     opacity: 0.2;
 }
@@ -65,8 +62,8 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    opacity: 1; /* Initially hide content to prevent flicker before swipe */
+    z-index: 3; /* Above WebGL hover canvas (z-index:2) so card overlays are visible */
+    opacity: 1;
 }
 
 main {
@@ -84,225 +81,306 @@ main {
 
 #logo {
     color: white;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-size: 1rem;
 }
 
 .nav-header {
-    min-height: 10vh;
-    font-size: 1rem;
+    height: 5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: white;
     width: 100vw;
-    padding: 0 5%;
+    padding: 0 8vw;
     position: fixed;
-    z-index: 20;
-    transform-origin: 50% 50%;
+    z-index: 30;
 }
 
-.line1,
-.line2 {
-    width: 3rem;
-    height: 0.2rem;
-    margin: 0.4rem;
-    pointer-events: none;
+/* ── Inline nav links ────────────────────────────────────── */
+.nav-links-inline {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-size: clamp(0.75rem, 0.95vw, 0.9rem);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
     background: white;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.nav-link.active,
+.nav-link:hover {
+    color: white;
+}
+
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ── About overlay — circle-mask reveal ─────────────────── */
+.about-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    clip-path: circle(0px at 100% 0%);
+    pointer-events: none;
+    overflow: hidden;
+    font-family: var(--font-display);
+    background: #0a0a0a;  /* solid base so character doesn't bleed through */
+}
+
+/* ── Slides ──────────────────────────────────────────────── */
 .slide {
-    opacity: 0;
-    min-height: 100vh;
-    margin: 0 auto 0 auto;
+    height: 100vh;
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     color: white;
     position: relative;
-}
-.slide.show {
-    opacity: 1;
-}
-
-.hero-desc {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 35vw;
-    padding-left: 2rem;
-    position: relative;
-}
-
-.title {
-    padding-left: 4rem;
     overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-.title ul {
-    padding-bottom: 2rem;
-    padding-left: 1rem;
+    font-family: var(--font-display);
 }
 
-.borderLine {
-    height: 2px;
-    background: #ffffff47;
-    position: relative;
-    display: flex;
-}
-
-.project-img {
+/* Slide number — bottom left */
+.slide-num {
     position: absolute;
-    right: 10vw;
-    border-radius: 100px;
-    overflow: hidden;
-    width: 50%;
-    height: 65%;
-    transform-origin: center center;
-    perspective: 1000px;
-    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-in-out;
+    bottom: 2.8rem;
+    left: 5vw;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.28);
+    z-index: 3;
 }
 
-.project-img img {
+/* Category — bottom left above number */
+.project-category {
+    position: absolute;
+    bottom: 4.8rem;
+    left: 5vw;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.42);
+    z-index: 3;
+}
+
+/* ── Slide inner layout: card centered, title below ──────── */
+.slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+}
+
+/* ── Project card ────────────────────────────────────────── */
+.project-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    z-index: 2;
+    will-change: transform, opacity;
+    flex-shrink: 0;
+    border-radius: 0;
+}
+
+/* Image wrapper — landscape ratio */
+.project-img-wrap {
+    width: 35vw;
+    height: 60vh;
+    overflow: hidden;
+    position: relative;
+    will-change: transform;
+    border-radius: 0;
+}
+
+.project-img-wrap img {
     width: 100%;
     height: 100%;
+    top: 0;
+    position: relative;
     object-fit: cover;
-    border-radius: 100px;
+    will-change: transform;
+    display: block;
+    transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.hero-desc h2 {
-    font-size: 4rem;
-    line-height: normal;
-    text-transform: capitalize;
+.project-card:hover .project-img-wrap img {
+    transform: scale(1.04);
 }
 
-.projNumber {
-    font-size: 8rem;
-    opacity: 0.2;
-    margin-bottom: -2rem;
-    color: #3d3d3d;
+/* Project name — below image, centered */
+.project-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.2vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+    position: relative;
+    display: inline-block;
+    text-align: center;
 }
 
-.hero-desc p {
-    padding: 3rem 0rem;
-    font-size: 1.5rem;
-    color: white;
-}
-
-.explore {
-    padding: 1rem 2rem;
-    background: none;
-    border: none;
-    transform: translateY(5rem);
-    border-radius: 30px;
-    color: white;
-    border: 2px solid white;
-    cursor: pointer;
-    z-index: 1;
-}
-   
-
-
-.nav-bar {
-    position: fixed;
+/* Solid fill layer — same text stacked on top, clip-path driven by GSAP */
+.title-fill {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    color: white;
+    -webkit-text-stroke: 0px transparent;
+    pointer-events: none;
+    clip-path: inset(0 0 100% 0); /* initial hidden; GSAP animates on scroll-in */
+}
+
+/* ── About page ──────────────────────────────────────────── */
+.about-page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     align-items: center;
-    z-index: 10;
-    /* start collapsed — GSAP animates this */
-    clip-path: circle(0px at calc(100% - 5%) 5vh);
-    overflow: hidden;
-    pointer-events: none; /* inactive when closed */
+    font-family: var(--font-display);
 }
 
-.nav-bar.is-open {
-    pointer-events: auto;
-}
-
-/* ── Background video ── */
-.nav-bg-video {
+.about-video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     z-index: 0;
+    opacity: 0.45;   /* dark moody video, not full brightness */
 }
 
-/* ── Dark scrim for legibility ── */
-.nav-scrim {
+.about-scrim {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.18);
     z-index: 1;
 }
 
-/* ── Right-aligned content (sits beside the character in the video) ── */
-.nav-content {
+.about-overlay.is-open {
+    pointer-events: auto;
+}
+
+/* Two-column wrapper */
+.about-content {
     position: relative;
     z-index: 2;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;   /* push block to the right */
-    margin-left: auto;       /* shove the whole column to the far right */
-    padding-right: 8vw;
-    gap: 3rem;
-    text-align: right;
-}
-
-.burger {
-    cursor: pointer;
-}
-
-.nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-.nav-links h3 {
-    font-size: clamp(2rem, 5vw, 4rem);
-    line-height: 1.1;
-    overflow: hidden;
-}
-
-.nav-links h3 a {
-    display: inline-block;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25rem 40vw;
+    gap: 4vw;
     color: white;
+}
+
+/* Left — giant Hello */
+.about-hello {
+    flex: 0 0 auto;
+}
+
+.about-hello h1 {
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 16vw, 18rem);
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: white;
+    white-space: nowrap;
+}
+
+/* Right — info blocks stacked below the typographic block */
+.about-info {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    width: 22rem;
+}
+
+.about-block-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.01em;
+}
+
+.about-block-text {
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+}
+
+.about-block-text a {
+    color: inherit;
     text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s;
 }
 
-.nav-links h3 a:hover {
-    opacity: 0.6;
-    transform: translateX(-0.5rem);
+.about-block-text a:hover { color: white; }
+
+.about-social {
+    display: flex;
+    gap: 1.8rem;
 }
 
-.nav-about {
-    max-width: 28rem;
-    color: white;
+.about-social a {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
 }
 
-.nav-about h2 {
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 500;
-    margin-bottom: 0.75rem;
-    opacity: 0.9;
-}
+.about-social a:hover { color: white; }
+   
 
-.nav-about p {
-    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-    line-height: 1.7;
-    opacity: 0.7;
-}
+
 
 .reveal-img, .reveal-text {
     position: absolute;
@@ -316,29 +394,58 @@ main {
 .cursor {
     width: 2rem;
     height: 2rem;
-    border: 2px solid white;
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
     border-radius: 50%;
     position: fixed;
+    top: -100px;
+    left: -100px;
+    /* translate(-50%,-50%) always centres on left/top — even as width/height animate */
     transform: translate(-50%, -50%);
     pointer-events: none;
-    transition: all 0.2s ease-out;
-    transition-property: background, transform;
-    transform-origin: 75% 75%;
-    background: rgba(255, 255, 255, 0.2);
+    background: transparent;
     z-index: 100;
 }
 
-.cursor.nav-active, .cursor.explore-active {
-    transform: scale(3);
-    background: rgba(86, 124, 228, 0.5);
+/* Double ripple waves that pulse outward when over a nav button */
+.cursor::before,
+.cursor::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    opacity: 0;
+    pointer-events: none;
+}
+.cursor.has-ripple::before {
+    animation: cursor-ripple 1.3s ease-out infinite;
+}
+.cursor.has-ripple::after {
+    animation: cursor-ripple 1.3s ease-out 0.5s infinite;
+}
+@keyframes cursor-ripple {
+    0%   { transform: scale(1);    opacity: 0.55; }
+    100% { transform: scale(1.85); opacity: 0;    }
 }
 
 .cursor-text {
     position: absolute;
-    transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    font-size: 0.4rem;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.95);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+}
+.cursor.show-label .cursor-text {
+    opacity: 1;
 }
 
 .scrollmagic-pin-spacer {
@@ -414,28 +521,17 @@ main {
 
 /* ─── Tablet (≤ 900px) ─────────────────────────────── */
 @media (max-width: 900px) {
-    .hero-desc h2 {
-        font-size: 2.8rem;
+    .hero-desc {
+        width: 46vw;
+        padding-left: 5vw;
     }
 
-    .projNumber {
-        font-size: 5rem;
-    }
-
-    .about h2 {
-        font-size: 3.5rem;
+    .project-img {
+        width: 50vw;
     }
 
     .nav-links {
         flex-basis: 18rem;
-    }
-
-    .about {
-        flex-basis: 18rem;
-    }
-
-    .project-img {
-        width: 45%;
     }
 }
 
@@ -444,50 +540,22 @@ main {
     .slide {
         flex-direction: column;
         justify-content: flex-end;
-        padding-top: 40vw;
-        min-height: 100svh;
+        height: 100svh;
     }
 
     .hero-desc {
-        flex-basis: auto;
+        position: relative;
         width: 100%;
-        padding: 2rem 1.5rem 1.5rem;
-        align-items: flex-start;
-    }
-
-    .hero-desc h2 {
-        font-size: 2rem;
-    }
-
-    .hero-desc p {
-        font-size: 1rem;
-        padding: 1.5rem 0;
-    }
-
-    .projNumber {
-        font-size: 4rem;
-    }
-
-    .title {
-        padding-left: 0;
+        padding: 2rem 1.5rem 2.5rem;
+        gap: 1rem;
     }
 
     .project-img {
-        position: relative;
-        right: auto;
+        position: absolute;
+        top: 0;
+        right: 0;
         width: 100%;
-        height: 45vw;
-        border-radius: 20px;
-        order: -1;
-    }
-
-    .project-img img {
-        border-radius: 20px;
-    }
-
-    .explore {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.9rem;
+        height: 55%;
     }
 
     .nav-content {

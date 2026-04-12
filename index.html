@@ -16,34 +16,41 @@
         <span class="cursor-text"></span>
     </div>
 
-    <!-- Navigation overlay -->
-    <div class="nav-bar" role="dialog" aria-label="Navigation" aria-modal="true" aria-hidden="true">
-        <!-- Full-bleed background video -->
-        <video class="nav-bg-video" src="./homePage/Comp.mp4" autoplay loop muted playsinline></video>
-
-        <!-- Dark scrim so text stays legible -->
-        <div class="nav-scrim"></div>
-
-        <!-- Left-aligned content -->
-        <div class="nav-content">
-            <nav class="nav-links" aria-label="Site navigation">
-                <h3><a href="#">Work</a></h3>
-                <h3><a href="#">About</a></h3>
-                <h3><a href="#">Contact</a></h3>
-            </nav>
-            <div class="nav-about">
-                <h2>Portfolio</h2>
-                <p>Creative developer building interactive web experiences.</p>
+    <!-- About overlay — circle-mask reveal -->
+    <div class="about-overlay" aria-hidden="true">
+        <video class="about-video" src="./homePage/Comp.mp4" autoplay loop muted playsinline></video>
+        <div class="about-scrim"></div>
+        <div class="about-content">
+<div class="about-info">
+                <div class="about-block">
+                    <p class="about-block-label">About</p>
+                    <p class="about-block-text">Being dyslexic has created my biggest strength — visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Social</p>
+                    <div class="about-social">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Dribbble</a>
+                        <a href="#">Behance</a>
+                    </div>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Contact</p>
+                    <p class="about-block-text">
+                        <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
+                        <a href="tel:+000000000000">+00 000 000 0000</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Nav header (outside #wrapper so its z-index isn't trapped in wrapper's stacking context) -->
+    <!-- Persistent nav header -->
     <nav class="nav-header">
-        <a id="logo" href="#">LOGO</a>
-        <div class="burger" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
-            <div class="line1"></div>
-            <div class="line2"></div>
+        <a id="logo" href="#"></a>
+        <div class="nav-links-inline">
+            <a class="nav-link active" data-page="work" href="#">Work</a>
+            <a class="nav-link" data-page="about" href="#">About</a>
         </div>
     </nav>
 
@@ -55,78 +62,50 @@
 
             <!-- Slide 1 -->
             <section class="slide">
-                <div class="hero-desc">
-                    <p class="projNumber">01</p>
-                    <div class="title">
-                        <h2>Project One</h2>
-                        <ul>
-                            <li>Web Design</li>
-                            <li>Animation</li>
-                        </ul>
+                <a class="project-card" href="project.html?id=1">
+                    <div class="project-img-wrap">
+                        <img src="./assets/img/Frame-1.png" alt="Project One">
                     </div>
-                    <div class="borderLine"></div>
-                    <a class="explore" href="#">Explore</a>
-                </div>
-                <div class="project-img">
-                    <img class="ripple-image" src="./dist/pj.52e24367.png" alt="Project One">
-                </div>
+                </a>
+                <h2 class="project-title">Project One</h2>
+                <span class="project-category">Web Design</span>
+                <span class="slide-num">01</span>
             </section>
 
             <!-- Slide 2 -->
             <section class="slide">
-                <div class="hero-desc">
-                    <p class="projNumber">02</p>
-                    <div class="title">
-                        <h2>Project Two</h2>
-                        <ul>
-                            <li>3D / WebGL</li>
-                            <li>Interaction</li>
-                        </ul>
+                <a class="project-card" href="project.html?id=2">
+                    <div class="project-img-wrap">
+                        <img src="./assets/img/pj_1.png" alt="Project Two">
                     </div>
-                    <div class="borderLine"></div>
-                    <a class="explore" href="#">Explore</a>
-                </div>
-                <div class="project-img">
-                    <img class="ripple-image" src="./dist/pj_1.dce56a1c.png" alt="Project Two">
-                </div>
+                </a>
+                <h2 class="project-title">Project Two</h2>
+                <span class="project-category">3D / WebGL</span>
+                <span class="slide-num">02</span>
             </section>
 
             <!-- Slide 3 -->
             <section class="slide">
-                <div class="hero-desc">
-                    <p class="projNumber">03</p>
-                    <div class="title">
-                        <h2>Project Three</h2>
-                        <ul>
-                            <li>Branding</li>
-                            <li>Motion</li>
-                        </ul>
+                <a class="project-card" href="project.html?id=3">
+                    <div class="project-img-wrap">
+                        <img src="./assets/img/pj_3.png" alt="Project Three">
                     </div>
-                    <div class="borderLine"></div>
-                    <a class="explore" href="#">Explore</a>
-                </div>
-                <div class="project-img">
-                    <img class="ripple-image" src="./dist/pj_3.7f232dd1.png" alt="Project Three">
-                </div>
+                </a>
+                <h2 class="project-title">Project Three</h2>
+                <span class="project-category">Branding</span>
+                <span class="slide-num">03</span>
             </section>
 
-            <!-- Slide 4 (last child — triggers lastChild observer) -->
+            <!-- Slide 4 -->
             <section class="slide">
-                <div class="hero-desc">
-                    <p class="projNumber">04</p>
-                    <div class="title">
-                        <h2>Project Four</h2>
-                        <ul>
-                            <li>Creative Dev</li>
-                            <li>GSAP</li>
-                        </ul>
+                <a class="project-card" href="project.html?id=4">
+                    <div class="project-img-wrap">
+                        <img src="./assets/img/pj_22.png" alt="Project Four">
                     </div>
-                    <div class="borderLine"></div>
-                    <a class="explore" href="#">Explore</a>
-                </div>
-                <div class="project-img">
-                    <img class="ripple-image" src="./dist/pj_22.e31f51ce.png" alt="Project Four">
-                </div>
+                </a>
+                <h2 class="project-title">Project Four</h2>
+                <span class="project-category">Creative Dev</span>
+                <span class="slide-num">04</span>
             </section>
 
         </main>
@@ -200,6 +179,16 @@
         }
     </script>
 
-    <script type="module" src="./js/index.js"></script>
+    <!-- CDN libraries (no bundler needed) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+    <!-- App scripts -->
+    <script src="./js/particales.js"></script>
+    <script src="./js/appearOnScroll.js"></script>
+    <script src="./js/hoverEffect.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/transition.js"></script>
 </body>
 </html>
