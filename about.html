@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Portfolio</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+
+    <!-- Custom cursor -->
+    <div class="cursor">
+        <span class="cursor-text"></span>
+    </div>
+
+    <!-- Navigation overlay -->
+    <div class="nav-bar" role="dialog" aria-label="Navigation" aria-modal="true" aria-hidden="true">
+        <!-- Three.js character canvas -->
+        <canvas class="nav-char-canvas"></canvas>
+        <div class="nav-scrim"></div>
+        <div class="nav-char-switcher">
+            <button class="char-btn active" data-char="v18" aria-label="Character 1 – Walker">1</button>
+            <button class="char-btn" data-char="rocket" aria-label="Character 2 – Rocket">2</button>
+        </div>
+        <div class="nav-content">
+            <nav class="nav-links" aria-label="Site navigation">
+                <h3><a href="./index.html">Work</a></h3>
+                <h3><a href="./about.html">About</a></h3>
+                <h3><a href="#">Contact</a></h3>
+            </nav>
+            <div class="nav-about">
+                <h2>Portfolio</h2>
+                <p>Creative developer building interactive web experiences.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav header -->
+    <nav class="nav-header">
+        <a id="logo" href="./index.html">LOGO</a>
+        <div class="burger" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
+            <div class="line1"></div>
+            <div class="line2"></div>
+        </div>
+    </nav>
+
+    <!-- About page -->
+    <div id="wrapper" data-barba="wrapper">
+        <main data-barba="container" data-barba-namespace="about">
+
+            <section class="about-page">
+                <!-- Full-bleed background video -->
+                <video class="about-video" src="./homePage/Comp.mp4"
+                       autoplay loop muted playsinline></video>
+
+                <!-- Gradient scrim -->
+                <div class="about-scrim"></div>
+
+                <!-- Two-column layout -->
+                <div class="about-content">
+                    <!-- Left: Giant hello -->
+                    <div class="about-hello">
+                        <h1>Hello</h1>
+                    </div>
+
+                    <!-- Right: Info blocks -->
+                    <div class="about-info">
+                        <div class="about-block">
+                            <p class="about-block-label">About</p>
+                            <p class="about-block-text">Being dyslexic has created my biggest strength — visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                        </div>
+
+                        <div class="about-block">
+                            <p class="about-block-label">Social</p>
+                            <div class="about-social">
+                                <a href="#">LinkedIn</a>
+                                <a href="#">Dribbble</a>
+                                <a href="#">Behance</a>
+                            </div>
+                        </div>
+
+                        <div class="about-block">
+                            <p class="about-block-label">Contact</p>
+                            <p class="about-block-text">
+                                <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
+                                <a href="tel:+000000000000">+00 000 000 0000</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script type="module" src="./js/about.js"></script>
+</body>
+</html>
