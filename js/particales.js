@@ -1,4 +1,4 @@
-export default function Particles(){
+function Particles(){
 
 var particalCanvas = document.getElementById("gl-canvas");
 particalCanvas.width = window.innerWidth;
