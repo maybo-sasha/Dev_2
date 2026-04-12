@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project — Portfolio</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <style>
+        body { opacity: 0; background: #0f0f0f; }
+
+        .project-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .project-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-hero-scrim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+        }
+
+        .project-hero-meta {
+            position: absolute;
+            bottom: 10%;
+            left: 8vw;
+            color: white;
+            font-family: var(--font-display);
+        }
+
+        .project-hero-title {
+            font-size: clamp(3rem, 7vw, 8rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            margin: 0 0 1.2rem;
+        }
+
+        .project-hero-category {
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .project-body {
+            padding: 8rem 8vw;
+            color: rgba(255,255,255,0.55);
+            font-size: 0.95rem;
+            line-height: 1.85;
+            max-width: 680px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-header">
+        <a id="logo" href="index.html"></a>
+        <div class="nav-links-inline">
+            <a class="nav-link active" data-page="work" href="index.html">Work</a>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <main>
+            <section class="project-hero">
+                <img id="hero-img" src="" alt="">
+                <div class="project-hero-scrim"></div>
+                <div class="project-hero-meta">
+                    <h1 id="hero-title" class="project-hero-title"></h1>
+                    <span id="hero-category" class="project-hero-category"></span>
+                </div>
+            </section>
+
+            <div class="project-body">
+                <p>Project overview and case study content goes here.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+        const projects = {
+            '1': { img: './assets/img/Frame-1.png',  title: 'Project One',   category: 'Web Design'   },
+            '2': { img: './assets/img/pj_1.png',     title: 'Project Two',   category: '3D / WebGL'   },
+            '3': { img: './assets/img/pj_3.png',     title: 'Project Three', category: 'Branding'     },
+            '4': { img: './assets/img/pj_22.png',    title: 'Project Four',  category: 'Creative Dev' },
+        };
+
+        const id   = new URLSearchParams(window.location.search).get('id') || '1';
+        const proj = projects[id] || projects['1'];
+
+        const heroImg = document.getElementById('hero-img');
+        heroImg.alt   = proj.title;
+        document.getElementById('hero-title').textContent    = proj.title;
+        document.getElementById('hero-category').textContent = proj.category;
+        document.title = proj.title + ' — Portfolio';
+
+        // Entrance — image settles from the zoom-in that just brought us here
+        heroImg.src = proj.img;
+        heroImg.onload = () => {
+            gsap.timeline()
+                .set(document.body, { opacity: 1 })
+                .from('.project-hero-meta', { y: 24, opacity: 0, duration: 1.0, ease: 'expo.out' }, 0.15)
+                .from('.nav-header',        { y: '-100%', opacity: 0, duration: 0.8, ease: 'expo.out' }, 0.2);
+        };
+    </script>
+</body>
+</html>

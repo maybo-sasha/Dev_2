@@ -1,327 +1,204 @@
-import { gsap } from 'gsap';
-import barba from '@barba/core';
-import Particles from "./particales";
-import appearOnScroll from './appearOnScroll';
+// Uses globals: gsap, Lenis, barba (loaded via CDN)
+// Particles and appearOnScroll are loaded as script tags before this file
 
-
-let logo = document.querySelector("#logo")
-const cont = document.querySelector('.cont')
 const lastChild = document.querySelector('.slide:last-child');
-const sliders = document.querySelectorAll('.slide');
-const nav = document.querySelectorAll('.nav-header');
-const burger = document.querySelector('.burger');
-const navBar = document.querySelector('.nav-bar');
-const canvas = document.querySelector('#wallkingCycle')
-let mouse = document.querySelector('.cursor');
+const sliders   = document.querySelectorAll('.slide');
+const nav       = document.querySelector('.nav-header');
+const mouse     = document.querySelector('.cursor');
+const overlay   = document.querySelector('.about-overlay');
+const navLinks  = document.querySelectorAll('.nav-link');
 
-const navTl = gsap.timeline({ defaults: { duration: .5, ease: 'power2.inOut' }});
-navTl.fromTo(nav, { y: '-100%', opacity: 0 }, { y: '0%', opacity: 1 });
-navTl.fromTo(nav, { width: "90vw", x: "5vw", marginLeft: '1%' }, { x: "0%", width: "100vw", marginLeft: 0, duration: 1 }, '-=.2');
+// ── Nav entrance ───────────────────────────────────────────────────────────
+gsap.fromTo(nav, { y: '-100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 0.6, ease: 'power2.out' });
 
-function cursorAnim(e){
-    mouse.style.top = e.pageY + 'px';
-    mouse.style.left = e.pageX + 'px';
-};
+// ── Cursor ─────────────────────────────────────────────────────────────────
+let rawX = 0, rawY = 0;
 
+if (mouse) {
+    // Drive position via left/top — CSS transform:translate(-50%,-50%) centres it.
+    // GSAP never touches `transform`, so centering is always correct.
+    const setLeft = gsap.quickSetter(mouse, 'left', 'px');
+    const setTop  = gsap.quickSetter(mouse, 'top',  'px');
 
-function cursorHoverAnim (e){
-    const item = e.target
-    if (item.id === 'logo' || item.classList.contains('burger')){
-        mouse.classList.add("nav-active");
-    }else{
-        mouse.classList.remove("nav-active");
-    };
-    if( item.classList.contains('explore')){
-        mouse.classList.add("explore-active");
-    }else{
-        mouse.classList.remove("explore-active");
-    }
-};
+    window.addEventListener('mousemove', e => {
+        rawX = e.clientX;
+        rawY = e.clientY;
+    });
 
-// Circle-mask origin: top-right corner where the burger lives
-const MASK_ORIGIN = 'calc(100% - 5%) 5vh';
-const MASK_OPEN   = `circle(150vmax at ${MASK_ORIGIN})`;
-const MASK_CLOSED = `circle(0px at ${MASK_ORIGIN})`;
+    let isLocked   = false;
+    let unlockTimer;
 
-function navToggle(e){
-    const btn = e.currentTarget;
-    const isOpen = btn.classList.contains('active');
+    gsap.ticker.add(() => {
+        if (!isLocked) { setLeft(rawX); setTop(rawY); }
+    });
 
-    if (!isOpen) {
-        btn.classList.add('active');
-        btn.setAttribute('aria-expanded', 'true');
-        btn.setAttribute('aria-label', 'Close menu');
-        navBar.setAttribute('aria-hidden', 'false');
-        navBar.classList.add('is-open');
+    // ── Reset to default circle ───────────────────────────────────────
+    const resetCursor = () => gsap.to(mouse, {
+        width:  '2rem',
+        height: '2rem',
+        borderRadius: '50%',
+        borderColor: 'rgba(255,255,255,0.75)',
+        backgroundColor: 'transparent',
+        duration: 0.25,
+        ease: 'power2.out',
+        overwrite: true,
+    });
 
-        // Burger → X (white lines stay white; overlay is dark)
-        gsap.to(".line1", { duration: .25, rotate: 45,  y:  5 });
-        gsap.to(".line2", { duration: .25, rotate: -45, y: -5 });
+    // ── Nav links: auto-lock & expand to cover the button ────────────
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            clearTimeout(unlockTimer);
+            isLocked = true;
+            mouse.classList.add('has-ripple');
 
-        // Expand circle mask from burger corner
-        gsap.to('.nav-bar', {
-            duration: 0.9,
-            clipPath: MASK_OPEN,
-            ease: 'power3.inOut',
+            const r  = link.getBoundingClientRect();
+            const cx = r.left + r.width  / 2;
+            const cy = r.top  + r.height / 2;
+
+            // left/top = button centre → translate(-50%,-50%) centres cursor on it
+            gsap.to(mouse, {
+                left:  cx,
+                top:   cy,
+                width:  r.width  + 40,
+                height: r.height + 20,
+                borderRadius: '999px',
+                borderColor: 'rgba(255,255,255,1)',
+                backgroundColor: 'rgba(255,255,255,0.07)',
+                duration: 0.35,
+                ease: 'expo.out',
+                overwrite: true,
+            });
         });
 
-        // Stagger nav links in
-        gsap.fromTo('.nav-links h3 a',
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out', delay: 0.35 }
-        );
-        gsap.fromTo('.nav-about',
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.6 }
-        );
-    } else {
-        btn.classList.remove('active');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.setAttribute('aria-label', 'Open menu');
-
-        // Fade content out first, then collapse mask
-        gsap.to(['.nav-links h3 a', '.nav-about'], {
-            opacity: 0, y: -20, duration: 0.3, ease: 'power2.in',
+        link.addEventListener('mouseleave', () => {
+            // Small delay prevents flicker when moving between adjacent nav links
+            unlockTimer = setTimeout(() => {
+                isLocked = false;
+                mouse.classList.remove('has-ripple');
+                resetCursor();
+            }, 40);
         });
+    });
 
-        gsap.to('.nav-bar', {
-            duration: 0.7,
-            clipPath: MASK_CLOSED,
-            ease: 'power3.inOut',
-            delay: 0.2,
-            onComplete: () => {
-                navBar.setAttribute('aria-hidden', 'true');
-                navBar.classList.remove('is-open');
-            }
+    // ── Project card hover: large circle with View label ─────────────
+    const cursorText = mouse.querySelector('.cursor-text');
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            if (cursorText) cursorText.textContent = 'View';
+            mouse.classList.add('show-label');
+            gsap.to(mouse, {
+                width:  '7rem',
+                height: '7rem',
+                borderColor: 'rgba(255,255,255,0.6)',
+                backgroundColor: 'rgba(0,0,0,0.55)',
+                duration: 0.5,
+                ease: 'expo.out',
+                overwrite: true,
+            });
         });
+        card.addEventListener('mouseleave', () => {
+            mouse.classList.remove('show-label');
+            resetCursor();
+        });
+    });
 
-        // Restore burger lines
-        gsap.to(".line1", { duration: .25, rotate: 0, y: 0, delay: 0.2 });
-        gsap.to(".line2", { duration: .25, rotate: 0, y: 0, delay: 0.2 });
-    }
+    // ── Click pulse ───────────────────────────────────────────────────
+    document.addEventListener('mousedown', () => {
+        gsap.to(mouse, {
+            width:  '1.4rem',
+            height: '1.4rem',
+            duration: 0.09,
+            ease: 'power3.in',
+            overwrite: 'auto',
+        });
+    });
+    document.addEventListener('mouseup', () => {
+        gsap.to(mouse, {
+            width:  '2rem',
+            height: '2rem',
+            duration: 0.2,
+            ease: 'power2.out',
+            overwrite: 'auto',
+        });
+    });
 }
 
-function navKeydown(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        navToggle(e);
-    }
+function cursorAnim() {}  // kept for call-site compat in appearOnScroll
+
+// ── About overlay — circle-mask from nav link position ─────────────────────
+let aboutOpen = false;
+
+function openAbout(triggerEl) {
+    if (aboutOpen) return;
+    aboutOpen = true;
+
+    const rect = triggerEl.getBoundingClientRect();
+    const ox = rect.left + rect.width / 2;
+    const oy = rect.top  + rect.height / 2;
+    const origin = `${ox}px ${oy}px`;
+
+    overlay.style.clipPath = `circle(0px at ${origin})`;
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === 'about'));
+
+    gsap.to(overlay, {
+        clipPath: `circle(150vmax at ${origin})`,
+        duration: 0.9,
+        ease: 'power3.inOut',
+    });
+
+    gsap.fromTo('.about-block',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', delay: 0.5 }
+    );
 }
 
+function closeAbout() {
+    if (!aboutOpen) return;
 
-barba.init({
-    transitions: [
-        {
-            name: "home-pj-transition",
-            from: {
-                namespace: ["home"]
-            },
-            to: {
-                namespace: ["PJ"]
-            },
-            leave({ current, done }) {
-                const rippleImage = current.container.querySelector('.project-img');
-                const body = current.container.querySelector('#body');
-                const canvas = current.container.querySelector('canvas');
-                if (!rippleImage) {
-                    console.warn('No .ripple-image found in the current page');
-                    done();
-                    return;
-                }
+    const aboutLink = document.querySelector('.nav-link[data-page="about"]');
+    const rect = aboutLink.getBoundingClientRect();
+    const origin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
 
-                // Animate ripple image scaling up to 1.2
-                const tl = gsap.timeline({
-                    defaults: { ease: 'power2.out' },
-                    onComplete: done // Trigger done after animation
-                });
+    gsap.to('.about-block', {
+        opacity: 0, y: -20, duration: 0.25, ease: 'power2.in',
+    });
 
-                tl.to(rippleImage, {
-                    scale: 1.2, // Scale up to 1.2
-                    duration: 0.6, // Smooth scaling
-                })
-                  .to(current.container, {
-                      opacity: 0,
-                      duration: 0.4
-                  }, '-=0.4'); // Fade out while scaling
-            },
-            enter({ next, done }) {
-                const projImg = next.container.querySelector('.proj-img');
-                if (!projImg) {
-                    console.warn('No .proj-img found in the new page');
-                    done();
-                    return;
-                }
-
-                // Start proj-img at scale 1.2
-                gsap.set(projImg, { scale: 1.2 });
-
-                // Animate proj-img scaling back to 1
-                const tl = gsap.timeline({
-                    defaults: { ease: 'power2.inOut' },
-                    onComplete: done // Trigger done after animation
-                });
-
-                tl.to(projImg, {
-                    scale: 1, // Reset to original size
-                    duration: 0.6 // Smooth scale-down
-                })
-                  .to(next.container, {
-                      opacity: 1,
-                      duration: 0.4
-                  }, '-=0.4'); // Fade in content while scaling
-            }
+    gsap.to(overlay, {
+        clipPath: `circle(0px at ${origin})`,
+        duration: 0.75,
+        ease: 'power3.inOut',
+        delay: 0.1,
+        onComplete: () => {
+            overlay.classList.remove('is-open');
+            overlay.setAttribute('aria-hidden', 'true');
+            aboutOpen = false;
         }
-    ],
-    debug: false
-});
-
-
-
-document.querySelectorAll('.project-img').forEach((container) => {
-    const img = container.querySelector('.ripple-image');
-
-    container.addEventListener('mousemove', (e) => {
-        // Get the container's bounding box
-        const rect = container.getBoundingClientRect();
-
-        // Calculate mouse position relative to the container
-        const x = e.clientX - rect.left; // Mouse X inside the container
-        const y = e.clientY - rect.top;  // Mouse Y inside the container
-
-        // Normalize the values to range [-1, 1]
-        const offsetX = (x / rect.width) * 2 - 1; // Horizontal offset
-        const offsetY = (y / rect.height) * 2 - 1; // Vertical offset
-
-        // Calculate rotation values
-        const rotateX = offsetY * 1; // Tilt effect on the X-axis
-        const rotateY = -offsetX * 1; // Tilt effect on the Y-axis
-
-        // Apply GSAP animation for smooth rotation
-        gsap.to(img, {
-            duration: 0.8,
-            rotateX: rotateX,
-            rotateY: rotateY,
-            scale: 1.05,
-            ease: "power2.out",
-            transformPerspective: 1000, // Ensure proper 3D perspective
-        });
     });
 
-    container.addEventListener('mouseleave', () => {
-        // Reset the transform with GSAP when the mouse leaves
-        gsap.to(img, {
-            duration: 0.8,
-            rotateX: 0,
-            rotateY: 0,
-            scale: 1,
-            ease: "power2.out",
-        });
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === 'work'));
+}
+
+navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        if (link.dataset.page === 'about') {
+            if (!aboutOpen) openAbout(link);
+        } else {
+            closeAbout();
+        }
     });
 });
 
-
-// Select all `.explore` links
-document.querySelectorAll('.explore').forEach((exploreLink) => {
-    // Find the `.project-1-section` ancestor and its corresponding `.ripple-image`
-    const section = exploreLink.closest('.slide');
-    if (!section) {
-        console.warn('No .slide found for:', exploreLink);
-        return;
-    }
-
-    const rippleImage = section.querySelector('.ripple-image');
-    if (!rippleImage) {
-        console.warn('No .ripple-image found in:', section);
-        return;
-    }
-
-    // Add hover effect listeners to the `.explore` link
-    exploreLink.addEventListener('mouseenter', () => {
-        gsap.to(rippleImage, {
-            duration: 0.6,
-            scale: 1.1,
-            ease: "power2.out",
-        });
-    });
-
-    exploreLink.addEventListener('mouseleave', () => {
-        gsap.to(rippleImage, {
-            duration: 0.6,
-            scale: 1,
-            ease: "power2.out",
-        });
-    });
+window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && aboutOpen) closeAbout();
 });
 
-////////////////////////
+// ── Particles + scroll + hover effects ────────────────────────────────────
 Particles();
 let destroyScroll = appearOnScroll(sliders, lastChild, cursorAnim);
-
-barba.hooks.beforeLeave(() => {
-    destroyScroll();
-});
-
-barba.hooks.afterEnter(({ next }) => {
-    const newSliders = next.container.querySelectorAll('.slide');
-    const newLastChild = next.container.querySelector('.slide:last-child');
-    destroyScroll = appearOnScroll(newSliders, newLastChild, cursorAnim);
-});
+initHoverEffects();
 
 window.scrollTo(0, 0);
-const charBtns = document.querySelectorAll('.char-btn');
-let destroyCharacter = null;
-let activeChar = 'v18';
-
-const charModules = {
-    v18:    () => import('./character').then(m => m.default),
-    rocket: () => import('./characterRocket').then(m => m.default),
-};
-
-function getCanvas() {
-    return document.querySelector('.nav-char-canvas');
-}
-
-function loadCharacter(key) {
-    console.log('[loadCharacter] key:', key);
-    // Destroy previous instance
-    if (destroyCharacter) {
-        destroyCharacter();
-        destroyCharacter = null;
-    }
-
-    // Replace canvas with a fresh element to get a clean WebGL context
-    const oldCanvas = getCanvas();
-    if (!oldCanvas) return;
-    const newCanvas = document.createElement('canvas');
-    newCanvas.className = 'nav-char-canvas';
-    oldCanvas.replaceWith(newCanvas);
-
-    charModules[key]()
-        .then(init => {
-            console.log('[loadCharacter] module loaded, init:', typeof init);
-            destroyCharacter = init(newCanvas);
-            activeChar = key;
-        })
-        .catch(err => console.error('Character load error:', err));
-}
-
-charBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const key = btn.dataset.char;
-        if (key === activeChar) return;
-        charBtns.forEach(b => b.classList.toggle('active', b === btn));
-        loadCharacter(key);
-    });
-});
-
-burger.addEventListener('click', (e) => {
-    navToggle(e);
-    const nowOpen = e.currentTarget.classList.contains('active');
-    if (nowOpen && !destroyCharacter) {
-        loadCharacter(activeChar);
-    }
-});
-burger.addEventListener('keydown', navKeydown);
-window.addEventListener("mousemove", cursorAnim);
-window.addEventListener("mouseover", cursorHoverAnim);
-
