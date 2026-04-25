@@ -168,11 +168,11 @@ main {
     font-family: var(--font-display);
 }
 
-/* Slide number — bottom left */
+/* Slide number — absolute bottom left of slide */
 .slide-num {
     position: absolute;
     bottom: 2.8rem;
-    left: 5vw;
+    left: 6vw;
     font-family: var(--font-display);
     font-size: 0.72rem;
     font-weight: 400;
@@ -181,11 +181,11 @@ main {
     z-index: 3;
 }
 
-/* Category — bottom left above number */
+/* Category — absolute, just above slide number */
 .project-category {
     position: absolute;
     bottom: 4.8rem;
-    left: 5vw;
+    left: 6vw;
     font-family: var(--font-display);
     font-size: 0.72rem;
     font-weight: 400;
@@ -195,13 +195,14 @@ main {
     z-index: 3;
 }
 
-/* ── Slide inner layout: card centered, title below ──────── */
+/* ── Slide inner layout: title left, image right ──────── */
 .slide {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 1.6rem;
+    justify-content: space-between;
+    padding: 0 8vw 0 6vw;
+    gap: 4vw;
 }
 
 /* ── Project card ────────────────────────────────────────── */
@@ -213,12 +214,13 @@ main {
     will-change: transform, opacity;
     flex-shrink: 0;
     border-radius: 0;
+    order: 2; /* image on the right */
 }
 
-/* Image wrapper — landscape ratio */
+/* Image wrapper — right column */
 .project-img-wrap {
-    width: 35vw;
-    height: 60vh;
+    width: 48vw;
+    height: 78vh;
     overflow: hidden;
     position: relative;
     will-change: transform;
@@ -240,18 +242,20 @@ main {
     transform: scale(1.04);
 }
 
-/* Project name — below image, centered */
+/* Project name — left column */
 .project-title {
     font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.2vw, 3rem);
+    font-size: clamp(2rem, 4vw, 6rem);
     font-weight: 800;
     letter-spacing: -0.03em;
-    line-height: 1;
+    line-height: 1.05;
     color: transparent;
     -webkit-text-stroke: 1px rgba(255,255,255,0.25);
     position: relative;
-    display: inline-block;
-    text-align: center;
+    display: block;
+    text-align: left;
+    order: 1; /* title on the left */
+    flex: 1;
 }
 
 /* Solid fill layer — same text stacked on top, clip-path driven by GSAP */
