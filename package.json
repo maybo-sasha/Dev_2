@@ -2,10 +2,9 @@
   "name": "dev_2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
+    "start": "vite",
+    "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -24,5 +23,8 @@
     "scrollmagic-plugins": "^1.0.8",
     "three": "^0.172.0",
     "three-bmfont-text": "^3.0.1"
+  },
+  "devDependencies": {
+    "vite": "^8.0.8"
   }
 }

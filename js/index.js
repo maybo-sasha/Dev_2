@@ -14,6 +14,20 @@ gsap.fromTo(nav, { y: '-100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 0.
 // ── Cursor ─────────────────────────────────────────────────────────────────
 let rawX = 0, rawY = 0;
 
+const resetCursor = () => {
+    if (!mouse) return;
+    gsap.to(mouse, {
+        width:  '2rem',
+        height: '2rem',
+        borderRadius: '50%',
+        borderColor: 'rgba(255,255,255,0.75)',
+        backgroundColor: 'transparent',
+        duration: 0.25,
+        ease: 'power2.out',
+        overwrite: true,
+    });
+};
+
 if (mouse) {
     // Drive position via left/top — CSS transform:translate(-50%,-50%) centres it.
     // GSAP never touches `transform`, so centering is always correct.
@@ -30,18 +44,6 @@ if (mouse) {
 
     gsap.ticker.add(() => {
         if (!isLocked) { setLeft(rawX); setTop(rawY); }
-    });
-
-    // ── Reset to default circle ───────────────────────────────────────
-    const resetCursor = () => gsap.to(mouse, {
-        width:  '2rem',
-        height: '2rem',
-        borderRadius: '50%',
-        borderColor: 'rgba(255,255,255,0.75)',
-        backgroundColor: 'transparent',
-        duration: 0.25,
-        ease: 'power2.out',
-        overwrite: true,
     });
 
     // ── Nav links: auto-lock & expand to cover the button ────────────
@@ -124,6 +126,67 @@ if (mouse) {
 }
 
 function cursorAnim() {}  // kept for call-site compat in appearOnScroll
+
+// ── Drag to scroll ─────────────────────────────────────────────────────────
+{
+    let isDragging    = false;
+    let dragStartY    = 0;
+    let scrollAtDrag  = 0;
+
+    const cursorText = mouse ? mouse.querySelector('.cursor-text') : null;
+
+    const toDragCursor = () => {
+        document.body.classList.add('is-dragging');
+        if (!mouse) return;
+        if (cursorText) { cursorText.textContent = '↕'; }
+        mouse.classList.add('show-label');
+        gsap.to(mouse, {
+            width:        '4.5rem',
+            height:       '2rem',
+            borderRadius: '999px',
+            borderColor:  'rgba(255,255,255,0.9)',
+            duration: 0.2,
+            ease: 'power2.out',
+            overwrite: true,
+        });
+    };
+
+    const fromDragCursor = () => {
+        document.body.classList.remove('is-dragging');
+        if (!mouse) return;
+        mouse.classList.remove('show-label');
+        if (cursorText) cursorText.textContent = '';
+        resetCursor();
+    };
+
+    document.addEventListener('pointerdown', e => {
+        if (e.target.closest('a, button, input')) return;
+        isDragging   = true;
+        dragStartY   = e.clientY;
+        scrollAtDrag = window.lenisInstance ? window.lenisInstance.scroll : window.scrollY;
+        toDragCursor();
+    });
+
+    document.addEventListener('pointermove', e => {
+        if (!isDragging) return;
+        const delta = dragStartY - e.clientY;
+        const lenis = window.lenisInstance;
+        if (lenis) {
+            lenis.scrollTo(scrollAtDrag + delta * 1.8, { immediate: false });
+        } else {
+            window.scrollTo(0, scrollAtDrag + delta * 1.8);
+        }
+    });
+
+    const endDrag = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        fromDragCursor();
+    };
+
+    document.addEventListener('pointerup',     endDrag);
+    document.addEventListener('pointercancel', endDrag);
+}
 
 // ── About overlay — circle-mask from nav link position ─────────────────────
 let aboutOpen = false;

@@ -16,6 +16,7 @@ function appearOnScroll(params, _lastchild, onScrollCallback) {
 
     // ── Smooth scroll ──────────────────────────────────────────────────
     const lenis = new Lenis({ lerp: 0.07, smoothWheel: true });
+    window.lenisInstance = lenis;
     let rafId;
     function raf(time) { lenis.raf(time); rafId = requestAnimationFrame(raf); }
     rafId = requestAnimationFrame(raf);
