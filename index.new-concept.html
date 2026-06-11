@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ["DM Sans","Helvetica Neue","Arial","sans-serif"] } } }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+
+  <style>
+    :root {
+      --bg:     #0c0c0c;
+      --text:   #e6e1d8;
+      --muted:  rgba(230,225,216,.35);
+      --bord:   rgba(230,225,216,.09);
+      --tag:    rgba(230,225,216,.06);
+      --header: 56px;
+      --subnav: 44px;
+      --hh:     100px; /* total header height */
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--bg); }
+    body {
+      font-family: "DM Sans","Helvetica Neue",sans-serif;
+      background: var(--bg); color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; cursor: none;
+    }
+
+    /* ── Cursor ── */
+    #cursor {
+      position: fixed; top: 0; left: 0;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--text); pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%); mix-blend-mode: difference;
+      transition: width .3s cubic-bezier(.4,0,.2,1), height .3s cubic-bezier(.4,0,.2,1);
+    }
+    #cursor.big { width: 48px; height: 48px; }
+
+    /* ── Loader ── */
+    #loader {
+      position: fixed; inset: 0; background: var(--bg);
+      z-index: 8000; display: flex; align-items: center; justify-content: center;
+    }
+    .loader-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── Fixed header ── */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 0 32px;
+      background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+    }
+    .main-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: var(--header); border-bottom: 1px solid var(--bord);
+    }
+    .logo {
+      font-size: 13px; font-weight: 500; letter-spacing: .02em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-right a {
+      font-size: 12px; color: var(--muted); text-decoration: none;
+      letter-spacing: .01em; transition: color .2s;
+    }
+    .nav-right a:hover { color: var(--text); }
+    .nav-lang { font-size: 10px !important; letter-spacing: .1em !important; text-transform: uppercase; }
+    .nav-sep  { width: 1px; height: 12px; background: var(--bord); }
+
+    /* ── Sub-nav ── */
+    .sub-nav {
+      display: flex; align-items: center; gap: 5px;
+      height: var(--subnav); overflow-x: auto; scrollbar-width: none;
+    }
+    .sub-nav::-webkit-scrollbar { display: none; }
+    .snav-btn {
+      font-size: 10px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
+      color: var(--muted); padding: 4px 12px;
+      border: 1px solid var(--bord); border-radius: 100px;
+      white-space: nowrap; background: transparent; cursor: none;
+      transition: color .2s, background .2s, border-color .2s;
+    }
+    .snav-btn:hover,.snav-btn.active {
+      color: var(--text); background: var(--tag); border-color: rgba(230,225,216,.22);
+    }
+
+    /* ── Full-screen project sections ── */
+    #project-list {
+      padding-top: var(--hh);
+    }
+
+    .project-section {
+      display: grid;
+      grid-template-columns: 38% 62%;
+      min-height: 100vh;
+      border-top: 1px solid var(--bord);
+    }
+    .project-section:last-child { border-bottom: 1px solid var(--bord); }
+
+    @media (max-width: 767px) {
+      .project-section { grid-template-columns: 1fr; min-height: auto; }
+    }
+
+    /* ── LEFT: project index + name + detail ── */
+    .section-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 28px 32px 32px;
+      border-right: 1px solid var(--bord);
+    }
+
+    /* Mini project index list at top of left col
+       — uses js-project-item class for each item */
+    .proj-index-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /*
+     * js-project-item
+     * Tailwind classes handle: relative leading-[1.1] text-[20px] md:text-[24px] lg:text-[28px] font-medium
+     * Custom CSS adds layout, interaction, and transition
+     */
+    .js-project-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 5px 0;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: none;
+      transition: color .25s, opacity .25s;
+      border-bottom: 1px solid transparent;
+    }
+    .js-project-item .item-num  { font-size: 10px; font-weight: 400; letter-spacing: .05em; opacity: .6; min-width: 22px; }
+    .js-project-item .item-name { flex: 1; }
+    .js-project-item .item-arr  { font-size: 14px; opacity: 0; transform: translateX(-4px); transition: opacity .25s, transform .25s; }
+    .js-project-item.active     { color: var(--text); }
+    .js-project-item:hover      { color: var(--text); }
+    .js-project-item:hover .item-arr  { opacity: 1; transform: translateX(0); }
+    .js-project-item.active .item-arr { opacity: 1; transform: translateX(0); }
+
+    /* Large display info at bottom of left col */
+    .proj-display {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .proj-display-meta {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .proj-display-num  { font-size: 10px; color: var(--muted); letter-spacing: .06em; }
+    .proj-display-tag  {
+      font-size: 9px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+      color: var(--muted); background: var(--tag); border: 1px solid var(--bord);
+      border-radius: 100px; padding: 2px 8px;
+    }
+    .proj-display-title {
+      font-size: clamp(40px, 5.5vw, 76px);
+      font-weight: 500; line-height: .98; letter-spacing: -.02em;
+    }
+
+    /*
+     * js-home-detail
+     * Tailwind classes handle: relative min-h-[190px] pr-4 py-3 md:min-h-[220px] md:pr-5 md:py-4 lg:min-h-[250px]
+     * Custom CSS adds layout for description content
+     */
+    .js-home-detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .js-home-detail .detail-desc {
+      font-size: 12px; font-weight: 300; line-height: 1.65;
+      color: rgba(230,225,216,.5); max-width: 340px;
+    }
+    .js-home-detail .detail-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+      padding-bottom: 2px; border-bottom: 1px solid rgba(230,225,216,.28);
+      transition: border-color .2s; width: fit-content;
+    }
+    .js-home-detail .detail-link:hover { border-color: var(--text); }
+
+    /* ── RIGHT: full-height image ── */
+    .section-right {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+    @media (max-width: 767px) { .section-right { min-height: 60vw; } }
+
+    .section-right img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block; background: #181818;
+      transition: transform .8s cubic-bezier(.4,0,.2,1);
+    }
+    .project-section:hover .section-right img { transform: scale(1.03); }
+
+    /* ── GSAP init states ── */
+    .anim-left  { opacity: 0; transform: translateY(24px); }
+    .anim-right { opacity: 0; transform: scale(1.06); }
+    .anim-item  { opacity: 0; transform: translateY(10px); }
+
+    /* ── Footer ── */
+    #site-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 32px; border-top: 1px solid var(--bord);
+    }
+    .footer-copy { font-size: 10px; color: var(--muted); letter-spacing: .04em; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 10px; color: var(--muted); text-decoration: none;
+      letter-spacing: .07em; text-transform: uppercase; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<div id="cursor" aria-hidden="true"></div>
+<div id="loader"><span class="loader-label">Loading</span></div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <nav class="main-nav">
+    <a href="#" class="logo"></a>
+    <div class="nav-right">
+      <a href="#">About</a>
+      <a href="#">Work together</a>
+      <div class="nav-sep"></div>
+      <a href="#" class="nav-lang">EN</a>
+    </div>
+  </nav>
+  <nav class="sub-nav" aria-label="Filter projects">
+    <button class="snav-btn active" data-filter="all">All</button>
+    <button class="snav-btn" data-filter="design-dev">Design / Dev</button>
+    <button class="snav-btn" data-filter="dev">Dev</button>
+    <button class="snav-btn" data-filter="branding">Branding</button>
+    <button class="snav-btn" data-filter="3d">3D</button>
+  </nav>
+</header>
+
+<!-- PROJECT SECTIONS -->
+<main id="project-list"></main>
+
+<footer id="site-footer">
+  <span class="footer-copy">&copy; 2025 Studio.name</span>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Email</a>
+  </div>
+</footer>
+
+<script>
+/* ── Data ─────────────────────────────────────────── */
+const PROJECTS = [
+  { id:0, num:"01", year:"2025", discipline:"Design/Dev", filter:"design-dev",
+    name:"Lucky Buddies",
+    desc:"Brand identity and digital experience for a collectible NFT project.",
+    image:"assets/img/Lucky_buddies_Clans.png", href:"pages/strike.html" },
+  { id:1, num:"02", year:"2025", discipline:"Design/Dev", filter:"design-dev",
+    name:"Strike",
+    desc:"A bold, sports-forward web presence for a premium streetwear label.",
+    image:"assets/img/strike_header_img.png", href:"pages/strike.html" },
+  { id:2, num:"03", year:"2024", discipline:"Dev", filter:"dev",
+    name:"PJ Studio",
+    desc:"Creative agency site built with a motion-first interaction design.",
+    image:"assets/img/pj_1.png", href:"#" },
+  { id:3, num:"04", year:"2024", discipline:"Design/Dev", filter:"design-dev",
+    name:"Frame Project",
+    desc:"Interactive portfolio framework with immersive scroll storytelling.",
+    image:"assets/img/Frame-1.png", href:"#" },
+];
+
+/* ── Build sections ───────────────────────────────── */
+const main = document.getElementById("project-list");
+
+PROJECTS.forEach(proj => {
+  /* Build the mini index list (all projects) */
+  const indexListHTML = PROJECTS.map(p =>
+    "<a href=\"#section-" + p.id + "\"" +
+    " class=\"js-project-item relative leading-[1.1] text-[20px] md:text-[24px] lg:text-[28px] font-medium" +
+      (p.id === proj.id ? " active" : "") + "\"" +
+    " data-target=\"" + p.id + "\">" +
+      "<span class=\"item-num\">" + p.num + "</span>" +
+      "<span class=\"item-name\">" + p.name + "</span>" +
+      "<span class=\"item-arr\">&#8599;</span>" +
+    "</a>"
+  ).join("");
+
+  const section = document.createElement("section");
+  section.className = "project-section";
+  section.id = "section-" + proj.id;
+  section.dataset.filter = proj.filter;
+
+  section.innerHTML =
+    /* LEFT */
+    "<div class=\"section-left\">" +
+      /* top: mini index list */
+      "<nav class=\"proj-index-list anim-item\">" +
+        indexListHTML +
+      "</nav>" +
+
+      /* bottom: display info */
+      "<div class=\"proj-display\">" +
+        "<div class=\"proj-display-meta\">" +
+          "<span class=\"proj-display-num\">" + proj.num + "</span>" +
+          "<span class=\"proj-display-tag\">" + proj.discipline + "</span>" +
+        "</div>" +
+        "<h2 class=\"proj-display-title anim-left\">" + proj.name + "</h2>" +
+
+        /* js-home-detail with user's exact Tailwind classes */
+        "<div class=\"js-home-detail relative min-h-[190px] pr-4 py-3 md:min-h-[220px] md:pr-5 md:py-4 lg:min-h-[250px] anim-left\">" +
+          "<p class=\"detail-desc\">" + proj.desc + "</p>" +
+          "<a href=\"" + proj.href + "\" class=\"detail-link\">" +
+            "Explore" +
+            "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\">" +
+              "<path d=\"M2 10L10 2M10 2H4M10 2V8\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>" +
+            "</svg>" +
+          "</a>" +
+        "</div>" +
+      "</div>" +
+    "</div>" +
+
+    /* RIGHT — full-height image */
+    "<div class=\"section-right anim-right\">" +
+      "<img src=\"" + proj.image + "\" alt=\"" + proj.name + "\" loading=\"lazy\">" +
+    "</div>";
+
+  main.appendChild(section);
+});
+
+/* ── Lenis ────────────────────────────────────────── */
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+});
+gsap.registerPlugin(ScrollTrigger);
+lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+/* ── Scroll-triggered section animations ─────────── */
+function initAnims() {
+  document.querySelectorAll(".project-section").forEach(section => {
+    const left  = section.querySelector(".anim-left");
+    const lefts = section.querySelectorAll(".anim-left");
+    const right = section.querySelector(".anim-right");
+    const items = section.querySelector(".anim-item");
+
+    const st = { trigger: section, start: "top 80%", toggleActions: "play none none none" };
+
+    gsap.fromTo(items,
+      { opacity:0, y:14 },
+      { opacity:1, y:0, duration:.55, ease:"power3.out", scrollTrigger: st });
+
+    gsap.fromTo(lefts,
+      { opacity:0, y:28 },
+      { opacity:1, y:0, duration:.7, ease:"power3.out", stagger:.12,
+        scrollTrigger: { ...st, start:"top 85%" } });
+
+    gsap.fromTo(right,
+      { opacity:0, scale:1.06 },
+      { opacity:1, scale:1, duration:.9, ease:"power3.out",
+        scrollTrigger: { ...st, start:"top 90%" } });
+  });
+
+  /* Active item highlight on scroll */
+  document.querySelectorAll(".project-section").forEach(section => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 50%",
+      end: "bottom 50%",
+      onEnter:      () => highlightActive(section.id),
+      onEnterBack:  () => highlightActive(section.id),
+    });
+  });
+}
+
+function highlightActive(sectionId) {
+  const idx = sectionId.replace("section-", "");
+  document.querySelectorAll(".js-project-item").forEach(el => {
+    if (el.dataset.target === idx) {
+      el.classList.add("active");
+    } else {
+      el.classList.remove("active");
+    }
+  });
+}
+
+/* ── Smooth scroll on index-list clicks ──────────── */
+document.addEventListener("click", e => {
+  const link = e.target.closest(".js-project-item[data-target]");
+  if (!link) return;
+  e.preventDefault();
+  const target = document.getElementById("section-" + link.dataset.target);
+  if (target) lenis.scrollTo(target, { offset: -80, duration: 1.4 });
+});
+
+/* ── Sub-nav filter ───────────────────────────────── */
+document.querySelectorAll(".snav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const f = btn.dataset.filter;
+    document.querySelectorAll(".project-section").forEach(section => {
+      const show = f === "all" || section.dataset.filter === f;
+      gsap.to(section, { opacity: show ? 1 : .08, pointerEvents: show ? "all" : "none", duration:.4 });
+    });
+  });
+});
+
+/* ── Cursor ───────────────────────────────────────── */
+const cursor = document.getElementById("cursor");
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener("mousemove", e => { mx=e.clientX; my=e.clientY; });
+(function loop(){ cx+=(mx-cx)*.13; cy+=(my-cy)*.13;
+  cursor.style.left=cx+"px"; cursor.style.top=cy+"px"; requestAnimationFrame(loop); })();
+document.querySelectorAll("a,button,.project-section").forEach(el => {
+  el.addEventListener("mouseenter", () => cursor.classList.add("big"));
+  el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
+});
+
+/* ── Entrance ─────────────────────────────────────── */
+window.addEventListener("load", () => {
+  gsap.timeline({ defaults: { ease:"power3.out" } })
+    .to("#loader", { opacity:0, duration:.5, delay:.3,
+        onComplete: () => { document.getElementById("loader").style.display="none"; } })
+    .fromTo("#site-header", { y:-16, opacity:0 }, { y:0, opacity:1, duration:.6 }, "-=.1")
+    .add(() => initAnims(), "+=.05");
+});
+</script>
+</body>
+</html>
