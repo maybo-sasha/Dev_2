@@ -15,6 +15,8 @@ const MIME = {
     '.gif':  'image/gif',
     '.svg':  'image/svg+xml',
     '.mp4':  'video/mp4',
+    '.mov':  'video/quicktime',
+    '.webm': 'video/webm',
     '.glb':  'model/gltf-binary',
     '.woff': 'font/woff',
     '.woff2':'font/woff2',
@@ -23,6 +25,7 @@ const MIME = {
 http.createServer((req, res) => {
     let urlPath = req.url.split('?')[0];
     if (urlPath === '/') urlPath = '/index.html';
+    try { urlPath = decodeURIComponent(urlPath); } catch (_) {}
 
     const filePath = path.join(ROOT, urlPath);
 

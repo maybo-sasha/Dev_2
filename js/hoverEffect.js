@@ -75,12 +75,13 @@ function initHoverEffects() {
     const items = [];
 
     cards.forEach(card => {
-        const wrap  = card.querySelector('.project-img-wrap');
-        const imgEl = card.querySelector('.project-img-wrap img');
-        if (!wrap || !imgEl) return;
+        const wrap   = card.querySelector('.project-img-wrap');
+        const mediaEl = card.querySelector('.project-img-wrap img, .project-img-wrap video');
+        if (!wrap || !mediaEl) return;
+        const isVideo = mediaEl.tagName === 'VIDEO';
 
-        // Hide the DOM img immediately — WebGL takes over
-        imgEl.style.opacity = '0';
+        // Hide the DOM media immediately — WebGL takes over
+        mediaEl.style.opacity = '0';
 
         const mat = new THREE.ShaderMaterial({
             uniforms: {
@@ -126,16 +127,36 @@ function initHoverEffects() {
         const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 32, 32), mat);
         scene.add(mesh);
 
-        const item = { wrap, imgEl, mesh, mat, loaded: false, pendingReveal: false };
+        const item = { wrap, mediaEl, mesh, mat, loaded: false, pendingReveal: false, isVideo };
         items.push(item);
 
-        // Load texture — if a reveal was already requested, play it now
-        new THREE.TextureLoader().load(imgEl.src, tex => {
-            tex.minFilter = THREE.LinearFilter;
-            mat.uniforms.tMap.value = tex;
-            item.loaded = true;
-            if (item.pendingReveal) playReveal(item);
-        });
+        if (isVideo) {
+            // VideoTexture updates every frame from <video>
+            const vtex = new THREE.VideoTexture(mediaEl);
+            vtex.minFilter = THREE.LinearFilter;
+            vtex.magFilter = THREE.LinearFilter;
+            vtex.format    = THREE.RGBAFormat;
+            mat.uniforms.tMap.value = vtex;
+
+            const markReady = () => {
+                if (item.loaded) return;
+                item.loaded = true;
+                if (item.pendingReveal) playReveal(item);
+            };
+            if (mediaEl.readyState >= 2) markReady();
+            else mediaEl.addEventListener('loadeddata', markReady, { once: true });
+
+            // Ensure the source video keeps playing while WebGL samples it
+            mediaEl.play().catch(() => {});
+        } else {
+            // Load texture — if a reveal was already requested, play it now
+            new THREE.TextureLoader().load(mediaEl.src, tex => {
+                tex.minFilter = THREE.LinearFilter;
+                mat.uniforms.tMap.value = tex;
+                item.loaded = true;
+                if (item.pendingReveal) playReveal(item);
+            });
+        }
 
         // Re-trigger on every scroll into view; direction from entry position
         const io = new IntersectionObserver(entries => {

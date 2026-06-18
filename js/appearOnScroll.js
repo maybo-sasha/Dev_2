@@ -128,10 +128,27 @@ function appearOnScroll(params, _lastchild, onScrollCallback) {
 
     params.forEach(s => observer.observe(s));
 
+    // ── Video play/pause when in view ─────────────────────────────────
+    const videoObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const v = entry.target;
+            if (entry.isIntersecting) {
+                v.play().catch(() => {});
+            } else {
+                v.pause();
+            }
+        });
+    }, { threshold: 0.4 });
+
+    params.forEach(slide => {
+        slide.querySelectorAll('video.project-video').forEach(v => videoObserver.observe(v));
+    });
+
     // ── Destroy ────────────────────────────────────────────────────────
     return function destroy() {
         cancelAnimationFrame(rafId);
         observer.disconnect();
+        videoObserver.disconnect();
         lenis.destroy();
     };
 }

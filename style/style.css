@@ -180,11 +180,12 @@ main {
     font-family: var(--font-display);
 }
 
-/* Slide number — absolute bottom left of slide */
+/* Slide number — centered at bottom */
 .slide-num {
     position: absolute;
     bottom: 2.8rem;
-    left: 6vw;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: var(--font-display);
     font-size: 0.72rem;
     font-weight: 400;
@@ -193,11 +194,12 @@ main {
     z-index: 3;
 }
 
-/* Category — absolute, just above slide number */
+/* Category — centered, just above slide number */
 .project-category {
     position: absolute;
     bottom: 4.8rem;
-    left: 6vw;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: var(--font-display);
     font-size: 0.72rem;
     font-weight: 400;
@@ -207,14 +209,24 @@ main {
     z-index: 3;
 }
 
-/* ── Slide inner layout: title left, image right ──────── */
+/* ── Slide inner layout: everything centered ──────── */
 .slide {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 8vw 0 6vw;
-    gap: 4vw;
+    justify-content: center;
+    padding: 0;
+    gap: 1.8rem;
+    text-align: center;
+}
+
+.slide-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.8rem;
+    width: 100%;
 }
 
 /* ── Project card ────────────────────────────────────────── */
@@ -226,13 +238,12 @@ main {
     will-change: transform, opacity;
     flex-shrink: 0;
     border-radius: 0;
-    order: 2; /* image on the right */
 }
 
-/* Image wrapper — right column */
+/* Image wrapper — centered, landscape ratio */
 .project-img-wrap {
-    width: 48vw;
-    height: 78vh;
+    width: 40vw;
+    height: 60vh;
     overflow: hidden;
     position: relative;
     will-change: transform;
@@ -240,21 +251,39 @@ main {
 }
 
 .project-img-wrap img {
-    width: 220%;
-    height: auto;
+    width: 100%;
+    height: 100%;
     top: 0;
     position: relative;
-    object-fit: contain;
+    object-fit: cover;
     will-change: transform;
     display: block;
     transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.project-img-wrap .project-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Wide variant — landscape media (e.g. AI Decisioning Studio screen recording) */
+.project-img-wrap.is-wide {
+    width: min(70vw, 110vh);
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+.project-img-wrap.is-wide .project-video {
+    object-fit: contain;
+    background: #000;
 }
 /*
 .project-card:hover .project-img-wrap img {
     transform: scale(1.04);
 }*/
 
-/* Project name — left column */
+/* Project name — centered */
 .project-title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 4vw, 6rem);
@@ -264,10 +293,8 @@ main {
     color: transparent;
     -webkit-text-stroke: 1px rgba(255,255,255,0.25);
     position: relative;
-    display: block;
-    text-align: left;
-    order: 1; /* title on the left */
-    flex: 1;
+    display: inline-block;
+    text-align: center;
 }
 
 /* Solid fill layer — same text stacked on top, clip-path driven by GSAP */

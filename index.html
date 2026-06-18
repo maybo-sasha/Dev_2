@@ -49,7 +49,6 @@
     <nav class="nav-header">
         <a id="logo" href="#"></a>
         <div class="nav-links-inline">
-            <a class="nav-link active" data-page="work" href="#">Work</a>
             <a class="nav-link" data-page="about" href="#">About</a>
         </div>
     </nav>
@@ -63,10 +62,10 @@
             <!-- Slide 1 -->
             <section class="slide">
                 <div class="slide-inner">
-                    <h2 class="project-title">Optimove<span class="title-fill">Optimove</span></h2>
+                    <h2 class="project-title">AI Decisioning Studio<span class="title-fill">AI Decisioning Studio</span></h2>
                     <a class="project-card" href="project.html?id=1">
-                        <div class="project-img-wrap">
-                            <img src="./assets/img/Frame-1.png" alt="Project One">
+                        <div class="project-img-wrap is-wide">
+                            <video class="project-video" src="./assets/Opimove/Ai%20studio/ai_studio-1.mp4" poster="./assets/img/Frame-1.png" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -92,9 +91,9 @@
             <section class="slide">
                 <div class="slide-inner">
                     <h2 class="project-title">Lucky Buddies<span class="title-fill">Lucky Buddies</span></h2>
-                    <a class="project-card" href="project.html?id=3">
+                    <a class="project-card" href="lucky-buddies.html">
                         <div class="project-img-wrap">
-                            <img src="./assets/img/pj_3.png" alt="Project Three">
+                            <video class="project-video" src="./assets/img/lucky_buddies.mp4" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -107,8 +106,9 @@
                 <div class="slide-inner">
                     <h2 class="project-title">Player Journey<span class="title-fill">Player Journey</span></h2>
                     <a class="project-card" href="project.html?id=4">
-                        <div class="project-img-wrap">
-                            <img src="./assets/img/pj_22.png" alt="Project Four">
+                        <div class="project-img-wrap is-wide">
+                            <video class="project-video" muted playsinline preload="metadata"
+                                   data-playlist="./assets/playerjoueney/CanvasIntredaction.mp4,./assets/playerjoueney/journeyBuilder.mp4"></video>
                         </div>
                     </a>
                 </div>
@@ -197,6 +197,21 @@
     <script src="./js/appearOnScroll.js"></script>
     <script src="./js/hoverEffect.js"></script>
     <script src="./js/index.js"></script>
+
+    <!-- Video playlists — cycle through data-playlist sources -->
+    <script>
+        document.querySelectorAll('video[data-playlist]').forEach(v => {
+            const items = v.dataset.playlist.split(',').map(s => s.trim()).filter(Boolean);
+            if (!items.length) return;
+            let idx = 0;
+            v.src = items[0];
+            v.addEventListener('ended', () => {
+                idx = (idx + 1) % items.length;
+                v.src = items[idx];
+                v.play().catch(() => {});
+            });
+        });
+    </script>
     <script src="./js/transition.js"></script>
 </body>
 </html>
