@@ -328,24 +328,67 @@ main {
 
 .about-video {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(46vw, 640px);
+    height: auto;
+    max-height: 70vh;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     z-index: 0;
-    opacity: 0.45;   /* dark moody video, not full brightness */
+    opacity: 0.85;
+    border-radius: 24px;
+    box-shadow: 0 40px 100px -20px rgba(0,0,0,0.6);
 }
 
 .about-scrim {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.18);
+    background: rgba(0, 0, 0, 0.35);
     z-index: 1;
 }
 
 .about-overlay.is-open {
     pointer-events: auto;
 }
+
+/* Back button shown only when the about overlay is open */
+.about-back {
+    position: absolute;
+    top: 1.5rem;
+    left: 8vw;
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    padding: 0.7rem 1.1rem 0.7rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(20, 24, 40, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.18);
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s, background 0.3s ease, border-color 0.3s ease;
+}
+.about-overlay.is-open .about-back {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.about-back .arrow { display: inline-block; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.about-back:hover { background: rgba(20,24,40,0.85); border-color: rgba(255,255,255,0.35); }
+.about-back:hover .arrow { transform: translateX(-4px); }
+@media (max-width: 700px) { .about-back { left: 5vw; } }
 
 /* Two-column wrapper */
 .about-content {

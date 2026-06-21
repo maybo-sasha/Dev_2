@@ -46,8 +46,8 @@ if (mouse) {
         if (!isLocked) { setLeft(rawX); setTop(rawY); }
     });
 
-    // ── Nav links: auto-lock & expand to cover the button ────────────
-    navLinks.forEach(link => {
+    // ── Nav links + about-back: auto-lock & expand to cover the button ──
+    document.querySelectorAll('.nav-link, .about-back').forEach(link => {
         link.addEventListener('mouseenter', () => {
             clearTimeout(unlockTimer);
             isLocked = true;
@@ -222,8 +222,11 @@ function closeAbout() {
     if (!aboutOpen) return;
 
     const aboutLink = document.querySelector('.nav-link[data-page="about"]');
-    const rect = aboutLink.getBoundingClientRect();
-    const origin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
+    let origin = '100% 0%';
+    if (aboutLink) {
+        const rect = aboutLink.getBoundingClientRect();
+        origin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
+    }
 
     gsap.to('.about-block', {
         opacity: 0, y: -20, duration: 0.25, ease: 'power2.in',
@@ -243,6 +246,15 @@ function closeAbout() {
 
     navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === 'work'));
 }
+
+// Event delegation — robust even if .about-back is later replaced
+document.addEventListener('click', e => {
+    const backBtn = e.target.closest('.about-back');
+    if (!backBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    closeAbout();
+});
 
 navLinks.forEach(link => {
     link.addEventListener('click', e => {
