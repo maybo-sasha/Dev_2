@@ -28,7 +28,10 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        body * { cursor: none; }
+        /* Inner pages use the system cursor — no custom cursor */
+        body, body * { cursor: auto !important; }
+        a, button, .nav-link, .inner-back, .about-back, .lb-card, .lb-phone { cursor: pointer !important; }
+        .cursor { display: none !important; }
 
         /* Cursor — light ring on dark page */
         .cursor       { border-color: rgba(255,255,255,0.78); }
@@ -265,10 +268,10 @@
         }
         .lb-case-text {
             color: var(--text-mute);
-            font-size: 1rem;
+            font-size: 1.4rem;
             line-height: 1.7;
             font-weight: 400;
-            max-width: 42ch;
+            max-width: 80ch;
             margin: 0;
         }
 
@@ -336,7 +339,7 @@
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .lb-gallery .lb-phone:hover img,
-        .lb-gallery .lb-phone:hover video { transform: scale(1.06); }
+        .lb-gallery .lb-phone:hover video { transform: none; }
         .lb-gallery .lb-phone img,
         .lb-gallery .lb-phone video {
             width: 100%; height: 100%;
@@ -418,7 +421,7 @@
             transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .lb-card:hover .lb-card-media img,
-        .lb-card:hover .lb-card-placeholder { transform: scale(1.06); }
+        .lb-card:hover .lb-card-placeholder { transform: none; }
         .lb-card-placeholder {
             display: grid;
             place-items: center;
@@ -487,9 +490,8 @@
         }
         .lb-modal-frame {
             position: relative;
-            height: 94vh;
-            aspect-ratio: 9 / 16;
-            max-width: 96vw;
+            width: 80vw;
+            height: 90vh;
             background: #0d1530;
             border-radius: 20px;
             overflow: hidden;
@@ -525,8 +527,90 @@
             background: rgba(255,122,74,0.85);
             transform: rotate(90deg);
         }
+
+        /* ── Full-screen image lightbox (in-site, matches modal) ─────── */
+        .lb-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5vmin;
+            background: rgba(5, 8, 20, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .lb-lightbox.is-open { opacity: 1; pointer-events: auto; }
+        .lb-lightbox-img {
+            max-width: 94vw;
+            max-height: 90vh;
+            display: block;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 60px 120px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08);
+            transform: scale(0.94) translateY(16px);
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .lb-lightbox.is-open .lb-lightbox-img { transform: none; }
+
+        /* ── Inline embedded prototype (part of the page) ──────────── */
+        .lb-embed { display: none; padding: 1rem 6vw 5rem; }
+        .lb-embed.is-open { display: block; }
+        .lb-embed-title {
+            text-align: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(1rem, 1.6vw, 1.3rem);
+            letter-spacing: 0.01em;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+        }
+        .lb-embed-frame {
+            position: relative;
+            height: 82vh;
+            aspect-ratio: 9 / 16;
+            max-width: 94vw;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #0d1530;
+            box-shadow: 0 60px 120px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08);
+        }
+        .lb-embed-frame iframe { width: 100%; height: 100%; border: 0; display: block; background: #0d1530; }
+
+        /* ── Island backdrop — begins at the Buddies Islands section ─── */
+        .lb-island-zone { position: relative; isolation: isolate; }
+        .lb-island-zone::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            /* Full width, proportional height (no stretch); tiles down the zone
+               and scrolls with the page (not fixed). */
+            background-image: url('./assets/lucky-buddies/bg.png');
+            background-repeat: repeat-y;
+            background-position: top center;
+            background-size: 100% auto;
+        }
+        /* Scrim: blends down from the dark section above + keeps text legible */
+        .lb-island-zone::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                var(--ink) 0%,
+                rgba(10,14,30,0.55) 9%,
+                rgba(10,14,30,0.42) 42%,
+                rgba(10,14,30,0.55) 100%);
+        }
         @media (max-width: 700px) {
-            .lb-modal-frame { height: 90vh; aspect-ratio: 9 / 16; max-width: 96vw; }
+            .lb-modal-frame { width: 94vw; height: 88vh; }
         }
 
         /* ── Outro — bold dark thanks ───────────────────────── */
@@ -653,10 +737,10 @@
         <!-- LEDE — huge intro paragraph -->
         <section class="lb-lede reveal">
             <p>
-                As <em>Head of Product Designer</em> at Lucky Buddies, I shaped a mobile game where casual play meets RPG strategy — a slot-driven core loop that pulls players deeper into the world with every spin. Collect Buddies, level them up, build your team, and face off against the evil <em>Pi-Rats</em> in escalating battles. Each session promises new heroes, fresh loot and the next dramatic showdown.
+                <em>Lucky Buddies</em> is a mobile game where casual play meets RPG strategy — a slot-driven core loop that pulls players deeper into the world with every spin. Collect Buddies, level them up, build your team, and face off against the evil <em>Pi-Rats</em> in escalating battles. Each session promises new heroes, fresh loot and the next dramatic showdown.
             </p>
             <p>
-                My remit ran from the smallest icon to the wider visual system: a graphical language consistent across slots, popups, team views and battle scenes, supported by the specs and wireframes that kept art, engineering and live-ops aligned. I owned the palette, the motion direction and the iconic branding — driving the studio toward an interface that&rsquo;s punchy, expressive and unmistakably <em>Lucky Buddies</em>.
+                As <em>Head of Product Designer</em>, my remit ran from the smallest icon to the wider visual system: a graphical language consistent across slots, popups, team views and battle scenes, supported by the specs and wireframes that kept art, engineering and live-ops aligned. I owned the palette, the motion direction and the iconic branding — driving the studio toward an interface that&rsquo;s punchy, expressive and unmistakably <em>Lucky Buddies</em>.
             </p>
         </section>
 
@@ -719,7 +803,10 @@
             </div>
         </section>
 
-<!-- 05 — BUDDIES ISLANDS — full-bleed cinematic -->
+<!-- Island backdrop begins here -->
+        <div class="lb-island-zone">
+
+        <!-- 05 — BUDDIES ISLANDS — full-bleed cinematic -->
         <section class="lb-case lb-case--hero reveal">
             <div class="lb-case-left">
                 <p class="lb-case-num">05.</p>
@@ -736,8 +823,8 @@
         <!-- MORE PROJECTS — Lucky Buddies family -->
         <section class="lb-more reveal">
             <div class="lb-more-head">
-                <h2>More from the Lucky Buddies world</h2>
-                <span class="label">Related projects</span>
+                <h2>Selected Projects</h2>
+                <span class="label">More from the Lucky Buddies world</span>
             </div>
             <div class="lb-more-grid">
                 <a class="lb-card" href="#" data-figma-proto="https://www.figma.com/proto/S5bmNquCqCDWQndIcdnqxE/Strike?node-id=202-548&amp;t=MCZb8V7JwAKzQuIi-0&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1">
@@ -752,9 +839,9 @@
                         <span class="lb-card-arrow">→</span>
                     </div>
                 </a>
-                <a class="lb-card" href="#">
+                <a class="lb-card" href="#" data-figma-proto="https://www.figma.com/proto/szMvi5Qn3LcqAzgnFIV212/Clans?node-id=207-2&amp;t=1wgL3GMo27Urxpzk-0&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1">
                     <div class="lb-card-media">
-                        <div class="lb-card-placeholder clan">Clan</div>
+                        <img src="./assets/lucky-buddies/hero.png" alt="Lucky Buddies Clan">
                     </div>
                     <div class="lb-card-body">
                         <div>
@@ -764,7 +851,7 @@
                         <span class="lb-card-arrow">→</span>
                     </div>
                 </a>
-                <a class="lb-card" href="#">
+                <a class="lb-card" href="#" data-figma-proto="https://www.figma.com/proto/F2lnENWKOKYpbsSZlGRYJz/Stamps?node-id=1206-2&amp;t=NxI6Z0DQ0Rt8Ynus-0&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1">
                     <div class="lb-card-media">
                         <img src="./assets/lucky-buddies/Lucky_buddies_stamps.png" alt="Lucky Buddies Stamps">
                     </div>
@@ -779,8 +866,15 @@
             </div>
         </section>
 
+        </div><!-- /.lb-island-zone -->
 
     </main>
+
+    <!-- Full-screen image lightbox -->
+    <div class="lb-lightbox" id="lb-lightbox" aria-hidden="true">
+        <button class="lb-modal-close" type="button" aria-label="Close">✕</button>
+        <img class="lb-lightbox-img" src="" alt="">
+    </div>
 
     <!-- Figma prototype modal -->
     <div class="lb-modal" id="lb-modal" aria-hidden="true">
@@ -817,40 +911,6 @@
             });
         }, { threshold: 0.12 });
         document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-        // ── Cursor-driven 3D tilt on phones ───────────────────────────
-        document.querySelectorAll('.lb-phone').forEach(card => {
-            let tx = 0, ty = 0, rx = 0, ry = 0;
-            let targetX = 0, targetY = 0;
-            let raf = null;
-
-            card.addEventListener('mousemove', e => {
-                const r = card.getBoundingClientRect();
-                const x = (e.clientX - r.left) / r.width  - 0.5;  // -0.5..0.5
-                const y = (e.clientY - r.top)  / r.height - 0.5;
-                targetX = -y * 10;  // rotateX
-                targetY =  x * 12;  // rotateY
-                if (!raf) loop();
-            });
-            card.addEventListener('mouseleave', () => {
-                targetX = 0; targetY = 0;
-                if (!raf) loop();
-            });
-
-            function loop() {
-                rx += (targetX - rx) * 0.12;
-                ry += (targetY - ry) * 0.12;
-                card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-                card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-                if (Math.abs(rx - targetX) > 0.05 || Math.abs(ry - targetY) > 0.05) {
-                    raf = requestAnimationFrame(loop);
-                } else {
-                    card.style.setProperty('--rx', targetX + 'deg');
-                    card.style.setProperty('--ry', targetY + 'deg');
-                    raf = null;
-                }
-            }
-        });
 
         // ── Scroll-driven parallax & motion ───────────────────────────
         const splashImg = document.querySelector('.lb-splash img');
@@ -931,20 +991,6 @@
                 });
             });
 
-            document.querySelectorAll('.lb-phone').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    cursorEl.classList.add('show-label');
-                    cursorEl.querySelector('.cursor-text').textContent = 'View';
-                    gsap.to(cursorEl, {
-                        width: 76, height: 76, borderRadius: '50%',
-                        borderColor: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,0.06)',
-                        duration: 0.3, ease: 'expo.out', overwrite: true,
-                    });
-                });
-                card.addEventListener('mouseleave', () => {
-                    cursorEl.classList.remove('show-label'); reset();
-                });
-            });
         }
 
         // ── Figma prototype modal ────────────────────────────────────
@@ -952,7 +998,11 @@
         const modalIframe = document.getElementById('lb-modal-iframe');
         const modalClose  = modal.querySelector('.lb-modal-close');
 
-        function openProto(url) {
+        const modalFrame = modal.querySelector('.lb-modal-frame');
+
+        function openProto(url, ratio) {
+            // Frame is 95vh tall; its width follows the prototype's own ratio
+            modalFrame.style.setProperty('--proto-ratio', ratio || '9 / 16');
             // Force the prototype to scale to the iframe width so it fills the modal
             const scaled = url.replace(/scaling=[^&]*/, 'scaling=scale-down-width');
             const embed  = 'https://www.figma.com/embed?embed_host=share&url=' + encodeURIComponent(scaled);
@@ -971,12 +1021,59 @@
         document.querySelectorAll('[data-figma-proto]').forEach(card => {
             card.addEventListener('click', e => {
                 e.preventDefault();
-                openProto(card.dataset.figmaProto);
+                openProto(card.dataset.figmaProto, card.dataset.ratio);
             });
         });
         modalClose.addEventListener('click', closeProto);
         modal.addEventListener('click', e => { if (e.target === modal) closeProto(); });
         document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeProto(); });
+
+        // ── Full-screen image lightbox ────────────────────────────────
+        const lightbox      = document.getElementById('lb-lightbox');
+        const lightboxImg   = lightbox.querySelector('.lb-lightbox-img');
+        const lightboxClose = lightbox.querySelector('.lb-modal-close');
+
+        function openLightbox(src, alt) {
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || '';
+            lightbox.classList.add('is-open');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.documentElement.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.documentElement.style.overflow = '';
+            setTimeout(() => { lightboxImg.src = ''; }, 400);
+        }
+
+        document.querySelectorAll('[data-lightbox]').forEach(card => {
+            card.addEventListener('click', e => {
+                e.preventDefault();
+                const img = card.querySelector('img');
+                openLightbox(card.dataset.lightbox, img ? img.alt : '');
+            });
+        });
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox(); });
+
+        // ── Inline embedded prototype (reveals in-page, lazy-loads iframe) ──
+        document.querySelectorAll('[data-embed]').forEach(trigger => {
+            trigger.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.getElementById(trigger.dataset.embed);
+                if (!target) return;
+                const iframe = target.querySelector('iframe');
+                if (iframe && !iframe.src && target.dataset.proto) {
+                    const scaled = target.dataset.proto.replace(/scaling=[^&]*/, 'scaling=scale-down-width');
+                    iframe.src = 'https://www.figma.com/embed?embed_host=share&url=' + encodeURIComponent(scaled);
+                }
+                target.classList.add('is-open');
+                target.setAttribute('aria-hidden', 'false');
+                requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+            });
+        });
 
         // ── About overlay ─────────────────────────────────────────────
         const overlay  = document.querySelector('.about-overlay');
@@ -1011,5 +1108,6 @@
             closeOverlay();
         });
     </script>
+    <script src="./js/workMenu.js"></script>
 </body>
 </html>

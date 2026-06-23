@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="./style/style.css">
     <style>
         body { opacity: 0; background: #0f0f0f; cursor: none; }
-        body * { cursor: none; }
+        /* Inner pages use the system cursor — no custom cursor */
+        body, body * { cursor: auto !important; }
+        a, button, .nav-link, .inner-back, .about-back { cursor: pointer !important; }
+        .cursor { display: none !important; }
 
         .project-hero {
             position: relative;
@@ -296,5 +299,6 @@
             closeOverlay();
         });
     </script>
+    <script src="./js/workMenu.js"></script>
 </body>
 </html>

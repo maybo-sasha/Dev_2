@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Journey · Portfolio</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <style>
+        :root {
+            --paper:   #f4f5f8;
+            --surface: #ffffff;
+            --stage:   #eaedf4;
+            --ink:     #0f1115;
+            --muted:   #5b6472;
+            --dim:     #8a93a3;
+            --line:    rgba(15,17,21,0.10);
+            --accent:  #2f6bff;
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+            --cursor-ring: rgba(15,17,21,0.5);
+        }
+
+        body {
+            opacity: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--font-display);
+            cursor: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Inner pages use the system cursor */
+        body, body * { cursor: auto; }
+        a, button, .nav-link, .inner-back, .about-back, .pj-card { cursor: pointer; }
+        .cursor { display: none !important; }
+
+        /* Nav recoloured for the light theme */
+        #logo { color: var(--ink); }
+        .nav-link { color: rgba(15,17,21,0.5); }
+        .nav-link:hover, .nav-link.active { color: var(--ink); }
+        .nav-link::after { background: var(--ink); }
+
+        .pj { position: relative; width: 100%; overflow: hidden; }
+        .pj-wrap { max-width: 1240px; margin: 0 auto; padding: 0 6vw; }
+
+        /* ── Back CTA ──────────────────────────────────────── */
+        .inner-back {
+            position: fixed; top: 1.5rem; left: 6vw; z-index: 50;
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            font-family: var(--font-display);
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
+            text-transform: uppercase; text-decoration: none; color: #fff;
+            padding: 0.7rem 1.1rem 0.7rem 0.85rem; border-radius: 999px;
+            background: var(--ink);
+            box-shadow: 0 12px 26px -10px rgba(15,17,21,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .inner-back .arrow { display: inline-block; transition: transform 0.3s var(--ease-out); }
+        .inner-back:hover .arrow { transform: translateX(-4px); }
+
+        /* ── Header ────────────────────────────────────────── */
+        .pj-head { padding: 10rem 0 3rem; }
+        .pj-eyebrow {
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 1.6rem;
+        }
+        .pj-title {
+            font-weight: 700; font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 0.95; letter-spacing: -0.04em; margin: 0 0 2rem;
+        }
+        .pj-intro {
+            max-width: 62ch; font-size: clamp(1.2rem, 1.9vw, 1.7rem);
+            line-height: 1.5; color: var(--muted); font-weight: 400;
+        }
+
+        /* meta row */
+        .pj-meta {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+            margin-top: 4rem; padding-top: 2.4rem; border-top: 1px solid var(--line);
+        }
+        .pj-meta .k {
+            display: block; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.16em;
+            text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem;
+        }
+        .pj-meta .v { font-size: 0.95rem; font-weight: 500; color: var(--ink); }
+
+        /* ── Stage (full-bleed tinted band that holds product shots) ── */
+        .pj-stage {
+            background: var(--stage);
+            padding: clamp(2.5rem, 7vw, 7rem) 6vw;
+            margin: clamp(4rem, 8vw, 7rem) 0;
+        }
+        .pj-stage--tight { margin: 0; }
+        .pj-shot {
+            max-width: 1180px; margin: 0 auto;
+            border-radius: 16px; overflow: hidden; background: var(--surface);
+            box-shadow: 0 50px 90px -45px rgba(15,23,55,0.4), 0 0 0 1px rgba(15,17,21,0.05);
+        }
+        .pj-shot img, .pj-shot video { width: 100%; height: auto; display: block; }
+        .pj-cap {
+            max-width: 1180px; margin: 1.2rem auto 0;
+            font-size: 0.82rem; color: var(--dim); letter-spacing: 0.01em;
+        }
+
+        /* ── Text section ──────────────────────────────────── */
+        .pj-section { padding: clamp(4rem, 8vw, 7rem) 0; }
+        .pj-label {
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem;
+        }
+        .pj-h2 {
+            font-weight: 700; font-size: clamp(1.9rem, 4vw, 3.2rem);
+            line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 1.4rem; max-width: 20ch;
+        }
+        .pj-body {
+            font-size: clamp(1.05rem, 1.5vw, 1.3rem); line-height: 1.6;
+            color: var(--muted); max-width: 60ch; margin: 0;
+        }
+        .pj-body + .pj-body { margin-top: 1.2rem; }
+
+        /* split: text + media side by side */
+        .pj-split {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: center;
+        }
+        .pj-split .pj-shot { box-shadow: 0 40px 80px -45px rgba(15,23,55,0.45), 0 0 0 1px rgba(15,17,21,0.05); }
+
+        /* lede */
+        .pj-lede { padding: clamp(4rem, 9vw, 8rem) 0 clamp(2rem, 5vw, 4rem); }
+        .pj-lede p {
+            font-weight: 600; font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+            line-height: 1.22; letter-spacing: -0.03em; color: var(--ink); margin: 0;
+            max-width: 24ch;
+        }
+        .pj-lede p + p {
+            margin-top: 2rem; font-weight: 400; color: var(--muted);
+            font-size: clamp(1.05rem, 1.5vw, 1.3rem); line-height: 1.6; max-width: 60ch;
+        }
+        .pj-lede em { font-style: normal; color: var(--accent); font-weight: 600; }
+
+        /* design-system board */
+        .pj-board { background: var(--surface); border-radius: 16px; overflow: hidden;
+            box-shadow: 0 40px 80px -45px rgba(15,23,55,0.4), 0 0 0 1px rgba(15,17,21,0.05); }
+        .pj-board img { width: 100%; height: auto; display: block; }
+        .pj-duo { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(1.2rem, 2.5vw, 2rem); align-items: stretch; max-width: 1180px; margin: 0 auto; }
+        .pj-duo .pj-board { display: grid; place-items: center; }
+        .pj-duo .pj-board.pad { padding: clamp(1.5rem, 3vw, 3rem); }
+        .pj-duo .pj-board.pad img { width: auto; max-width: 100%; max-height: 320px; }
+
+        /* ── Outro ─────────────────────────────────────────── */
+        .pj-outro { padding: clamp(5rem, 10vw, 9rem) 0; text-align: center; }
+        .pj-outro h2 {
+            font-weight: 700; font-size: clamp(2rem, 5vw, 4rem);
+            letter-spacing: -0.03em; margin: 0 0 2.2rem; color: var(--ink);
+        }
+        .pj-outro-cta {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+            text-decoration: none; color: #fff; background: var(--ink);
+            padding: 1rem 1.6rem; border-radius: 999px;
+            box-shadow: 0 14px 30px -12px rgba(15,17,21,0.5);
+        }
+        .pj-outro-cta .arrow { display: inline-block; transition: transform 0.3s var(--ease-out); }
+        .pj-outro-cta:hover .arrow { transform: translateX(-4px); }
+
+        /* ── Reveal ────────────────────────────────────────── */
+        .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+        .fade-up.is-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { .fade-up { transform: none; transition: opacity 0.3s ease; } }
+
+        /* ── Mobile ────────────────────────────────────────── */
+        @media (max-width: 860px) {
+            .pj-head { padding: 8rem 0 2rem; }
+            .pj-meta { grid-template-columns: repeat(2, 1fr); }
+            .pj-split { grid-template-columns: 1fr; gap: 2.5rem; }
+            .pj-duo { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom cursor (hidden on inner pages) -->
+    <div class="cursor"><span class="cursor-text"></span></div>
+
+    <!-- About overlay -->
+    <div class="about-overlay" aria-hidden="true">
+        <video class="about-video" src="./assets/img/Comp%201_1.mp4" autoplay loop muted playsinline></video>
+        <div class="about-scrim"></div>
+        <a class="about-back" href="#"><span class="arrow">←</span> Back</a>
+        <div class="about-content">
+            <div class="about-info">
+                <div class="about-block">
+                    <p class="about-block-label">About</p>
+                    <p class="about-block-text">Being dyslexic has created my biggest strength: visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Social</p>
+                    <div class="about-social">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Dribbble</a>
+                        <a href="#">Behance</a>
+                    </div>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Contact</p>
+                    <p class="about-block-text">
+                        <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
+                        <a href="tel:+000000000000">+00 000 000 0000</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="inner-back" href="index.html"><span class="arrow">←</span> Back</a>
+
+    <nav class="nav-header">
+        <a id="logo" href="index.html"></a>
+        <div class="nav-links-inline">
+            <a class="nav-link" data-page="about" href="#">About</a>
+        </div>
+    </nav>
+
+    <main class="pj">
+
+        <!-- HEADER -->
+        <header class="pj-head fade-up">
+            <div class="pj-wrap">
+                <p class="pj-eyebrow">Case study · Product design</p>
+                <h1 class="pj-title">Player Journey</h1>
+                <p class="pj-intro">
+                    Playtech's Player Journey is a CRM tool in the Engagement Centre suite for real-time, automated and personalised player engagement, with rewards along the way. Plan and execute at every stage of the player lifecycle, from VIP engagement to retention and safer-gambling interventions.
+                </p>
+                <div class="pj-meta">
+                    <div><span class="k">Role</span><span class="v">Lead UI/UX Designer</span></div>
+                    <div><span class="k">Product</span><span class="v">Playtech · Engagement Centre</span></div>
+                    <div><span class="k">Discipline</span><span class="v">UX · UI · Design System</span></div>
+                    <div><span class="k">Platforms</span><span class="v">Player Journey · Campaign Manager</span></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO MEDIA -->
+        <section class="pj-stage pj-stage--tight fade-up" style="margin-top: clamp(2.5rem, 6vw, 5rem);">
+            <div class="pj-shot">
+                <video src="./assets/playerjoueney/journeyBuilder.mp4" autoplay loop muted playsinline preload="metadata"></video>
+            </div>
+            <p class="pj-cap">The Journey Builder canvas — placing and connecting steps into a live journey.</p>
+        </section>
+
+        <!-- LEDE -->
+        <section class="pj-lede">
+            <div class="pj-wrap fade-up">
+                <p>An intuitive, engaging and efficient interface for the player lifecycle.</p>
+                <p>
+                    As the <em>Lead UI/UX Designer</em> for Playtech's Player Journey CRM tool, my goal was to create an interface that maximises user engagement through real-time, automated and personalised interactions.
+                </p>
+                <p>
+                    A key part of the project was a comprehensive <em>design system</em> that ensures consistency and scalability across every interface and multiple platforms, including Playtech's Campaign Manager, through a unified cross-platform graphical language.
+                </p>
+            </div>
+        </section>
+
+        <!-- 01 Canvas -->
+        <section class="pj-section">
+            <div class="pj-wrap fade-up">
+                <p class="pj-label">The canvas</p>
+                <h2 class="pj-h2">An infinite canvas to compose journeys</h2>
+                <p class="pj-body">
+                    Marketers build a journey by dropping steps onto a canvas and wiring them together: SMS, email, bonuses and enhanced messages, branching on player behaviour. It replaced rigid form-based setup with something spatial, visual and easy to reason about.
+                </p>
+            </div>
+            <div class="pj-stage fade-up">
+                <div class="pj-shot">
+                    <video src="./assets/playerjoueney/CanvasIntredaction.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <p class="pj-cap">Introducing the canvas — drag, drop and connect.</p>
+            </div>
+        </section>
+
+        <!-- 02 Guided setup (split) -->
+        <section class="pj-section">
+            <div class="pj-wrap">
+                <div class="pj-split">
+                    <div class="fade-up">
+                        <p class="pj-label">Guided setup</p>
+                        <h2 class="pj-h2">A wizard that makes the hard parts feel easy</h2>
+                        <p class="pj-body">
+                            Each journey is configured through a clear, stepped flow: General, Goal, then KPIs. Plain language, sensible defaults and inline guidance let non-technical marketers set conversion targets without ever feeling lost.
+                        </p>
+                    </div>
+                    <div class="pj-shot fade-up">
+                        <img src="./assets/playerjoueney/image%2041.png" alt="Journey setup wizard — KPIs step">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 Goals & milestones (full media) -->
+        <section class="pj-section">
+            <div class="pj-wrap fade-up">
+                <p class="pj-label">Goals &amp; milestones</p>
+                <h2 class="pj-h2">Progress you can see, step by step</h2>
+                <p class="pj-body">
+                    A time-based flow lays the journey out left to right, with goal milestones and a conversion rate on every step. Live participant and goal numbers turn the canvas into a dashboard the moment a journey goes live.
+                </p>
+            </div>
+            <div class="pj-stage fade-up">
+                <div class="pj-shot">
+                    <img src="./assets/playerjoueney/image%2085.png" alt="Goal milestones flow with per-step conversion">
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 IA / flow map -->
+        <section class="pj-section">
+            <div class="pj-wrap fade-up">
+                <p class="pj-label">Architecture</p>
+                <h2 class="pj-h2">Mapping every screen and state</h2>
+                <p class="pj-body">
+                    Before pixels, the whole product was mapped as a flow: journey list, summary, setup steps, milestones and insights. The map kept design, product and engineering aligned on one shared picture.
+                </p>
+            </div>
+            <div class="pj-stage fade-up">
+                <div class="pj-shot" style="background:#0f1320;">
+                    <img src="./assets/playerjoueney/image%20101.png" alt="End-to-end information architecture flow map">
+                </div>
+                <p class="pj-cap">End-to-end flow map of the Player Journey experience.</p>
+            </div>
+        </section>
+
+        <!-- 05 Design system -->
+        <section class="pj-section">
+            <div class="pj-wrap fade-up">
+                <p class="pj-label">A system to scale</p>
+                <h2 class="pj-h2">One cross-platform design system</h2>
+                <p class="pj-body">
+                    Inputs, alerts, badges, node icons, menus and states were unified into a single design system with a shared graphical language, keeping Player Journey consistent and scalable across the Engagement Centre, all the way to Playtech's Campaign Manager.
+                </p>
+            </div>
+            <div class="pj-stage fade-up">
+                <div class="pj-duo">
+                    <div class="pj-board"><img src="./assets/playerjoueney/Group%202675.png" alt="Player Journey design-system components"></div>
+                    <div class="pj-board pad"><img src="./assets/playerjoueney/Frame%202203.png" alt="Map-pin icon construction grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUTRO -->
+        <section class="pj-outro">
+            <div class="pj-wrap fade-up">
+                <h2>Built to make complex journeys simple.</h2>
+                <a class="pj-outro-cta" href="index.html"><span class="arrow">←</span> Back to work</a>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+    <script>
+        document.body.style.opacity = '1';
+
+        // Lenis smooth scroll
+        const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+        gsap.ticker.add(t => lenis.raf(t * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Staggered fade-in as groups enter view
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                e.target.querySelectorAll('.fade-up').forEach((el, i) => {
+                    el.style.transitionDelay = (i * 0.06) + 's';
+                    el.classList.add('is-in');
+                });
+                if (e.target.classList.contains('fade-up')) e.target.classList.add('is-in');
+                io.unobserve(e.target);
+            });
+        }, { threshold: 0.15 });
+        // observe each top-level section + standalone fade-ups
+        document.querySelectorAll('.pj-head, .pj-stage, .pj-lede, .pj-section, .pj-outro').forEach(s => io.observe(s));
+
+        // Play/pause videos when in view
+        const vio = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                const v = e.target;
+                if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); }
+                else v.pause();
+            });
+        }, { threshold: 0.25 });
+        document.querySelectorAll('.pj-shot video').forEach(v => vio.observe(v));
+
+        // About overlay
+        const overlay  = document.querySelector('.about-overlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+        let overlayOpen = false;
+        function openOverlay()  {
+            overlayOpen = true; overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden','false');
+            gsap.to(overlay, { clipPath: 'circle(150vmax at 100% 0%)', duration: 1.1, ease: 'power3.inOut' });
+            document.documentElement.style.overflow = 'hidden';
+        }
+        function closeOverlay() {
+            overlayOpen = false; overlay.setAttribute('aria-hidden','true');
+            gsap.to(overlay, { clipPath: 'circle(0px at 100% 0%)', duration: 0.9, ease: 'power3.inOut',
+                onComplete: () => overlay.classList.remove('is-open') });
+            document.documentElement.style.overflow = '';
+        }
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                if (link.dataset.page === 'about') { e.preventDefault(); overlayOpen ? closeOverlay() : openOverlay(); }
+            });
+        });
+        document.addEventListener('click', e => {
+            const back = e.target.closest('.about-back');
+            if (!back) return;
+            e.preventDefault(); e.stopPropagation(); closeOverlay();
+        });
+    </script>
+    <script src="./js/workMenu.js"></script>
+</body>
+</html>

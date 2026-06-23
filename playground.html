@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground — Portfolio</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <style>
+        :root {
+            /* Playground runs its own "creative lab" palette — charcoal +
+               violet/acid-lime — deliberately distinct from Lucky Buddies. */
+            --ink:        #0b0b0f;
+            --ink-2:      #131119;
+            --ink-3:      #1b1925;
+            --line:       rgba(255,255,255,0.09);
+            --text:       #f2f0f7;
+            --text-mute:  rgba(242,240,247,0.55);
+            --text-dim:   rgba(242,240,247,0.34);
+            --orange:     #8b6cff;   /* accent — violet */
+            --yellow:     #d6ff3d;   /* accent-2 — acid lime */
+            --cyan:       #29b5ff;
+            --glow:       rgba(139,108,255,0.22);
+            --font-mono:  'SFMono-Regular', ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+        }
+
+        body {
+            opacity: 0;
+            background: var(--ink);
+            color: var(--text);
+            font-family: var(--font-display);
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Inner pages use the system cursor — no custom cursor */
+        body, body * { cursor: auto !important; }
+        a, button, .nav-link, .inner-back, .about-back { cursor: pointer !important; }
+        .cursor { display: none !important; }
+
+        /* Ambient lab glow in the background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(60% 40% at 12% -5%, rgba(139,108,255,0.16) 0%, transparent 60%),
+                radial-gradient(50% 38% at 100% 12%, rgba(214,255,61,0.07) 0%, transparent 60%);
+        }
+        .pg, .nav-header, .inner-back { position: relative; z-index: 1; }
+
+        /* Cursor — light ring on dark page */
+        .cursor       { border-color: rgba(255,255,255,0.78); }
+        .cursor::before,
+        .cursor::after { border-color: rgba(255,255,255,0.55); }
+        .cursor-text  { color: rgba(255,255,255,0.95); }
+
+        .pg { position: relative; width: 100%; overflow: hidden; padding-bottom: 4rem; }
+
+        /* ── Back CTA — same shape used on every inner page ── */
+        .inner-back {
+            position: fixed;
+            top: 1.5rem;
+            left: 8vw;
+            z-index: 50;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: white;
+            padding: 0.7rem 1.1rem 0.7rem 0.85rem;
+            border-radius: 999px;
+            background: rgba(20, 24, 40, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+        .inner-back .arrow {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .inner-back:hover {
+            background: rgba(20, 24, 40, 0.8);
+            border-color: rgba(255,255,255,0.25);
+        }
+        .inner-back:hover .arrow { transform: translateX(-4px); }
+        @media (max-width: 700px) { .inner-back { left: 5vw; } }
+
+        /* ── Editorial header ───────────────────────────────── */
+        .pg-head {
+            padding: 9rem 8vw 3.5rem;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        .pg-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--yellow);
+            margin-bottom: 1.6rem;
+        }
+        .pg-headline {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(3.5rem, 12vw, 11rem);
+            line-height: 0.88;
+            letter-spacing: -0.045em;
+            margin: 0 0 2.2rem;
+        }
+        .pg-headline em { font-style: normal; color: var(--orange); }
+        .pg-intro {
+            max-width: 60ch;
+            font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+            line-height: 1.55;
+            color: var(--text-mute);
+            font-weight: 400;
+        }
+        .pg-intro em { color: var(--yellow); font-style: normal; font-weight: 600; }
+
+        /* meta */
+        .pg-meta {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            padding-top: 2.6rem;
+            border-top: 1px solid var(--line);
+        }
+        .pg-meta-item .k {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 0.6rem;
+        }
+        .pg-meta-item .v {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -0.005em;
+        }
+
+        /* ── Gallery grid ───────────────────────────────────── */
+        .pg-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 3vw, 3rem);
+            padding: 4rem 8vw 0;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        .pg-tile { display: flex; flex-direction: column; }
+        .pg-tile--wide { grid-column: 1 / -1; }
+
+        .pg-frame {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            box-shadow:
+                0 40px 90px -30px rgba(0,0,0,0.75),
+                0 0 0 1px rgba(255,255,255,0.06) inset;
+            transition: box-shadow 0.5s ease;
+        }
+        .pg-frame video {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .pg-tile:hover .pg-frame {
+            box-shadow:
+                0 60px 120px -30px rgba(0,0,0,0.85),
+                0 0 0 1px rgba(255,255,255,0.12) inset,
+                0 0 70px var(--glow);
+        }
+        .pg-tile:hover .pg-frame video { transform: scale(1.04); }
+
+        /* duo — two clips inside one wide tile */
+        .pg-duo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 2vw, 1.6rem);
+        }
+        @media (max-width: 700px) { .pg-duo { grid-template-columns: 1fr; } }
+
+        .pg-frame-cap {
+            position: absolute;
+            left: 0.9rem; bottom: 0.9rem;
+            z-index: 2;
+            font-family: var(--font-mono);
+            font-size: 0.56rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.92);
+            padding: 0.35rem 0.65rem;
+            border-radius: 6px;
+            background: rgba(11,11,15,0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.14);
+        }
+
+        /* caption block under each tile */
+        .pg-cap { padding: 1.4rem 0.2rem 0; }
+        .pg-cap-num {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin: 0 0 0.7rem;
+        }
+        .pg-cap-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(1.4rem, 2.4vw, 2rem);
+            line-height: 1.05;
+            letter-spacing: -0.025em;
+            color: var(--text);
+            margin: 0 0 0.8rem;
+        }
+        .pg-cap-desc {
+            color: var(--text-mute);
+            font-size: 0.98rem;
+            line-height: 1.65;
+            font-weight: 400;
+            max-width: 56ch;
+            margin: 0;
+        }
+        .pg-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.1rem;
+        }
+        .pg-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-mute);
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        .pg-tile:hover .pg-tag { border-color: rgba(139,108,255,0.4); }
+
+        /* ── Footer ─────────────────────────────────────────── */
+        .pg-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 7rem 8vw 0;
+            max-width: 1500px;
+            padding-top: 3rem;
+            border-top: 1px solid var(--line);
+        }
+        .pg-foot-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: white;
+            padding: 1rem 1.6rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .pg-foot-cta .arrow { display: inline-block; transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1); }
+        .pg-foot-cta:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); }
+        .pg-foot-cta:hover .arrow { transform: translateX(-4px); }
+        .pg-foot-meta {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* ── Reveal mechanic ────────────────────────────────── */
+        .reveal { opacity: 0; transform: translateY(40px); }
+        .reveal.in { opacity: 1; transform: none; transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+        /* ── Mobile ─────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .pg-head { padding: 7rem 6vw 2.5rem; }
+            .pg-meta { grid-template-columns: repeat(2, 1fr); }
+            .pg-gallery { grid-template-columns: 1fr; padding: 3rem 6vw 0; gap: 3rem; }
+            .pg-tile--wide { grid-column: auto; }
+            .pg-foot { margin: 5rem 6vw 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom cursor -->
+    <div class="cursor">
+        <span class="cursor-text"></span>
+    </div>
+
+    <!-- About overlay -->
+    <div class="about-overlay" aria-hidden="true">
+        <video class="about-video" src="./assets/img/Comp%201_1.mp4" autoplay loop muted playsinline></video>
+        <div class="about-scrim"></div>
+        <a class="about-back" href="#"><span class="arrow">←</span> Back</a>
+        <div class="about-content">
+            <div class="about-info">
+                <div class="about-block">
+                    <p class="about-block-label">About</p>
+                    <p class="about-block-text">Being dyslexic has created my biggest strength — visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Social</p>
+                    <div class="about-social">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Dribbble</a>
+                        <a href="#">Behance</a>
+                    </div>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Contact</p>
+                    <p class="about-block-text">
+                        <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
+                        <a href="tel:+000000000000">+00 000 000 0000</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="inner-back" href="index.html"><span class="arrow">←</span> Back</a>
+
+    <nav class="nav-header">
+        <a id="logo" href="index.html"></a>
+        <div class="nav-links-inline">
+            <a class="nav-link" data-page="about" href="#">About</a>
+        </div>
+    </nav>
+
+    <main class="pg">
+
+        <!-- HEADER -->
+        <header class="pg-head reveal">
+            <p class="pg-eyebrow">Personal work · Motion &amp; 3D · 2021 — 2024</p>
+            <h1 class="pg-headline">Play<em>ground</em></h1>
+            <p class="pg-intro">
+                Playground is where the brief disappears — a running set of <em>personal experiments</em> in 3D, motion and compositing. No clients, no deadlines, just curiosity.
+            </p>
+
+            <div class="pg-meta">
+                <div class="pg-meta-item"><span class="k">Role</span><span class="v">Direction · 3D · Motion · Edit</span></div>
+                <div class="pg-meta-item"><span class="k">Focus</span><span class="v">3D · Motion · Compositing</span></div>
+                <div class="pg-meta-item"><span class="k">Tools</span><span class="v">Blender · After Effects · C4D</span></div>
+                <div class="pg-meta-item"><span class="k">Year</span><span class="v">2021 — 2024</span></div>
+            </div>
+        </header>
+
+        <!-- GALLERY -->
+        <section class="pg-gallery">
+
+            <!-- 01 Cubic World — wide feature -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/cubicworld.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">01 — Environment</p>
+                    <h2 class="pg-cap-title">Cubic World</h2>
+                    <p class="pg-cap-desc">
+                        A world built entirely from cubes — an experiment in modular geometry, stylised lighting and finding a sense of scale and atmosphere from the simplest possible building block.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">3D</span>
+                        <span class="pg-tag">Environment</span>
+                        <span class="pg-tag">Stylised</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 02 Fish Bot -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/fish_bot.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">02 — Creature design</p>
+                    <h2 class="pg-cap-title">Fish Bot</h2>
+                    <p class="pg-cap-desc">
+                        A mechanical sea-creature blending organic, swimming motion with hard-surface detail — an exercise in giving something rigid a real sense of life.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Hard-surface</span>
+                        <span class="pg-tag">Rigging</span>
+                        <span class="pg-tag">Animation</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 03 Composite & Grade -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/comp.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">03 — Post</p>
+                    <h2 class="pg-cap-title">Composite &amp; Grade</h2>
+                    <p class="pg-cap-desc">
+                        Where the render becomes a shot — multi-pass compositing, colour and grade, balancing light, contrast and mood until the frame feels intentional.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Multi-pass</span>
+                        <span class="pg-tag">Colour</span>
+                        <span class="pg-tag">Grade</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 04 Robot — turntable + FX (wide duo) -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-duo">
+                    <div class="pg-frame">
+                        <video src="./assets/personal/robot_360.mp4" muted loop playsinline preload="metadata"></video>
+                        <span class="pg-frame-cap">Turntable</span>
+                    </div>
+                    <div class="pg-frame">
+                        <video src="./assets/personal/robot_withEffects.mp4" muted loop playsinline preload="metadata"></video>
+                        <span class="pg-frame-cap">FX pass</span>
+                    </div>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">04 — Character study</p>
+                    <h2 class="pg-cap-title">Robot — Turntable to FX</h2>
+                    <p class="pg-cap-desc">
+                        Two passes on the same character. First a full 360° turntable to lock silhouette, proportion and how light wraps the materials — then an FX pass layering volumetrics, emissive glow and particle detail over the base render.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Lookdev</span>
+                        <span class="pg-tag">Lighting</span>
+                        <span class="pg-tag">Particles</span>
+                        <span class="pg-tag">Compositing</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 05 Final Cut — wide feature -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/final.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">05 — Edit</p>
+                    <h2 class="pg-cap-title">Final Cut</h2>
+                    <p class="pg-cap-desc">
+                        Pacing is its own craft — the finished edit, with sound-led cuts, rhythm and timing that turn a set of clips into a single piece that holds attention.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Editing</span>
+                        <span class="pg-tag">Sound</span>
+                        <span class="pg-tag">Pacing</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="pg-foot reveal">
+            <a class="pg-foot-cta" href="index.html"><span class="arrow">←</span> Back to work</a>
+            <p class="pg-foot-meta">Personal work · Off the clock</p>
+        </footer>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+    <script>
+        // Force-show body in case anything below fails to run
+        document.body.style.opacity = '1';
+
+        // ── Lenis smooth scroll ───────────────────────────────────────
+        const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+        function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // ── Page entrance ─────────────────────────────────────────────
+        gsap.timeline()
+            .set(document.body, { opacity: 1 })
+            .from('.pg-head > *', { y: 26, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08 }, 0.1)
+            .from('.nav-header',  { y: '-100%', opacity: 0, duration: 0.8, ease: 'expo.out' }, 0.1);
+
+        // ── Reveal on scroll ──────────────────────────────────────────
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // ── Play/pause gallery videos only while on screen ────────────
+        const vio = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                const v = e.target;
+                if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); }
+                else v.pause();
+            });
+        }, { threshold: 0.25 });
+        document.querySelectorAll('.pg-frame video').forEach(v => vio.observe(v));
+
+        // ── Custom cursor ─────────────────────────────────────────────
+        const cursorEl = document.querySelector('.cursor');
+        if (cursorEl) {
+            let rawX = 0, rawY = 0;
+            const setLeft = gsap.quickSetter(cursorEl, 'left', 'px');
+            const setTop  = gsap.quickSetter(cursorEl, 'top',  'px');
+            window.addEventListener('mousemove', e => { rawX = e.clientX; rawY = e.clientY; });
+
+            let isLocked = false;
+            let unlockTimer;
+            gsap.ticker.add(() => { if (!isLocked) { setLeft(rawX); setTop(rawY); } });
+
+            const reset = () => gsap.to(cursorEl, {
+                width: '2rem', height: '2rem', borderRadius: '50%',
+                borderColor: 'rgba(255,255,255,0.78)', backgroundColor: 'transparent',
+                duration: 0.25, ease: 'power2.out', overwrite: true,
+            });
+
+            document.querySelectorAll('.nav-link, .about-back, .inner-back, .pg-foot-cta').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    clearTimeout(unlockTimer); isLocked = true;
+                    cursorEl.classList.add('has-ripple');
+                    const r = link.getBoundingClientRect();
+                    gsap.to(cursorEl, {
+                        left: r.left + r.width/2, top: r.top + r.height/2,
+                        width: r.width + 40, height: r.height + 20, borderRadius: '999px',
+                        borderColor: 'rgba(255,255,255,1)', backgroundColor: 'rgba(255,255,255,0.08)',
+                        duration: 0.35, ease: 'expo.out', overwrite: true,
+                    });
+                });
+                link.addEventListener('mouseleave', () => {
+                    unlockTimer = setTimeout(() => { isLocked = false; cursorEl.classList.remove('has-ripple'); reset(); }, 30);
+                });
+            });
+
+            const cursorText = cursorEl.querySelector('.cursor-text');
+            document.querySelectorAll('.pg-frame').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    cursorEl.classList.add('show-label');
+                    if (cursorText) cursorText.textContent = 'Play';
+                    gsap.to(cursorEl, {
+                        width: 80, height: 80, borderRadius: '50%',
+                        borderColor: 'rgba(255,255,255,1)', backgroundColor: 'rgba(0,0,0,0.45)',
+                        duration: 0.3, ease: 'expo.out', overwrite: true,
+                    });
+                });
+                card.addEventListener('mouseleave', () => {
+                    cursorEl.classList.remove('show-label'); reset();
+                });
+            });
+        }
+
+        // ── About overlay ─────────────────────────────────────────────
+        const overlay  = document.querySelector('.about-overlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+        let overlayOpen = false;
+        function openOverlay()  {
+            overlayOpen = true; overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden','false');
+            gsap.to(overlay, { clipPath: 'circle(150vmax at 100% 0%)', duration: 1.1, ease: 'power3.inOut' });
+            document.documentElement.style.overflow = 'hidden';
+        }
+        function closeOverlay() {
+            overlayOpen = false; overlay.setAttribute('aria-hidden','true');
+            gsap.to(overlay, {
+                clipPath: 'circle(0px at 100% 0%)', duration: 0.9, ease: 'power3.inOut',
+                onComplete: () => overlay.classList.remove('is-open')
+            });
+            document.documentElement.style.overflow = '';
+        }
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                if (link.dataset.page === 'about') {
+                    e.preventDefault();
+                    overlayOpen ? closeOverlay() : openOverlay();
+                }
+            });
+        });
+        document.addEventListener('click', e => {
+            const back = e.target.closest('.about-back');
+            if (!back) return;
+            e.preventDefault();
+            e.stopPropagation();
+            closeOverlay();
+        });
+    </script>
+    <script src="./js/workMenu.js"></script>
+</body>
+</html>
