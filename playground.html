@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playground — Portfolio</title>
     <link rel="stylesheet" href="./style/style.css">
+    <script>try{if(sessionStorage.getItem("heroZoom")){var d=document.documentElement;d.classList.add("instant");var p=sessionStorage.getItem("heroPoster");if(p)d.style.setProperty("--hero-poster","url("+p+")");sessionStorage.removeItem("heroZoom");sessionStorage.removeItem("heroPoster");}}catch(e){}</script>
     <style>
         :root {
             /* Playground runs its own "creative lab" palette — charcoal +
@@ -32,10 +33,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* Inner pages use the system cursor — no custom cursor */
-        body, body * { cursor: auto !important; }
-        a, button, .nav-link, .inner-back, .about-back { cursor: pointer !important; }
-        .cursor { display: none !important; }
 
         /* Ambient lab glow in the background */
         body::before {
@@ -48,7 +45,8 @@
                 radial-gradient(60% 40% at 12% -5%, rgba(139,108,255,0.16) 0%, transparent 60%),
                 radial-gradient(50% 38% at 100% 12%, rgba(214,255,61,0.07) 0%, transparent 60%);
         }
-        .pg, .nav-header, .inner-back { position: relative; z-index: 1; }
+        .pg { position: relative; z-index: 1; }
+        .nav-header { z-index: 40; }
 
         /* Cursor — light ring on dark page */
         .cursor       { border-color: rgba(255,255,255,0.78); }
@@ -330,21 +328,18 @@
             <div class="about-info">
                 <div class="about-block">
                     <p class="about-block-label">About</p>
-                    <p class="about-block-text">Being dyslexic has created my biggest strength — visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                    <p class="about-block-text">I am Sasha Mayboroda, a Senior Product Designer who lives and breathes design. With years of experience building design systems and cohesive graphical languages across web, mobile and game platforms, I turn complex products into clear, considered experiences that scale.</p>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Social</p>
                     <div class="about-social">
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Dribbble</a>
-                        <a href="#">Behance</a>
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda/" target="_blank" rel="noopener">LinkedIn</a>
                     </div>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Contact</p>
                     <p class="about-block-text">
-                        <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
-                        <a href="tel:+000000000000">+00 000 000 0000</a>
+                        <a href="mailto:maybosasha@gmail.com">maybosasha@gmail.com</a>
                     </p>
                 </div>
             </div>
@@ -373,7 +368,7 @@
             <div class="pg-meta">
                 <div class="pg-meta-item"><span class="k">Role</span><span class="v">Direction · 3D · Motion · Edit</span></div>
                 <div class="pg-meta-item"><span class="k">Focus</span><span class="v">3D · Motion · Compositing</span></div>
-                <div class="pg-meta-item"><span class="k">Tools</span><span class="v">Blender · After Effects · C4D</span></div>
+                <div class="pg-meta-item"><span class="k">Tools</span><span class="v">Blender · After Effects · Photoshop</span></div>
                 <div class="pg-meta-item"><span class="k">Year</span><span class="v">2021 — 2024</span></div>
             </div>
         </header>
@@ -419,48 +414,40 @@
                 </figcaption>
             </figure>
 
-            <!-- 03 Composite & Grade -->
+            <!-- 03 Robot modelling -->
             <figure class="pg-tile pg-tile--wide reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/comp.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">03 — Post</p>
-                    <h2 class="pg-cap-title">Composite &amp; Grade</h2>
+                    <p class="pg-cap-num">03 — Modelling</p>
+                    <h2 class="pg-cap-title">Robot Build</h2>
                     <p class="pg-cap-desc">
-                        Where the render becomes a shot — multi-pass compositing, colour and grade, balancing light, contrast and mood until the frame feels intentional.
+                        A hard-surface robot taken from blockout to final shot: clean mechanical topology, a working rig and animation that sells the weight of every moving part.
                     </p>
                     <div class="pg-tags">
-                        <span class="pg-tag">Multi-pass</span>
-                        <span class="pg-tag">Colour</span>
-                        <span class="pg-tag">Grade</span>
+                        <span class="pg-tag">Hard-surface</span>
+                        <span class="pg-tag">Rigging</span>
+                        <span class="pg-tag">Animation</span>
                     </div>
                 </figcaption>
             </figure>
 
             <!-- 04 Robot — turntable + FX (wide duo) -->
             <figure class="pg-tile pg-tile--wide reveal">
-                <div class="pg-duo">
-                    <div class="pg-frame">
-                        <video src="./assets/personal/robot_360.mp4" muted loop playsinline preload="metadata"></video>
-                        <span class="pg-frame-cap">Turntable</span>
-                    </div>
-                    <div class="pg-frame">
-                        <video src="./assets/personal/robot_withEffects.mp4" muted loop playsinline preload="metadata"></video>
-                        <span class="pg-frame-cap">FX pass</span>
-                    </div>
+                <div class="pg-frame">
+                    <video src="./assets/personal/robot_360.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
                     <p class="pg-cap-num">04 — Character study</p>
-                    <h2 class="pg-cap-title">Robot — Turntable to FX</h2>
+                    <h2 class="pg-cap-title">Robot Hero Shot</h2>
                     <p class="pg-cap-desc">
-                        Two passes on the same character. First a full 360° turntable to lock silhouette, proportion and how light wraps the materials — then an FX pass layering volumetrics, emissive glow and particle detail over the base render.
+                        A full 360° turntable to lock silhouette, proportion and how light wraps the materials, with lookdev and lighting tuned until the robot reads as a real, physical build.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">Lookdev</span>
                         <span class="pg-tag">Lighting</span>
-                        <span class="pg-tag">Particles</span>
-                        <span class="pg-tag">Compositing</span>
+                        <span class="pg-tag">Turntable</span>
                     </div>
                 </figcaption>
             </figure>
@@ -616,5 +603,8 @@
         });
     </script>
     <script src="./js/workMenu.js"></script>
+    <script src="./js/cursor.js"></script>
+    <script src="./js/transitionFade.js"></script>
+    <script src="./js/projectNav.js"></script>
 </body>
 </html>

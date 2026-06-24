@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetris Block Party · Portfolio</title>
     <link rel="stylesheet" href="./style/style.css">
+    <script>try{if(sessionStorage.getItem("heroZoom")){var d=document.documentElement;d.classList.add("instant");var p=sessionStorage.getItem("heroPoster");if(p)d.style.setProperty("--hero-poster","url("+p+")");sessionStorage.removeItem("heroZoom");sessionStorage.removeItem("heroPoster");}}catch(e){}</script>
     <style>
         :root {
             --ink:        #0a0e1e;
@@ -29,10 +30,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* Inner pages use the system cursor — no custom cursor */
-        body, body * { cursor: auto !important; }
-        a, button, .nav-link, .inner-back, .about-back { cursor: pointer !important; }
-        .cursor { display: none !important; }
 
         /* Ambient brand glow */
         body::before {
@@ -42,7 +39,8 @@
                 radial-gradient(55% 40% at 10% -5%, rgba(42,166,255,0.12) 0%, transparent 60%),
                 radial-gradient(50% 38% at 100% 8%, rgba(138,92,255,0.1) 0%, transparent 60%);
         }
-        .tbp, .nav-header, .inner-back { position: relative; z-index: 1; }
+        .tbp { position: relative; z-index: 1; }
+        .nav-header { z-index: 40; }
 
         .cursor       { border-color: rgba(255,255,255,0.78); }
         .cursor::before,
@@ -79,7 +77,7 @@
         .tbp-hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
         .tbp-hero::after {
             content: ''; position: absolute; inset: 0; pointer-events: none;
-            background: linear-gradient(180deg, rgba(10,14,30,0.7) 0%, rgba(10,14,30,0.1) 22%, rgba(10,14,30,0.1) 55%, var(--ink) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0) 26%, rgba(10,14,30,0) 58%, var(--ink) 100%);
         }
         .tbp-hero-tag { position: absolute; left: 8vw; bottom: 14vh; z-index: 2; color: white; }
         .tbp-hero-tag .eyebrow {
@@ -310,21 +308,18 @@
             <div class="about-info">
                 <div class="about-block">
                     <p class="about-block-label">About</p>
-                    <p class="about-block-text">Being dyslexic has created my biggest strength: visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                    <p class="about-block-text">I am Sasha Mayboroda, a Senior Product Designer who lives and breathes design. With years of experience building design systems and cohesive graphical languages across web, mobile and game platforms, I turn complex products into clear, considered experiences that scale.</p>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Social</p>
                     <div class="about-social">
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Dribbble</a>
-                        <a href="#">Behance</a>
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda/" target="_blank" rel="noopener">LinkedIn</a>
                     </div>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Contact</p>
                     <p class="about-block-text">
-                        <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
-                        <a href="tel:+000000000000">+00 000 000 0000</a>
+                        <a href="mailto:maybosasha@gmail.com">maybosasha@gmail.com</a>
                     </p>
                 </div>
             </div>
@@ -391,14 +386,14 @@
                     </p>
                 </div>
                 <div class="tbp-shots">
-                    <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235036_Tetris%20Block%20Party.jpg" alt="The Tetris Block Party cast (splash screen)"></div>
+                    <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235036_Tetris%20Block%20Party.jpg" alt="The Tetris Block Party cast (splash screen)"></div>
                 </div>
             </div>
 
             <div class="tbp-sketches">
-                <figure class="tbp-sketch fade-up"><img src="./assets/tetrisblockparty/image%2018.png" alt="Ian (I-piece) concept sketch"></figure>
-                <figure class="tbp-sketch fade-up"><img src="./assets/tetrisblockparty/image%2019.png" alt="Oskar (O-shape) concept sketch"></figure>
-                <figure class="tbp-sketch fade-up"><img src="./assets/tetrisblockparty/image%2020.png" alt="Character concept sketch"></figure>
+                <figure class="tbp-sketch fade-up"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/image%2018.png" alt="Ian (I-piece) concept sketch"></figure>
+                <figure class="tbp-sketch fade-up"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/image%2019.png" alt="Oskar (O-shape) concept sketch"></figure>
+                <figure class="tbp-sketch fade-up"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/image%2020.png" alt="Character concept sketch"></figure>
             </div>
         </section>
 
@@ -412,7 +407,7 @@
             </div>
             <div class="tbp-shots">
                 <div class="tbp-phone"><video src="./assets/tetrisblockparty/Screen_Recording_20260621_235908_Tetris%20Block%20Party.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235338_Tetris%20Block%20Party.jpg" alt="Gameplay board"></div>
+                <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235338_Tetris%20Block%20Party.jpg" alt="Gameplay board"></div>
             </div>
         </section>
 
@@ -426,8 +421,8 @@
             </div>
             <div class="tbp-shots">
                 <div class="tbp-phone"><video src="./assets/tetrisblockparty/Screen_Recording_20260622_000331_Tetris%20Block%20Party.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235816_Tetris%20Block%20Party.jpg" alt="Town builder map"></div>
-                <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235545_Tetris%20Block%20Party.jpg" alt="Build picker"></div>
+                <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235816_Tetris%20Block%20Party.jpg" alt="Town builder map"></div>
+                <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235545_Tetris%20Block%20Party.jpg" alt="Build picker"></div>
             </div>
         </section>
 
@@ -441,7 +436,7 @@
             </div>
             <div class="tbp-shots">
                 <div class="tbp-phone"><video src="./assets/tetrisblockparty/Screen_Recording_20260621_235754_Tetris%20Block%20Party.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235732_Tetris%20Block%20Party.jpg" alt="Pool party VS / revenge"></div>
+                <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235732_Tetris%20Block%20Party.jpg" alt="Pool party VS / revenge"></div>
             </div>
         </section>
 
@@ -455,7 +450,7 @@
                     </p>
                 </div>
                 <div class="tbp-shots">
-                    <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235614_Tetris%20Block%20Party.jpg" alt="Friends and social screen"></div>
+                    <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235614_Tetris%20Block%20Party.jpg" alt="Friends and social screen"></div>
                 </div>
             </div>
         </section>
@@ -469,8 +464,8 @@
                 </p>
             </div>
             <div class="tbp-shots">
-                <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235348_Tetris%20Block%20Party.jpg" alt="Daily streak rewards"></div>
-                <div class="tbp-phone"><img src="./assets/tetrisblockparty/Screenshot_20260621_235531_Tetris%20Block%20Party.jpg" alt="Events and offers"></div>
+                <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235348_Tetris%20Block%20Party.jpg" alt="Daily streak rewards"></div>
+                <div class="tbp-phone"><img loading="lazy" decoding="async" src="./assets/tetrisblockparty/Screenshot_20260621_235531_Tetris%20Block%20Party.jpg" alt="Events and offers"></div>
             </div>
         </section>
 
@@ -489,14 +484,15 @@
 
         // ── Hero entrance ──────────────────────────────────────────────
         const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const fromZoom = document.documentElement.classList.contains('instant');
         if (reduceMotion) {
             gsap.set(document.body, { opacity: 1 });
         } else {
-            gsap.timeline()
-                .set(document.body, { opacity: 1 })
-                .from('.tbp-hero',        { scale: 1.04, opacity: 0, duration: 1.3, ease: 'expo.out' }, 0)
-                .from('.tbp-hero-tag > *', { y: 24, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08 }, 0.35)
-                .from('.nav-header',      { y: '-100%', opacity: 0, duration: 0.8, ease: 'expo.out' }, 0.1);
+            const tl = gsap.timeline().set(document.body, { opacity: 1 });
+            // arriving via the card zoom: keep the hero exactly in place (no fade)
+            if (!fromZoom) tl.from('.tbp-hero', { scale: 1.04, opacity: 0, duration: 1.3, ease: 'expo.out' }, 0);
+            tl.from('.tbp-hero-tag > *', { y: 24, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08 }, 0.35);
+            if (!fromZoom) tl.from('.nav-header', { y: '-100%', opacity: 0, duration: 0.8, ease: 'expo.out' }, 0.1);
         }
 
         // ── Simple staggered fade-in as each group enters view ─────────
@@ -600,5 +596,8 @@
         });
     </script>
     <script src="./js/workMenu.js"></script>
+    <script src="./js/cursor.js"></script>
+    <script src="./js/transitionFade.js"></script>
+    <script src="./js/projectNav.js"></script>
 </body>
 </html>

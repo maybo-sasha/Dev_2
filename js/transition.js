@@ -1,63 +1,70 @@
-// Card → full-screen zoom transition before navigating to the project page.
+// Shared-element transition: the clicked project card scales up to fill the
+// screen (becoming the next page's hero), then we navigate. The destination
+// skips its entry curtain (via the heroZoom flag) so the motion feels continuous.
 // Uses globals: gsap (loaded via CDN)
-
 (function () {
-    document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('click', e => {
+    function zoom(card, dest) {
+        const wrap  = card.querySelector('.project-img-wrap');
+        const media = wrap && (wrap.querySelector('video') || wrap.querySelector('img'));
+        if (!wrap || !media || !window.gsap) {
+            if (window.__leaveTo) window.__leaveTo(dest); else window.location.href = dest;
+            return;
+        }
+
+        const r = wrap.getBoundingClientRect();
+        const radius = getComputedStyle(wrap).borderRadius;
+
+        const overlay = document.createElement('div');
+        overlay.style.cssText =
+            'position:fixed;z-index:100001;overflow:hidden;background:#000;margin:0;' +
+            'top:' + r.top + 'px;left:' + r.left + 'px;width:' + r.width + 'px;height:' + r.height + 'px;' +
+            'border-radius:' + radius + ';will-change:width,height,top,left;';
+
+        document.body.appendChild(overlay);
+        // Move the ORIGINAL, already-playing media into the overlay (cloning would
+        // reload it and flash a black frame). Moving keeps playback uninterrupted.
+        media.removeAttribute('class');
+        media.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        overlay.appendChild(media);
+        if (media.tagName === 'VIDEO') {
+            media.muted = true;
+            const p = media.play && media.play();
+            if (p && p.catch) p.catch(function () {});
+        }
+
+        // tell the destination to skip its entry curtain
+        try { sessionStorage.setItem('heroZoom', '1'); } catch (e) {}
+
+        gsap.to(overlay, {
+            top: 0, left: 0,
+            width: window.innerWidth,
+            height: window.innerHeight,
+            borderRadius: 0,
+            duration: 0.7,
+            ease: 'expo.inOut',
+            onComplete: function () {
+                // snapshot the final frame so the destination hero can show it
+                // instantly (kills the black flash while its video decodes)
+                try {
+                    if (media.tagName === 'VIDEO' && media.videoWidth) {
+                        var c = document.createElement('canvas');
+                        c.width = media.videoWidth;
+                        c.height = media.videoHeight;
+                        c.getContext('2d').drawImage(media, 0, 0);
+                        sessionStorage.setItem('heroPoster', c.toDataURL('image/jpeg', 0.72));
+                    }
+                } catch (e) {}
+                window.location.href = dest;
+            }
+        });
+    }
+
+    document.querySelectorAll('.project-card').forEach(function (card) {
+        card.addEventListener('click', function (e) {
             const dest = card.getAttribute('href');
             if (!dest || dest === '#') return;
             e.preventDefault();
-
-            const wrap    = card.querySelector('.project-img-wrap');
-            const imgEl   = wrap && wrap.querySelector('img');
-            const slide   = card.closest('.slide');
-            const titleEl = slide && slide.querySelector('.project-title');
-
-            if (!wrap || !imgEl) { window.location.href = dest; return; }
-
-            const rect = wrap.getBoundingClientRect();
-            const vw = window.innerWidth, vh = window.innerHeight;
-
-            // clip-path inset values that isolate exactly the card area
-            const t = +(rect.top           / vh * 100).toFixed(2);
-            const r = +((vw - rect.right)  / vw * 100).toFixed(2);
-            const b = +((vh - rect.bottom) / vh * 100).toFixed(2);
-            const l = +(rect.left          / vw * 100).toFixed(2);
-
-            // Fullscreen overlay — same image, clipped to card bounds initially
-            const overlay = document.createElement('div');
-            overlay.style.cssText = `
-                position:fixed;inset:0;z-index:500;
-                background-image:url("${imgEl.src}");
-                background-size:cover;background-position:center;
-                clip-path:inset(${t}% ${r}% ${b}% ${l}%);
-                will-change:clip-path;
-            `;
-            document.body.appendChild(overlay);
-
-            // Project title — appears bottom-left as zoom finishes
-            const label = document.createElement('p');
-            label.textContent = titleEl ? titleEl.textContent.trim() : '';
-            label.style.cssText = `
-                position:fixed;bottom:10%;left:8vw;z-index:501;
-                font-family:var(--font-display);
-                font-size:clamp(2.5rem,6vw,7rem);
-                font-weight:800;letter-spacing:-0.04em;line-height:1;
-                color:white;opacity:0;pointer-events:none;
-            `;
-            document.body.appendChild(label);
-
-            gsap.timeline({ onComplete: () => { window.location.href = dest; } })
-                .to(overlay, {
-                    clipPath: 'inset(0% 0% 0% 0%)',
-                    duration: 1.1,
-                    ease: 'expo.inOut',
-                })
-                .to(label, {
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: 'expo.out',
-                }, '-=0.55');
+            zoom(card, dest);
         });
     });
 }());

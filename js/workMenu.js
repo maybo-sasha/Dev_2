@@ -3,10 +3,10 @@
 // on any page that has a .nav-links-inline nav and it wires itself up.
 (function () {
     const PROJECTS = [
-        { name: 'AI Decisioning Studio', cat: 'Web Design',  href: 'project.html?id=1', type: 'video', media: './assets/Opimove/Ai studio/Comp 1.mp4' },
-        { name: 'Tetris Block Party',    cat: 'Casual Game · UI', href: 'tetris-block-party.html', type: 'img', media: './assets/tetrisblockparty/Screenshot_20260621_235036_Tetris Block Party.jpg' },
-        { name: 'Lucky Buddies',         cat: 'Branding',    href: 'lucky-buddies.html', type: 'video', media: './assets/img/lucky_buddies.mp4' },
-        { name: 'Player Journey',        cat: 'Product Design', href: 'player-journey.html', type: 'video', media: './assets/playerjoueney/CanvasIntredaction.mp4' },
+        { name: 'AI Decisioning Studio', cat: 'Optimove · Current', href: 'ai-decisioning-studio.html', type: 'video', media: './assets/Opimove/Ai studio/main.mp4' },
+        { name: 'Tetris Block Party',    cat: 'PLAYSTUDIOS · 2024', href: 'tetris-block-party.html', type: 'video', media: './assets/tetrisblockparty/tbp.mp4' },
+        { name: 'Lucky Buddies',         cat: 'Everybuddy · 2023',  href: 'lucky-buddies.html', type: 'video', media: './assets/img/lucky_buddies.mp4' },
+        { name: 'Player Journey',        cat: 'Playtech · 2019', href: 'player-journey.html', type: 'video', media: './assets/playerjoueney/CanvasIntredaction.mp4' },
         { name: 'Playground',            cat: 'Motion · 3D', href: 'playground.html',    type: 'video', media: './assets/personal/cubicworld.mp4' },
     ];
 

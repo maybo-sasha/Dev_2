@@ -1,11 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+/* ── Gellix (self-hosted) — drop .woff2 files in assets/fonts/gellix/ ── */
+@font-face {
+    font-family: 'Gellix';
+    src: url('../assets/fonts/gellix/Gellix-Regular.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Gellix';
+    src: url('../assets/fonts/gellix/Gellix-Medium.woff2') format('woff2');
+    font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Gellix';
+    src: url('../assets/fonts/gellix/Gellix-SemiBold.woff2') format('woff2');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Gellix';
+    src: url('../assets/fonts/gellix/Gellix-Bold.woff2') format('woff2');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
 
 :root {
     --swup-blue: hsl(239, 50%, 30%);
     --background: #0f0f0f;
-    /* Display: Helvetica Neue Roman. Body: Poppins. */
-    --font-display: 'HelveticaNeue-Roman', 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    --font-body: 'Poppins', sans-serif;
+    /* Gellix across the whole site, with graceful fallbacks. */
+    --font-display: 'Gellix', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Gellix', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Typographic baseline — applies across the whole site */
@@ -63,9 +83,72 @@ html.lenis {
     opacity: 0.2;
 }
 
+/* ── Site loader (percentage + bottom progress bar) ───────── */
+html.loading { overflow: hidden; }
+.site-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: #0a0a0a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display, 'Helvetica Neue', Arial, sans-serif);
+    transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.site-loader.is-done { transform: translateY(-100%); }
+.site-loader .sl-num {
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-size: clamp(4rem, 18vw, 13rem);
+}
+.site-loader .sl-num::after {
+    content: '%';
+    font-size: 0.36em;
+    vertical-align: super;
+    margin-left: 0.12em;
+    opacity: 0.45;
+    font-weight: 600;
+}
+.site-loader .sl-bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+}
+.site-loader .sl-bar > i {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+/* ── Mobile responsive baseline ──────────────────────────── */
+@media (max-width: 760px) {
+    img, video { max-width: 100%; }
+    /* the Work mega-menu is hover-only — not usable on touch */
+    .work-menu { display: none !important; }
+    /* home project frames fit the small screen */
+    .project-img-wrap.is-wide { width: 86vw; }
+    .project-img-wrap.is-phone { height: 58vh; }
+    /* nav breathing room */
+    .nav-header { padding-left: 5vw; padding-right: 5vw; }
+    /* shorter "Next" end-screen + smaller title */
+    .next-project { min-height: 64vh; }
+    .next-project .np-name { font-size: clamp(2.2rem, 12vw, 4rem); }
+    .about-content { padding: 8rem 8vw; flex-direction: column; gap: 2.5rem; align-items: flex-start; }
+}
+
 body {
     background-color: var(--background);
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body);
     overflow-x: hidden;
     position: relative;
     width: 100%;
@@ -78,6 +161,115 @@ body.is-dragging * {
     cursor: grabbing !important;
     user-select: none;
 }
+
+/* custom circle cursor is active: never show the default pointer on hover */
+a, button, .nav-link, .project-card, .work-item, .char-btn, .burger,
+[data-menu], .inner-back, .about-back, [role="button"], label, summary {
+    cursor: none;
+}
+
+/* page wipe transition — a black panel slides up; movement, not a fade */
+html { background: #0a0a0a; }
+html::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: #0a0a0a;
+    pointer-events: none;
+    animation: page-reveal 0.6s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+@keyframes page-reveal {
+    from { transform: translateY(0); }       /* covers the screen on arrival */
+    to   { transform: translateY(-100%); }   /* slides up and away */
+}
+html.leaving::before {
+    pointer-events: auto;
+    animation: page-cover 0.42s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+@keyframes page-cover {
+    from { transform: translateY(100%); }    /* rises from the bottom */
+    to   { transform: translateY(0); }       /* covers before navigating */
+}
+@media (prefers-reduced-motion: reduce) {
+    html::before, html.leaving::before { animation-duration: 0.001s; }
+}
+/* arriving from a card zoom: no curtain, show the hero immediately */
+html.instant::before { display: none; animation: none; }
+html.instant body { opacity: 1 !important; }
+/* the captured zoom frame backs the hero so its video can decode behind it */
+html.instant .ads-hero,
+html.instant .pj-hero,
+html.instant .tbp-hero,
+html.instant .lb-hero {
+    background-image: var(--hero-poster, none);
+    background-size: cover;
+    background-position: center;
+    animation: heroSettle 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+/* gentle scale settle that continues the zoom's momentum (transform only) */
+@keyframes heroSettle {
+    from { transform: scale(1.05); }
+    to   { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    html.instant .ads-hero, html.instant .pj-hero,
+    html.instant .tbp-hero, html.instant .lb-hero { animation: none; }
+}
+/* ease the hero gradient in after the zoom instead of popping it in one cut */
+@keyframes heroScrimIn { from { opacity: 0; } to { opacity: 1; } }
+html.instant .ads-hero::after,
+html.instant .pj-hero::after,
+html.instant .tbp-hero::after,
+html.instant .lb-hero::after {
+    animation: heroScrimIn 1s ease 0.2s both;
+}
+/* nav menu slides down from the top on zoom arrival */
+@keyframes navDown { from { transform: translateY(-115%); } to { transform: translateY(0); } }
+html.instant .nav-header,
+html.instant .inner-back {
+    animation: navDown 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.15s both;
+}
+
+/* "Next" end-screen — home page black graphical language, on every project page */
+.next-project {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 88vh;
+    gap: 1.4rem;
+    text-align: center;
+    text-decoration: none;
+    background: #0a0a0a;
+    color: #fff;
+    padding: clamp(4rem, 10vw, 8rem) 6vw;
+}
+.next-project .np-label {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+}
+.next-project .np-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    font-size: clamp(2.6rem, 9vw, 8rem);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45);
+    transition: color 0.5s ease, -webkit-text-stroke 0.5s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+/* fills in on hover or as the bottom is reached — the home title treatment */
+.next-project:hover .np-name,
+.next-project.is-near .np-name {
+    color: #fff;
+    -webkit-text-stroke: 1px #fff;
+}
+.next-project.is-near .np-name { transform: translateY(-6px); }
 
 #wrapper {
     position: relative;
@@ -104,9 +296,22 @@ main {
     color: white;
     text-decoration: none;
     font-family: var(--font-display);
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1.15;
+    gap: 0.12rem;
+}
+#logo .logo-name {
+    font-size: 0.95rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    font-size: 1rem;
+    letter-spacing: 0.02em;
+}
+#logo .logo-sub {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.55;
 }
 
 .nav-header {
@@ -323,7 +528,7 @@ main {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 130%;   /* extra room so the clip reveals glyph descenders (y, g, p) */
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
@@ -500,7 +705,7 @@ main {
 .cursor {
     width: 2rem;
     height: 2rem;
-    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    border: 1.5px solid var(--cursor-ring, rgba(255, 255, 255, 0.75));
     border-radius: 50%;
     position: fixed;
     top: -100px;
@@ -519,7 +724,7 @@ main {
     position: absolute;
     inset: -2px;
     border-radius: inherit;
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--cursor-ring, rgba(255, 255, 255, 0.55));
     opacity: 0;
     pointer-events: none;
 }

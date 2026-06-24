@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Buddies — Portfolio</title>
     <link rel="stylesheet" href="./style/style.css">
+    <script>try{if(sessionStorage.getItem("heroZoom")){var d=document.documentElement;d.classList.add("instant");var p=sessionStorage.getItem("heroPoster");if(p)d.style.setProperty("--hero-poster","url("+p+")");sessionStorage.removeItem("heroZoom");sessionStorage.removeItem("heroPoster");}}catch(e){}</script>
     <style>
         :root {
             --ink:        #0a0e1e;
@@ -28,10 +29,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* Inner pages use the system cursor — no custom cursor */
-        body, body * { cursor: auto !important; }
-        a, button, .nav-link, .inner-back, .about-back, .lb-card, .lb-phone { cursor: pointer !important; }
-        .cursor { display: none !important; }
 
         /* Cursor — light ring on dark page */
         .cursor       { border-color: rgba(255,255,255,0.78); }
@@ -312,9 +309,7 @@
             border-radius: 32px;
             overflow: hidden;
             background: var(--ink-2);
-            box-shadow:
-                0 50px 100px -20px rgba(0,0,0,0.65),
-                0 0 0 1px rgba(255,255,255,0.06) inset;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.65);
             will-change: transform;
             transform-style: preserve-3d;
             transition: box-shadow 0.4s ease;
@@ -331,7 +326,6 @@
         .lb-gallery .lb-phone:hover {
             box-shadow:
                 0 60px 120px -20px rgba(0,0,0,0.75),
-                0 0 0 1px rgba(255,255,255,0.12) inset,
                 0 0 60px rgba(255,122,74,0.18);
         }
         .lb-gallery .lb-phone img,
@@ -551,7 +545,7 @@
             display: block;
             object-fit: contain;
             border-radius: 16px;
-            box-shadow: 0 60px 120px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08);
+            box-shadow: 0 60px 120px -20px rgba(0,0,0,0.7);
             transform: scale(0.94) translateY(16px);
             transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
@@ -685,21 +679,18 @@
             <div class="about-info">
                 <div class="about-block">
                     <p class="about-block-label">About</p>
-                    <p class="about-block-text">Being dyslexic has created my biggest strength — visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                    <p class="about-block-text">I am Sasha Mayboroda, a Senior Product Designer who lives and breathes design. With years of experience building design systems and cohesive graphical languages across web, mobile and game platforms, I turn complex products into clear, considered experiences that scale.</p>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Social</p>
                     <div class="about-social">
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Dribbble</a>
-                        <a href="#">Behance</a>
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda/" target="_blank" rel="noopener">LinkedIn</a>
                     </div>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Contact</p>
                     <p class="about-block-text">
-                        <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
-                        <a href="tel:+000000000000">+00 000 000 0000</a>
+                        <a href="mailto:maybosasha@gmail.com">maybosasha@gmail.com</a>
                     </p>
                 </div>
             </div>
@@ -754,7 +745,7 @@
                 </p>
             </div>
             <div class="lb-gallery g-1">
-                <div class="lb-phone"><img src="./assets/lucky-buddies/phone-main-raw.png" alt="Main game"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/Group%205239156%20(1).png" alt="Main game"></div>
             </div>
         </section>
 
@@ -768,8 +759,8 @@
                 </p>
             </div>
             <div class="lb-gallery g-2">
-                <div class="lb-phone"><img src="./assets/lucky-buddies/phone-monetize-1-raw.jpg" alt="Monetization screen 1"></div>
-                <div class="lb-phone"><img src="./assets/lucky-buddies/phone-monetize-2-raw.jpg" alt="Monetization screen 2"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/phone-monetize-1-raw.jpg" alt="Monetization screen 1"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/phone-monetize-2-raw.jpg" alt="Monetization screen 2"></div>
             </div>
         </section>
 
@@ -783,8 +774,8 @@
                 </p>
             </div>
             <div class="lb-gallery g-3">
-                <div class="lb-phone"><img src="./assets/lucky-buddies/Group%205239151.png" alt="Upgrade — Gala popup"></div>
-                <div class="lb-phone"><img src="./assets/lucky-buddies/Group%205239152.png" alt="Upgrade — Thor popup"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/Group%205239151%20(1).png" alt="Upgrade — Gala popup"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/Group%205239152%20(1).png" alt="Upgrade — Thor popup"></div>
             </div>
         </section>
 
@@ -798,8 +789,8 @@
                 </p>
             </div>
             <div class="lb-gallery g-4">
-                <div class="lb-phone"><img src="./assets/lucky-buddies/Group%205239157.png" alt="Team page"></div>
-                <div class="lb-phone"><img src="./assets/lucky-buddies/Group%205239154.png" alt="Buddy page"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/Buddies-page%202.png" alt="Team page"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/on%20reels%20(1).png" alt="Buddy page"></div>
             </div>
         </section>
 
@@ -816,7 +807,7 @@
                 </p>
             </div>
             <div class="lb-gallery g-5">
-                <div class="lb-phone"><img src="./assets/lucky-buddies/on%20reels.png" alt="Buddies Islands"></div>
+                <div class="lb-phone"><img loading="lazy" decoding="async" src="./assets/lucky-buddies/current%201.png" alt="Buddies Islands"></div>
             </div>
         </section>
 
@@ -829,7 +820,7 @@
             <div class="lb-more-grid">
                 <a class="lb-card" href="#" data-figma-proto="https://www.figma.com/proto/S5bmNquCqCDWQndIcdnqxE/Strike?node-id=202-548&amp;t=MCZb8V7JwAKzQuIi-0&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1">
                     <div class="lb-card-media">
-                        <img src="./assets/lucky-buddies/strike_header_img.png" alt="Lucky Buddies Strike">
+                        <img loading="lazy" decoding="async" src="./assets/lucky-buddies/strike_header_img.png" alt="Lucky Buddies Strike">
                     </div>
                     <div class="lb-card-body">
                         <div>
@@ -841,7 +832,7 @@
                 </a>
                 <a class="lb-card" href="#" data-figma-proto="https://www.figma.com/proto/szMvi5Qn3LcqAzgnFIV212/Clans?node-id=207-2&amp;t=1wgL3GMo27Urxpzk-0&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1">
                     <div class="lb-card-media">
-                        <img src="./assets/lucky-buddies/hero.png" alt="Lucky Buddies Clan">
+                        <img loading="lazy" decoding="async" src="./assets/lucky-buddies/hero.png" alt="Lucky Buddies Clan">
                     </div>
                     <div class="lb-card-body">
                         <div>
@@ -853,7 +844,7 @@
                 </a>
                 <a class="lb-card" href="#" data-figma-proto="https://www.figma.com/proto/F2lnENWKOKYpbsSZlGRYJz/Stamps?node-id=1206-2&amp;t=NxI6Z0DQ0Rt8Ynus-0&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1">
                     <div class="lb-card-media">
-                        <img src="./assets/lucky-buddies/Lucky_buddies_stamps.png" alt="Lucky Buddies Stamps">
+                        <img loading="lazy" decoding="async" src="./assets/lucky-buddies/Lucky_buddies_stamps.png" alt="Lucky Buddies Stamps">
                     </div>
                     <div class="lb-card-body">
                         <div>
@@ -898,11 +889,12 @@
         requestAnimationFrame(raf);
 
         // ── Page entrance ─────────────────────────────────────────────
-        gsap.timeline()
-            .set(document.body, { opacity: 1 })
-            .from('.lb-hero',     { scale: 1.04, opacity: 0, duration: 1.3, ease: 'expo.out' }, 0)
-            .from('.lb-hero-tag > *', { y: 24, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08 }, 0.35)
-            .from('.nav-header',  { y: '-100%', opacity: 0, duration: 0.8, ease: 'expo.out' }, 0.15);
+        const fromZoom = document.documentElement.classList.contains('instant');
+        const entTl = gsap.timeline().set(document.body, { opacity: 1 });
+        // arriving via the card zoom: keep the hero exactly in place (no fade)
+        if (!fromZoom) entTl.from('.lb-hero', { scale: 1.04, opacity: 0, duration: 1.3, ease: 'expo.out' }, 0);
+        entTl.from('.lb-hero-tag > *', { y: 24, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08 }, 0.35);
+        if (!fromZoom) entTl.from('.nav-header', { y: '-100%', opacity: 0, duration: 0.8, ease: 'expo.out' }, 0.15);
 
         // ── Reveal on scroll ──────────────────────────────────────────
         const io = new IntersectionObserver(entries => {
@@ -1109,5 +1101,8 @@
         });
     </script>
     <script src="./js/workMenu.js"></script>
+    <script src="./js/cursor.js"></script>
+    <script src="./js/transitionFade.js"></script>
+    <script src="./js/projectNav.js"></script>
 </body>
 </html>

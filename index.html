@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Sasha Mayboroda · Selected Projects</title>
     <link rel="stylesheet" href="./style/style.css">
+    <script src="./js/loader.js"></script>
 </head>
 <body>
 
@@ -18,28 +19,25 @@
 
     <!-- About overlay — circle-mask reveal -->
     <div class="about-overlay" aria-hidden="true">
-        <video class="about-video" src="./assets/img/Comp%201_1.mp4" autoplay loop muted playsinline></video>
+        <video class="about-video" src="./homePage/4.mp4" autoplay loop muted playsinline></video>
         <div class="about-scrim"></div>
         <a class="about-back" href="#"><span class="arrow">←</span> Back</a>
         <div class="about-content">
 <div class="about-info">
                 <div class="about-block">
                     <p class="about-block-label">About</p>
-                    <p class="about-block-text">Being dyslexic has created my biggest strength — visual communication through design. I am a Design Director &amp; UI Designer focused on motion, 3D &amp; achieving results through user centered experience.</p>
+                    <p class="about-block-text">I am Sasha Mayboroda, a Senior Product Designer who lives and breathes design. With years of experience building design systems and cohesive graphical languages across web, mobile and game platforms, I turn complex products into clear, considered experiences that scale.</p>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Social</p>
                     <div class="about-social">
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Dribbble</a>
-                        <a href="#">Behance</a>
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda/" target="_blank" rel="noopener">LinkedIn</a>
                     </div>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Contact</p>
                     <p class="about-block-text">
-                        <a href="mailto:hello@portfolio.com">hello@portfolio.com</a><br>
-                        <a href="tel:+000000000000">+00 000 000 0000</a>
+                        <a href="mailto:maybosasha@gmail.com">maybosasha@gmail.com</a>
                     </p>
                 </div>
             </div>
@@ -48,7 +46,7 @@
 
     <!-- Persistent nav header -->
     <nav class="nav-header">
-        <a id="logo" href="#"></a>
+        <a id="logo" href="#"><span class="logo-name">Sasha Mayboroda</span><span class="logo-sub">Selected Projects</span></a>
         <div class="nav-links-inline">
             <a class="nav-link" data-page="about" href="#">About</a>
         </div>
@@ -64,13 +62,13 @@
             <section class="slide">
                 <div class="slide-inner">
                     <h2 class="project-title">AI Decisioning Studio<span class="title-fill">AI Decisioning Studio</span></h2>
-                    <a class="project-card" href="project.html?id=1">
-                        <div class="project-img-wrap is-wide">
-                            <video class="project-video" src="./assets/Opimove/Ai%20studio/Comp%201.mp4" poster="./assets/img/Frame-1.png" muted loop playsinline preload="metadata"></video>
+                    <a class="project-card" href="ai-decisioning-studio.html">
+                        <div class="project-img-wrap is-wide" style="aspect-ratio: 2364 / 1190;">
+                            <video class="project-video" src="./assets/Opimove/Ai%20studio/main.mp4" poster="./assets/img/Frame-1.png" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
-                <span class="project-category">Web Design</span>
+                <span class="project-category">Optimove · Current</span>
                 <span class="slide-num">01</span>
             </section>
 
@@ -84,7 +82,7 @@
                         </div>
                     </a>
                 </div>
-                <span class="project-category">Casual Game · UI</span>
+                <span class="project-category">PLAYSTUDIOS · 2024</span>
                 <span class="slide-num">02</span>
             </section>
 
@@ -93,12 +91,12 @@
                 <div class="slide-inner">
                     <h2 class="project-title">Lucky Buddies<span class="title-fill">Lucky Buddies</span></h2>
                     <a class="project-card" href="lucky-buddies.html">
-                        <div class="project-img-wrap">
+                        <div class="project-img-wrap is-wide">
                             <video class="project-video" src="./assets/img/lucky_buddies.mp4" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
-                <span class="project-category">Branding</span>
+                <span class="project-category">Everybuddy · 2023</span>
                 <span class="slide-num">03</span>
             </section>
 
@@ -113,7 +111,7 @@
                         </div>
                     </a>
                 </div>
-                <span class="project-category">Creative Dev</span>
+                <span class="project-category">Playtech · 2019</span>
                 <span class="slide-num">04</span>
             </section>
 
@@ -233,12 +231,7 @@
     <script>
         document.querySelectorAll('.pg-reel').forEach(reel => {
             const clips = [
-                './assets/personal/robot_withEffects.mp4',
                 './assets/personal/robot_360.mp4',
-                './assets/personal/fish_bot.mp4',
-                './assets/personal/cubicworld.mp4',
-                './assets/personal/final.mp4',
-                './assets/personal/comp.mp4',
             ];
             const layers = reel.querySelectorAll('.reel-vid');
             if (layers.length < 2) return;
@@ -338,6 +331,7 @@
         });
     </script>
 
+    <script src="./js/transitionFade.js"></script>
     <script src="./js/transition.js"></script>
     <script src="./js/workMenu.js"></script>
 </body>
