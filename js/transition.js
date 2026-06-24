@@ -64,6 +64,12 @@
             const dest = card.getAttribute('href');
             if (!dest || dest === '#') return;
             e.preventDefault();
+            // Playground: skip the shared-element video zoom — use the normal
+            // page transition so the video doesn't scale into the inner page.
+            if (/playground\.html/i.test(dest)) {
+                if (window.__leaveTo) window.__leaveTo(dest); else window.location.href = dest;
+                return;
+            }
             zoom(card, dest);
         });
     });

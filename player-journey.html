@@ -22,10 +22,10 @@
 
         body {
             opacity: 0;
-            background: var(--paper);
+            background: var(--paper) !important;
             color: var(--ink);
             font-family: var(--font-display);
-            cursor: auto;
+            cursor: none;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -63,9 +63,13 @@
         .pj-hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
         .pj-hero::after {
             content: ''; position: absolute; inset: 0; pointer-events: none;
+            /* soft blue wash from both the top and the bottom, clear in the middle */
             background: linear-gradient(180deg,
-                rgba(244,245,248,0.25) 0%, rgba(244,245,248,0) 24%,
-                rgba(244,245,248,0) 54%, var(--paper) 100%);
+                rgba(47,107,255,0.30) 0%,
+                rgba(47,107,255,0.08) 24%,
+                rgba(47,107,255,0.00) 50%,
+                rgba(47,107,255,0.10) 76%,
+                rgba(47,107,255,0.30) 100%);
         }
         .pj-hero-tag { position: absolute; left: 6vw; bottom: 12vh; z-index: 2; max-width: 88vw; }
         .pj-hero-tag .eyebrow {
@@ -326,7 +330,7 @@
                 <div class="about-block">
                     <p class="about-block-label">Contact</p>
                     <p class="about-block-text">
-                        <a href="mailto:maybosasha@gmail.com">maybosasha@gmail.com</a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maybosasha@gmail.com" target="_blank" rel="noopener">maybosasha@gmail.com</a>
                     </p>
                 </div>
             </div>
@@ -347,7 +351,7 @@
         <!-- HERO — full-bleed video header -->
         <section class="pj-hero">
             <div class="pj-hero-video">
-                <video src="./assets/playerjoueney/journeyBuilder.mp4" autoplay loop muted playsinline preload="auto"></video>
+                <video src="./assets/playerjoueney/journeyBuilder.mp4" autoplay loop muted playsinline preload="metadata"></video>
             </div>
             <div class="pj-hero-tag fade-up">
                 <p class="eyebrow">Case study · Product design</p>

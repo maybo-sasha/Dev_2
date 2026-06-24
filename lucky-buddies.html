@@ -22,7 +22,7 @@
 
         body {
             opacity: 0;
-            background: var(--ink);
+            background: var(--ink) !important;
             color: var(--text);
             font-family: var(--font-display);
             cursor: none;
@@ -651,6 +651,29 @@
         .reveal { opacity: 0; transform: translateY(40px); }
         .reveal.in { opacity: 1; transform: none; transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
+        /* ── 1440 and down — stack: text above, phones side by side ── */
+        @media (min-width: 901px) and (max-width: 1440px) {
+            .lb-case:not(.lb-case--hero) {
+                grid-template-columns: 1fr;
+                gap: 3.5rem;
+            }
+            .lb-case:not(.lb-case--hero) .lb-case-left {
+                position: static;
+                top: auto;
+            }
+            /* keep the copy on top even on the flipped (alt) sections */
+            .lb-case--alt .lb-case-left { order: 1; }
+            .lb-case--alt .lb-gallery   { order: 2; }
+            /* phones in a centered row, sized so they sit side by side */
+            .lb-case:not(.lb-case--hero) .lb-gallery {
+                justify-content: center;
+                flex-wrap: nowrap;
+            }
+            .lb-case:not(.lb-case--hero) .lb-gallery .lb-phone {
+                width: clamp(240px, 34vw, 420px);
+            }
+        }
+
         /* ── Mobile ─────────────────────────────────────────── */
         @media (max-width: 900px) {
             .lb-meta { grid-template-columns: repeat(2, 1fr); padding: 3rem 6vw; }
@@ -690,7 +713,7 @@
                 <div class="about-block">
                     <p class="about-block-label">Contact</p>
                     <p class="about-block-text">
-                        <a href="mailto:maybosasha@gmail.com">maybosasha@gmail.com</a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maybosasha@gmail.com" target="_blank" rel="noopener">maybosasha@gmail.com</a>
                     </p>
                 </div>
             </div>

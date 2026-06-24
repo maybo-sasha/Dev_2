@@ -1,31 +1,8 @@
-/* ── Gellix (self-hosted) — drop .woff2 files in assets/fonts/gellix/ ── */
-@font-face {
-    font-family: 'Gellix';
-    src: url('../assets/fonts/gellix/Gellix-Regular.woff2') format('woff2');
-    font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-    font-family: 'Gellix';
-    src: url('../assets/fonts/gellix/Gellix-Medium.woff2') format('woff2');
-    font-weight: 500; font-style: normal; font-display: swap;
-}
-@font-face {
-    font-family: 'Gellix';
-    src: url('../assets/fonts/gellix/Gellix-SemiBold.woff2') format('woff2');
-    font-weight: 600; font-style: normal; font-display: swap;
-}
-@font-face {
-    font-family: 'Gellix';
-    src: url('../assets/fonts/gellix/Gellix-Bold.woff2') format('woff2');
-    font-weight: 700; font-style: normal; font-display: swap;
-}
-
 :root {
     --swup-blue: hsl(239, 50%, 30%);
     --background: #0f0f0f;
-    /* Gellix across the whole site, with graceful fallbacks. */
-    --font-display: 'Gellix', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Gellix', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Typographic baseline — applies across the whole site */
@@ -143,7 +120,9 @@ html.loading { overflow: hidden; }
     /* shorter "Next" end-screen + smaller title */
     .next-project { min-height: 64vh; }
     .next-project .np-name { font-size: clamp(2.2rem, 12vw, 4rem); }
-    .about-content { padding: 8rem 8vw; flex-direction: column; gap: 2.5rem; align-items: flex-start; }
+    .about-content { padding: 8rem 8vw; flex-direction: column; gap: 2.5rem; align-items: flex-start; text-align: left; }
+    .about-info { align-items: flex-start; text-align: left; }
+    .about-social { justify-content: flex-start; }
 }
 
 body {
@@ -300,6 +279,12 @@ main {
     flex-direction: column;
     line-height: 1.15;
     gap: 0.12rem;
+    transition: opacity 0.4s ease;
+}
+/* Hide the site logo while the About overlay is open */
+body:has(.about-overlay.is-open) #logo {
+    opacity: 0;
+    pointer-events: none;
 }
 #logo .logo-name {
     font-size: 0.95rem;
@@ -380,6 +365,39 @@ main {
     font-family: var(--font-display);
     background: #0a0a0a;  /* solid base so character doesn't bleed through */
 }
+
+/* ── Burger nav overlay (about.html) — hidden until toggled by about.js ── */
+.nav-bar {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    clip-path: circle(0px at calc(100% - 5%) 5vh);
+    pointer-events: none;
+    overflow: hidden;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.nav-bar.is-open { pointer-events: auto; }
+.nav-bar .nav-char-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.nav-bar .nav-scrim { position: absolute; inset: 0; background: rgba(10, 10, 10, 0.5); }
+.nav-bar .nav-char-switcher {
+    position: absolute; left: 6vw; bottom: 6vh; z-index: 3;
+    display: flex; gap: 0.75rem;
+}
+.nav-bar .nav-content {
+    position: relative; z-index: 3;
+    padding: 0 8vw; display: flex; flex-direction: column;
+    gap: 2.5rem; color: #fff; text-align: right;
+}
+.nav-bar .nav-links { margin: 0; }
+.nav-bar .nav-links h3 { margin: 0.2rem 0; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; }
+.nav-bar .nav-links h3 a { color: #fff; text-decoration: none; transition: opacity 0.2s; }
+.nav-bar .nav-links h3 a:hover { opacity: 0.6; }
+.nav-bar .nav-about { max-width: 22rem; margin-left: auto; }
+.nav-bar .nav-about h2 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+.nav-bar .nav-about p { margin: 0; color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; line-height: 1.6; }
 
 /* ── Slides ──────────────────────────────────────────────── */
 .slide {
@@ -570,7 +588,14 @@ main {
 .about-scrim {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.35);
+    /* Darker at the edges where the type sits, lighter in the middle so the
+       video still reads — keeps the headline + info column legible. */
+    background:
+        linear-gradient(90deg,
+            rgba(0, 0, 0, 0.12) 0%,
+            rgba(0, 0, 0, 0.3) 48%,
+            rgba(0, 0, 0, 0.72) 100%),
+        linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.12));
     z-index: 1;
 }
 
@@ -620,11 +645,14 @@ main {
     position: relative;
     z-index: 2;
     width: 100%;
+    height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 25rem 40vw;
-    gap: 4vw;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: left;
+    padding: 0 8vw;
+    gap: 2.5rem;
     color: white;
 }
 
@@ -635,12 +663,13 @@ main {
 
 .about-hello h1 {
     font-family: var(--font-display);
-    font-size: clamp(7rem, 16vw, 18rem);
+    font-size: clamp(5rem, 15vw, 17rem);
     font-weight: 800;
     line-height: 0.88;
     letter-spacing: -0.04em;
     color: white;
     white-space: nowrap;
+    text-shadow: 0 2px 60px rgba(0, 0, 0, 0.45);
 }
 
 /* Right — info blocks stacked below the typographic block */
@@ -648,22 +677,27 @@ main {
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
-    width: 22rem;
+    align-items: flex-start;
+    gap: 2rem;
+    width: 24rem;
+    max-width: 90vw;
+    text-align: left;
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.5);
 }
 
 .about-block-label {
-    font-size: 0.78rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    color: white;
-    margin-bottom: 0.4rem;
-    letter-spacing: 0.01em;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
 }
 
 .about-block-text {
-    font-size: 0.8rem;
-    line-height: 1.65;
-    color: rgba(255,255,255,0.55);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.82);
     font-weight: 300;
 }
 
@@ -677,12 +711,13 @@ main {
 
 .about-social {
     display: flex;
+    justify-content: flex-start;
     gap: 1.8rem;
 }
 
 .about-social a {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.55);
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.82);
     text-decoration: none;
     font-weight: 300;
     transition: color 0.2s;
