@@ -1,6 +1,5 @@
 import * as THREE from './three.module.min.js';
 import { GLTFLoader } from './GLTFLoader.js';
-import glbUrl from '../homePage/v18.glb';
 
 export default function initCharacter(canvas) {
 
@@ -103,80 +102,80 @@ export default function initCharacter(canvas) {
     let mixer = null;
     let model = null;
 
-    const loader = new GLTFLoader();
-    loader.load(
-        glbUrl,
-        (gltf) => {
-            model = gltf.scene;
+    // const loader = new GLTFLoader();
+    // loader.load(
+    //     glbUrl,
+    //     (gltf) => {
+    //         model = gltf.scene;
 
-            // Measure model before material pass
-            const fullBox    = new THREE.Box3().setFromObject(model);
-            const fullHeight = fullBox.getSize(new THREE.Vector3()).y;
-            const topThreshold = fullBox.min.y + fullHeight * 0.70;
+    //         // Measure model before material pass
+    //         const fullBox    = new THREE.Box3().setFromObject(model);
+    //         const fullHeight = fullBox.getSize(new THREE.Vector3()).y;
+    //         const topThreshold = fullBox.min.y + fullHeight * 0.70;
 
-            // Material pass: hide ground plane, tint bubble, enforce opacity
-            model.traverse((child) => {
-                if (!child.isMesh) return;
+    //         // Material pass: hide ground plane, tint bubble, enforce opacity
+    //         model.traverse((child) => {
+    //             if (!child.isMesh) return;
 
-                const s = new THREE.Box3().setFromObject(child).getSize(new THREE.Vector3());
-                if (s.y < 0.01 * Math.max(s.x, s.z)) { child.visible = false; return; }
+    //             const s = new THREE.Box3().setFromObject(child).getSize(new THREE.Vector3());
+    //             if (s.y < 0.01 * Math.max(s.x, s.z)) { child.visible = false; return; }
 
-                const mats = Array.isArray(child.material) ? child.material : [child.material];
-                const cy   = new THREE.Box3().setFromObject(child).getCenter(new THREE.Vector3()).y;
+    //             const mats = Array.isArray(child.material) ? child.material : [child.material];
+    //             const cy   = new THREE.Box3().setFromObject(child).getCenter(new THREE.Vector3()).y;
 
-                mats.forEach(mat => {
-                    if (!mat?.color) return;
-                    const { r, g, b } = mat.color;
-                    if (cy > topThreshold && r > 0.80 && g > 0.80 && b > 0.80) {
-                        // Bubble — lamp glow
-                        mat.color.set(0xfffbe8);
-                        mat.transparent = true;
-                        mat.opacity = 0.55;
-                        if (mat.emissive) mat.emissive.set(0x553300);
-                        mat.emissiveIntensity = 0.6;
-                    } else {
-                        // Clothing / body — fully opaque
-                        mat.transparent = false;
-                        mat.opacity = 1.0;
-                    }
-                });
-            });
+    //             mats.forEach(mat => {
+    //                 if (!mat?.color) return;
+    //                 const { r, g, b } = mat.color;
+    //                 if (cy > topThreshold && r > 0.80 && g > 0.80 && b > 0.80) {
+    //                     // Bubble — lamp glow
+    //                     mat.color.set(0xfffbe8);
+    //                     mat.transparent = true;
+    //                     mat.opacity = 0.55;
+    //                     if (mat.emissive) mat.emissive.set(0x553300);
+    //                     mat.emissiveIntensity = 0.6;
+    //                 } else {
+    //                     // Clothing / body — fully opaque
+    //                     mat.transparent = false;
+    //                     mat.opacity = 1.0;
+    //                 }
+    //             });
+    //         });
 
-            // Scale & position
-            const box3   = new THREE.Box3().setFromObject(model);
-            const size   = box3.getSize(new THREE.Vector3());
-            const centre = box3.getCenter(new THREE.Vector3());
-            const scale  = 3.5 / Math.max(size.x, size.y, size.z);
-            model.scale.setScalar(scale);
-            model.position.set(
-                -centre.x * scale - 1.2,
-                -box3.min.y  * scale,
-                -centre.z * scale
-            );
-            model.rotation.y = 0.25;
-            scene.add(model);
+    //         // Scale & position
+    //         const box3   = new THREE.Box3().setFromObject(model);
+    //         const size   = box3.getSize(new THREE.Vector3());
+    //         const centre = box3.getCenter(new THREE.Vector3());
+    //         const scale  = 3.5 / Math.max(size.x, size.y, size.z);
+    //         model.scale.setScalar(scale);
+    //         model.position.set(
+    //             -centre.x * scale - 1.2,
+    //             -box3.min.y  * scale,
+    //             -centre.z * scale
+    //         );
+    //         model.rotation.y = 0.25;
+    //         scene.add(model);
 
-            // Anchor shadows to character feet position
-            const base = scale * 0.55;
-            const mx   = model.position.x;
-            const mz   = model.position.z;
-            shadowAnchor = { mx, mz, base };
-            bodyShadow.position.x  = mx;
-            bodyShadow.position.z  = mz;
-            footShadowL.position.x = mx - 0.12 * base;
-            footShadowL.position.z = mz;
-            footShadowR.position.x = mx + 0.12 * base;
-            footShadowR.position.z = mz;
+    //         // Anchor shadows to character feet position
+    //         const base = scale * 0.55;
+    //         const mx   = model.position.x;
+    //         const mz   = model.position.z;
+    //         shadowAnchor = { mx, mz, base };
+    //         bodyShadow.position.x  = mx;
+    //         bodyShadow.position.z  = mz;
+    //         footShadowL.position.x = mx - 0.12 * base;
+    //         footShadowL.position.z = mz;
+    //         footShadowR.position.x = mx + 0.12 * base;
+    //         footShadowR.position.z = mz;
 
-            // Play baked walk animation
-            if (gltf.animations?.length) {
-                mixer = new THREE.AnimationMixer(model);
-                gltf.animations.forEach(clip => mixer.clipAction(clip).play());
-            }
-        },
-        undefined,
-        (err) => console.error('GLB load error:', err)
-    );
+    //         // Play baked walk animation
+    //         if (gltf.animations?.length) {
+    //             mixer = new THREE.AnimationMixer(model);
+    //             gltf.animations.forEach(clip => mixer.clipAction(clip).play());
+    //         }
+    //     },
+    //     undefined,
+    //     (err) => console.error('GLB load error:', err)
+    // );
 
     // ── Animation loop ────────────────────────────────────────────────────
     let rafId;
