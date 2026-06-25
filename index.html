@@ -120,9 +120,8 @@
                 <div class="slide-inner">
                     <h2 class="project-title">Playground<span class="title-fill">Playground</span></h2>
                     <a class="project-card" href="playground.html">
-                        <div class="project-img-wrap is-wide pg-reel">
-                            <video class="reel-vid is-current" muted playsinline preload="metadata"></video>
-                            <video class="reel-vid" muted playsinline preload="metadata"></video>
+                        <div class="project-img-wrap is-wide" style="aspect-ratio: 16 / 9;">
+                            <video class="project-video" src="./assets/personal/cubickworld_2.mp4" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -231,10 +230,29 @@
     <script>
         document.querySelectorAll('.pg-reel').forEach(reel => {
             const clips = [
+                './assets/personal/fish_bot.mp4',
+                './assets/personal/cubickworld_2.mp4',
                 './assets/personal/robot_360.mp4',
+                './assets/personal/robot_withEffects.mp4',
             ];
             const layers = reel.querySelectorAll('.reel-vid');
             if (layers.length < 2) return;
+
+            // Single clip: the HTML video already has src + autoplay + loop, so it
+            // plays natively (seamless, no crossfade flash / dark gap). Here we just
+            // pause it while off-screen and resume when it scrolls back in.
+            if (clips.length <= 1) {
+                const v = layers[0];
+                v.loop = true;
+                v.classList.add('is-current');
+                layers[1].classList.remove('is-current');
+                const io1 = new IntersectionObserver(es => es.forEach(e => {
+                    if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); }
+                    else v.pause();
+                }), { threshold: 0.4 });
+                io1.observe(reel);
+                return;
+            }
 
             const FADE = 700;   // must match the CSS opacity transition (ms)
             let cur = 0;        // visible layer (0 or 1)
@@ -265,7 +283,9 @@
             setSrc(layers[0], clips[0]);
             setSrc(layers[1], clips[1 % clips.length]);
             layers[0].classList.add('is-current');
+            layers[0].style.zIndex = '2';
             layers[1].classList.remove('is-current');
+            layers[1].style.zIndex = '1';
 
             // Advance to the next clip in the list — wraps around so every clip
             // plays, one after another, forever.
@@ -286,14 +306,18 @@
                 whenReady(v).then(() => {
                     const p = v.play();
                     if (p) p.catch(() => {});
+                    // incoming on top, fully opaque outgoing stays underneath during the fade
+                    layers[next].style.zIndex = '2';
+                    layers[cur].style.zIndex = '1';
                     requestAnimationFrame(() => requestAnimationFrame(() => {
                         layers[next].classList.add('is-current');
-                        layers[cur].classList.remove('is-current');
                         const prev = cur;
                         cur = next;
                         idx = nextIdx;
 
                         setTimeout(() => {
+                            // now hide the outgoing clip (it's underneath, so no flash)
+                            layers[prev].classList.remove('is-current');
                             layers[prev].pause();
                             // Queue the following clip into the now-hidden layer
                             // and pre-decode its first frame so the next cut is clean

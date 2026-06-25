@@ -601,6 +601,9 @@ body:has(.about-overlay.is-open) #logo {
 
 .about-overlay.is-open {
     pointer-events: auto;
+    /* lift above the fixed .nav-header (z-index 30) so the Back button,
+       which sits under the nav bar's top-left area, is actually clickable */
+    z-index: 60;
 }
 
 /* Back button shown only when the about overlay is open */
