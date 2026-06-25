@@ -18,8 +18,21 @@
     var bar = el.querySelector('.sl-bar > i');
 
     var pct = 0, target = 0, done = false;
-    window.addEventListener('load', function () { done = true; });
-    setTimeout(function () { done = true; }, 9000);   // safety cap
+    function markDone() { done = true; }
+    // Reveal as soon as the page is interactive — do NOT wait on window.load,
+    // which waits for heavy videos/images and would keep html.loading (and its
+    // overflow:hidden scroll lock) active far too long on a cold visit.
+    if (document.readyState === 'complete') {
+        markDone();
+    } else {
+        window.addEventListener('load', markDone);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function () { setTimeout(markDone, 700); });
+        } else {
+            setTimeout(markDone, 700);
+        }
+    }
+    setTimeout(markDone, 4000);   // hard safety cap
 
     function tick() {
         target = done ? 100 : Math.min(92, target + Math.random() * 5);
@@ -42,6 +55,12 @@
         setTimeout(function () {
             root.classList.remove('loading');
             el.classList.add('is-done');
+            // Scroll lock is lifted now — make Lenis / layout recompute in case
+            // dimensions were cached while overflow was hidden.
+            try { window.dispatchEvent(new Event('resize')); } catch (e) {}
+            if (window.lenisInstance && window.lenisInstance.resize) {
+                try { window.lenisInstance.resize(); } catch (e) {}
+            }
             setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 750);
         }, 250);
     }
