@@ -58,11 +58,13 @@ if (mouse) {
             const cy = r.top  + r.height / 2;
 
             // left/top = button centre → translate(-50%,-50%) centres cursor on it
+            // Keep height fixed at the resting size so ONLY the width animates —
+            // the cursor stays a clean pill/circle and never passes through ovals.
             gsap.to(mouse, {
                 left:  cx,
                 top:   cy,
                 width:  r.width  + 40,
-                height: r.height + 20,
+                height: '2rem',
                 borderRadius: '999px',
                 borderColor: 'rgba(255,255,255,1)',
                 backgroundColor: 'rgba(255,255,255,0.07)',
