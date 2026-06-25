@@ -651,15 +651,23 @@
         .reveal { opacity: 0; transform: translateY(40px); }
         .reveal.in { opacity: 1; transform: none; transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
-        /* ── 901px and up — stack: text above, phones side by side ── */
-        @media (min-width: 901px) {
+        /* ── 901–1500px — stack: text above, phones side by side.
+              Above 1500px reverts to the original 2-column (text beside images). ── */
+        @media (min-width: 901px) and (max-width: 1500px) {
             .lb-case:not(.lb-case--hero) {
                 grid-template-columns: 1fr;
                 gap: 3.5rem;
+                text-align: center;
             }
             .lb-case:not(.lb-case--hero) .lb-case-left {
                 position: static;
                 top: auto;
+                max-width: 760px;
+                margin: 0 auto;
+            }
+            .lb-case:not(.lb-case--hero) .lb-case-text {
+                margin-left: auto;
+                margin-right: auto;
             }
             /* keep the copy on top even on the flipped (alt) sections */
             .lb-case--alt .lb-case-left { order: 1; }

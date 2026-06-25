@@ -82,7 +82,8 @@ if (mouse) {
         });
     });
 
-    // ── Project card hover: large circle with View label ─────────────
+    // ── Project card hover: large "View" circle that follows the cursor ──
+    // (No lock here — the cursor only snaps/locks onto nav elements.)
     const cursorText = mouse.querySelector('.cursor-text');
     document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('mouseenter', () => {
@@ -275,5 +276,19 @@ window.addEventListener('keydown', e => {
 Particles();
 let destroyScroll = appearOnScroll(sliders, lastChild, cursorAnim);
 initHoverEffects();
+
+// ── Minimal scroll-progress rail (bottom-right) ────────────────────────────
+const railFill = document.querySelector('.scroll-rail-fill');
+if (railFill) {
+    const updateRail = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        railFill.style.height = (p * 100) + '%';
+    };
+    if (window.lenisInstance) window.lenisInstance.on('scroll', updateRail);
+    window.addEventListener('scroll', updateRail, { passive: true });
+    window.addEventListener('resize', updateRail);
+    updateRail();
+}
 
 window.scrollTo(0, 0);
