@@ -606,6 +606,52 @@ body:has(.about-overlay.is-open) #logo {
     z-index: 60;
 }
 
+/* ── Inner-page hero scroll indicator ──────────────────────── */
+.scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 1.8rem;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.78;
+    pointer-events: none;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+}
+.scroll-cue-line {
+    position: relative;
+    width: 1px;
+    height: 42px;
+    background: rgba(255, 255, 255, 0.28);
+    overflow: hidden;
+}
+.scroll-cue-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 45%;
+    background: #fff;
+    animation: scroll-cue-fall 1.8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+}
+@keyframes scroll-cue-fall {
+    0%   { transform: translateY(-110%); }
+    100% { transform: translateY(230%); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .scroll-cue-line::after { animation: none; }
+}
+
 /* Back button shown only when the about overlay is open */
 .about-back {
     position: absolute;

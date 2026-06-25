@@ -651,8 +651,8 @@
         .reveal { opacity: 0; transform: translateY(40px); }
         .reveal.in { opacity: 1; transform: none; transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
-        /* ── 1440 and down — stack: text above, phones side by side ── */
-        @media (min-width: 901px) and (max-width: 1440px) {
+        /* ── 901px and up — stack: text above, phones side by side ── */
+        @media (min-width: 901px) {
             .lb-case:not(.lb-case--hero) {
                 grid-template-columns: 1fr;
                 gap: 3.5rem;
@@ -738,12 +738,13 @@
                 <p class="eyebrow">Case study · Mobile RPG · 2023 — 2024</p>
                 <h1>Lucky <em>Buddies</em></h1>
             </div>
+            <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="scroll-cue-line"></span></div>
         </section>
 
         <!-- META strip -->
         <section class="lb-meta reveal">
             <div class="lb-meta-item"><span class="k">Role</span><span class="v">Head of Product Design</span></div>
-            <div class="lb-meta-item"><span class="k">Studio</span><span class="v">Lucky Buddies</span></div>
+            <div class="lb-meta-item"><span class="k">Company</span><span class="v">Lucky Buddies</span></div>
             <div class="lb-meta-item"><span class="k">Discipline</span><span class="v">Game UI · Branding · Motion · Specs</span></div>
             <div class="lb-meta-item"><span class="k">Platform</span><span class="v">iOS · Android · Mobile-first</span></div>
         </section>
