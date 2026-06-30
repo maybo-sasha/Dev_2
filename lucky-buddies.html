@@ -651,9 +651,9 @@
         .reveal { opacity: 0; transform: translateY(40px); }
         .reveal.in { opacity: 1; transform: none; transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
-        /* ── 901–1500px — stack: text above, phones side by side.
-              Above 1500px reverts to the original 2-column (text beside images). ── */
-        @media (min-width: 901px) and (max-width: 1500px) {
+        /* ── Default (901px and up) — stack: everything centered, text above,
+              phone images side by side beneath. ── */
+        @media (min-width: 901px) {
             .lb-case:not(.lb-case--hero) {
                 grid-template-columns: 1fr;
                 gap: 3.5rem;
@@ -703,7 +703,7 @@
 
     <!-- About overlay -->
     <div class="about-overlay" aria-hidden="true">
-        <video class="about-video" src="./assets/img/Comp%201_1.mp4" autoplay loop muted playsinline></video>
+        <video class="about-video" src="./homePage/aboutVideo.mp4" autoplay loop muted playsinline></video>
         <div class="about-scrim"></div>
         <a class="about-back" href="#"><span class="arrow">←</span> Back</a>
         <div class="about-content">
@@ -1136,5 +1136,6 @@
     <script src="./js/cursor.js"></script>
     <script src="./js/transitionFade.js"></script>
     <script src="./js/projectNav.js"></script>
+    <script src="./js/lazyVideo.js"></script>
 </body>
 </html>
