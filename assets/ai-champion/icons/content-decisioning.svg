@@ -1,0 +1,59 @@
+<svg width="193" height="191" viewBox="0 0 193 191" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<g id="Frame 1000004064">
+<g id="Frame 1000004067">
+<g id="Brand Icons">
+<g id="Featured icon - Content Decisioning">
+<g id="Icon Container">
+<g id="Image Container">
+<g id="Image Container_2">
+<g id="Image Container_3">
+<rect id="Image Background" x="1.54032" y="29.2655" width="169.436" height="157.113" rx="10.5996" fill="white" stroke="#46398C" stroke-width="3.08065"/>
+<g id="Image Content">
+<g id="Button Container">
+<g id="Button">
+<rect id="Button Background" x="15.5677" y="121.686" width="144.182" height="50.7089" rx="5.4722" fill="#CBEF17" stroke="#46398C" stroke-width="3.08065"/>
+<g id="Button Icon Frame">
+<rect id="Button Icon" x="26.0852" y="130.651" width="33.7351" height="32.779" rx="3.71907" fill="#C3C3F7" stroke="#46398C" stroke-width="3.08065"/>
+</g>
+</g>
+<g id="Button Divider">
+<mask id="path-5-inside-1_1025_31781" fill="white">
+<rect x="67.7734" y="138.629" width="77.1377" height="7.01252" rx="3.50626"/>
+</mask>
+<rect x="67.7734" y="138.629" width="77.1377" height="7.01252" rx="3.50626" stroke="#46398C" stroke-width="7.01252" mask="url(#path-5-inside-1_1025_31781)"/>
+</g>
+<g id="Button Divider_2">
+<mask id="path-6-inside-2_1025_31781" fill="white">
+<rect x="67.7734" y="152.654" width="49.0876" height="7.01252" rx="3.50626"/>
+</mask>
+<rect x="67.7734" y="152.654" width="49.0876" height="7.01252" rx="3.50626" stroke="#46398C" stroke-width="7.01252" mask="url(#path-6-inside-2_1025_31781)"/>
+</g>
+</g>
+<g id="Image Content_2">
+<g id="Text Content">
+<rect id="Text Line" x="98.5762" y="78.7175" width="49.0876" height="7.01252" rx="3.50626" fill="#D9D6FE"/>
+<rect id="Text Line_2" x="98.5762" y="64.6931" width="56.1002" height="7.01252" rx="3.50626" fill="#D9D6FE"/>
+<rect id="Text Line_3" x="98.5762" y="92.7428" width="35.0626" height="7.01252" rx="3.50626" fill="#D9D6FE"/>
+</g>
+<g id="Image Details">
+<rect id="Image Frame" x="16.9401" y="44.6688" width="77.0161" height="58.5323" rx="5.58697" fill="#EAE9F3" stroke="#46398C" stroke-width="3.08065"/>
+<circle id="Ellipse 6" cx="78.9939" cy="63.5899" r="4.04664" fill="#A4A3F3" stroke="#241C8C" stroke-width="2.02332"/>
+<path id="Polygon 2" d="M73.9332 77.0156L49.288 101.661H88.8089C92.4141 101.661 94.2196 97.302 91.6703 94.7527L73.9332 77.0156Z" fill="#A4A3F3" stroke="#241C8C" stroke-width="2.02332"/>
+<path id="Polygon 1" d="M46.2071 64.6931L80.0942 101.661H21.5189C17.9979 101.661 16.1567 97.4753 18.5359 94.8798L46.2071 64.6931Z" fill="#A4A3F3" stroke="#241C8C" stroke-width="2.02332"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="Alert Icon">
+<path id="Vector" d="M163.282 58.5328C178.595 58.5328 191.008 46.1195 191.008 30.807C191.008 15.4944 178.595 3.08118 163.282 3.08118C147.97 3.08118 135.557 15.4944 135.557 30.807C135.557 46.1195 147.97 58.5328 163.282 58.5328Z" fill="#CBEF17" stroke="#241C8C" stroke-width="3.69678"/>
+<path id="Vector_2" d="M163.285 14.5417C167.84 24.9519 169.141 26.2531 179.551 30.8076C169.141 35.362 167.84 36.6632 163.285 47.0734C158.731 36.6632 157.43 35.362 147.02 30.8076C157.43 26.2531 158.731 24.9519 163.285 14.5417Z" fill="white" stroke="#241C8C" stroke-width="2.95742" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

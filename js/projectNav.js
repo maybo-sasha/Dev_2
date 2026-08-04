@@ -8,6 +8,7 @@
         { file: 'lucky-buddies.html',         name: 'Lucky Buddies' },
         { file: 'player-journey.html',        name: 'Player Journey' },
         { file: 'playground.html',            name: 'Playground' },
+        { file: 'ai-champion.html',           name: 'Optimove AI Champion' },
     ];
 
     const file = (location.pathname.split('/').pop() || '').toLowerCase();

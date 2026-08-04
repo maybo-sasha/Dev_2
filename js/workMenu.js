@@ -8,6 +8,7 @@
         { name: 'Lucky Buddies',         cat: 'Everybuddy · 2023',  href: 'lucky-buddies.html', type: 'video', media: './assets/img/lucky_buddies.mp4' },
         { name: 'Player Journey',        cat: 'Playtech · 2019', href: 'player-journey.html', type: 'video', media: './assets/playerjoueney/CanvasIntredaction.mp4' },
         { name: 'Playground',            cat: 'Motion · 3D', href: 'playground.html',    type: 'video', media: './assets/personal/cubickworld_2.mp4' },
+        { name: 'Optimove AI Champion',  cat: 'Optimove · AI Skills', href: 'ai-champion.html', type: 'video', media: './assets/ai-champion/generate-ds-ui.mp4' },
     ];
 
     function init() {

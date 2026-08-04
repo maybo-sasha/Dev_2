@@ -8,3 +8,7 @@ Thumbs.db
 .agents/
 skills-lock.json
 *.glb
+
+# Raw AI-skill source drops (nested git repos + zips). The site uses the
+# curated copies in assets/ai-champion/ instead.
+assets/skills/

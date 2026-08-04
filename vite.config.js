@@ -7,6 +7,11 @@ const base = process.env.GITHUB_PAGES === 'true' ? '/Dev_2/' : '/';
 
 // Vite bundles CSS and module scripts but leaves classic <script src="./js/...">
 // tags and runtime asset paths (inline scripts, workMenu.js) untouched — copy them into dist.
+// Never ship raw source drops: the AI-skill folder holds a nested git repo and
+// zip archives (~4.7MB) that the site never references — it uses the curated
+// copies in assets/ai-champion/ instead.
+const COPY_EXCLUDE = [/[\\/]assets[\\/]skills([\\/]|$)/, /[\\/]\.git([\\/]|$)/, /\.zip$/i];
+
 function copyStaticToDist(...paths) {
   return {
     name: 'copy-static-to-dist',
@@ -15,7 +20,10 @@ function copyStaticToDist(...paths) {
       for (const rel of paths) {
         const src = resolve(__dirname, rel);
         if (!existsSync(src)) continue;
-        cpSync(src, join(outDir, rel), { recursive: true });
+        cpSync(src, join(outDir, rel), {
+          recursive: true,
+          filter: (from) => !COPY_EXCLUDE.some((re) => re.test(from)),
+        });
       }
     },
   };
@@ -29,6 +37,7 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
+        'ai-champion': resolve(__dirname, 'ai-champion.html'),
         'ai-decisioning-studio': resolve(__dirname, 'ai-decisioning-studio.html'),
         'lucky-buddies': resolve(__dirname, 'lucky-buddies.html'),
         'player-journey': resolve(__dirname, 'player-journey.html'),

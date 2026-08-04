@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimove AI Champion · Portfolio</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <script>try{if(sessionStorage.getItem("heroZoom")){var d=document.documentElement;d.classList.add("instant");var p=sessionStorage.getItem("heroPoster");if(p)d.style.setProperty("--hero-poster","url("+p+")");sessionStorage.removeItem("heroZoom");sessionStorage.removeItem("heroPoster");}}catch(e){}</script>
+    <style>
+        /* ───────── Optimove icon-language palette ─────────
+           deep indigo ink · lavender fills · a single lime focal */
+        :root {
+            --paper:   #f4f1fc;
+            --surface: #ffffff;
+            --mist:    #ece8f8;
+            --lav:     #e0daf7;
+            --lav-2:   #c6bef0;
+            --ink:     #241c8c;
+            --ink-2:   #2d2578;
+            --muted:   #5f5a93;
+            --dim:     #8f8abf;
+            --violet:  #6b4ef5;
+            --lime:    #cbef17;
+            --line:    rgba(36,28,140,0.12);
+            --line-2:  rgba(36,28,140,0.22);
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+            --cursor-ring: rgba(36,28,140,0.55);
+            --font-mono: 'SFMono-Regular', ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+        }
+
+        body {
+            opacity: 0;
+            background: var(--paper) !important;
+            color: var(--ink);
+            font-family: var(--font-display);
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* nav recolour for the light theme */
+        #logo { color: var(--ink); }
+        .nav-link { color: rgba(36,28,140,0.5); }
+        .nav-link:hover, .nav-link.active { color: var(--ink); }
+        .nav-link::after { background: var(--ink); }
+        .cursor { border-color: rgba(36,28,140,0.5); }
+        .cursor::before, .cursor::after { border-color: rgba(36,28,140,0.35); }
+        .cursor-text { color: var(--ink); }
+
+        .ac { position: relative; width: 100%; overflow: hidden; counter-reset: acs; }
+        .ac-wrap { margin: 0 auto; padding: 0 6vw; max-width: 1400px; }
+
+        /* ── back CTA ── */
+        .inner-back {
+            position: fixed; top: 1.5rem; left: 6vw; z-index: 50;
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            font-family: var(--font-display); font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
+            color: #fff; padding: 0.7rem 1.1rem 0.7rem 0.85rem; border-radius: 999px;
+            background: var(--ink); box-shadow: 0 12px 26px -10px rgba(36,28,140,0.5);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .inner-back .arrow { display: inline-block; transition: transform 0.3s var(--ease-out); }
+        .inner-back:hover .arrow { transform: translateX(-4px); }
+        @media (max-width: 700px) { .inner-back { left: 5vw; } }
+
+        /* ── hero ── */
+        .ac-hero {
+            position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 600px;
+            overflow: hidden; background: var(--mist);
+        }
+        .ac-hero-art {
+            position: absolute; inset: 0;
+            background: url('./assets/ai-champion/hero-icon-skill.png') center/cover no-repeat;
+        }
+        /* Two-axis scrim: fades up from the bottom AND in from the left, so the
+           left-aligned indigo type always sits on near-solid paper. */
+        .ac-hero::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background:
+                linear-gradient(180deg,
+                    rgba(244,241,252,0.62) 0%,
+                    rgba(244,241,252,0.10) 26%,
+                    rgba(244,241,252,0.55) 58%,
+                    rgba(244,241,252,0.94) 82%,
+                    var(--paper) 100%),
+                linear-gradient(90deg,
+                    rgba(244,241,252,0.96) 0%,
+                    rgba(244,241,252,0.72) 26%,
+                    rgba(244,241,252,0.16) 54%,
+                    rgba(244,241,252,0) 78%);
+        }
+        .ac-hero-tag {
+            position: absolute; left: 6vw; bottom: 13vh; z-index: 2;
+            max-width: min(88vw, 20ch); text-align: left;
+        }
+        .ac-hero-tag .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.26em;
+            text-transform: uppercase; color: var(--ink-2); margin: 0 0 1.1rem;
+        }
+        .spark { color: var(--violet); }
+        .ac-hero-tag h1 {
+            font-weight: 800; font-size: clamp(2.6rem, 8vw, 7rem);
+            line-height: 0.92; letter-spacing: -0.045em; margin: 0; color: var(--ink);
+        }
+        .ac-hero-tag h1 em { font-style: normal; color: var(--violet); }
+        .ac-hero-sub {
+            margin: 1.5rem 0 0; max-width: 44ch; text-align: left;
+            font-size: clamp(0.98rem, 1.4vw, 1.18rem); line-height: 1.6; color: var(--muted);
+        }
+        @media (max-width: 700px) { .ac-hero-tag { left: 5vw; bottom: 11vh; } }
+
+        /* ── meta strip ── */
+        .ac-metabar { border-bottom: 1px solid var(--line); background: var(--paper); }
+        .ac-meta {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+            padding: 2.6rem 0;
+        }
+        .ac-meta .k {
+            display: block; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--dim); margin-bottom: 0.55rem;
+        }
+        .ac-meta .v { display: block; font-size: clamp(0.92rem, 1.2vw, 1.08rem); font-weight: 400; color: var(--ink); }
+
+        /* ── lede ── */
+        .ac-lede { padding: clamp(5rem, 10vw, 9rem) 0 clamp(3rem, 6vw, 5rem); text-align: center; }
+        .ac-lede .big {
+            font-weight: 700; font-size: clamp(1.6rem, 3.6vw, 3.1rem);
+            line-height: 1.16; letter-spacing: -0.035em; margin: 0 auto 1.8rem; max-width: 22ch;
+        }
+        .ac-lede .big .spark { color: var(--violet); }
+        .ac-lede .sub {
+            font-size: clamp(1rem, 1.4vw, 1.18rem); line-height: 1.7;
+            color: var(--muted); max-width: 62ch; margin: 0 auto;
+        }
+
+        /* ── generic section ── */
+        .ac-sec { padding: clamp(4.5rem, 8vw, 7.5rem) 0; }
+        .ac-sec--mist { background: var(--mist); border-block: 1px solid var(--line); }
+        .ac-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--violet); margin: 0 0 1rem;
+        }
+        .ac-h2 {
+            font-weight: 700; font-size: clamp(1.9rem, 4vw, 3.2rem);
+            line-height: 1.05; letter-spacing: -0.035em; margin: 0 0 1.3rem; max-width: 22ch;
+        }
+        .ac-body {
+            font-size: clamp(1rem, 1.35vw, 1.15rem); line-height: 1.7;
+            color: var(--muted); max-width: 60ch; margin: 0;
+        }
+        .ac-body + .ac-body { margin-top: 1.1rem; }
+
+        /* ── work area: sticky side menu + one panel at a time ── */
+        .ac-work { padding: clamp(3rem, 6vw, 5rem) 0 clamp(5rem, 9vw, 8rem); }
+        .work-grid {
+            display: grid; grid-template-columns: 16.5rem minmax(0, 1fr);
+            gap: clamp(2rem, 5vw, 4.5rem); align-items: start;
+        }
+        .work-nav { position: sticky; top: 6.5rem; align-self: start; }
+        .work-nav-k {
+            font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim);
+            margin: 0 0 0.85rem; padding-left: 0.15rem;
+        }
+        .work-nav-k + .work-nav-k { margin-top: 2rem; }
+        .work-nav-list { display: flex; flex-direction: column; gap: 0.4rem; }
+        .work-tab {
+            display: grid; grid-template-columns: 2.1rem minmax(0, 1fr); align-items: center;
+            gap: 0.8rem; width: 100%; text-align: left; cursor: none;
+            padding: 0.85rem 0.95rem; border-radius: 12px;
+            border: 1px solid transparent; background: transparent;
+            font-family: inherit; color: var(--ink);
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s var(--ease-out);
+        }
+        .work-tab .tn {
+            width: 2.1rem; height: 2.1rem; border-radius: 8px;
+            display: grid; place-items: center;
+            background: var(--lav); color: var(--ink-2);
+            font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+        .work-tab .tt { min-width: 0; }
+        .work-tab .th {
+            display: block; font-size: 0.92rem; font-weight: 700; letter-spacing: -0.01em;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .work-tab .ts {
+            display: block; margin-top: 0.12rem; font-size: 0.76rem; color: var(--dim);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .work-tab:hover { background: var(--surface); border-color: var(--line); transform: translateX(3px); }
+        .work-tab.is-on {
+            background: var(--ink); border-color: var(--ink);
+            box-shadow: 0 20px 36px -24px rgba(36,28,140,0.7);
+        }
+        .work-tab.is-on .th { color: #fff; }
+        .work-tab.is-on .ts { color: rgba(255,255,255,0.6); }
+        .work-tab.is-on .tn { background: var(--lime); color: var(--ink); }
+
+        /* ── the generative frame ── */
+        .gen-frame {
+            border: 1px solid var(--line-2); border-radius: 20px; overflow: hidden;
+            background: var(--surface);
+            box-shadow: 0 60px 100px -70px rgba(36,28,140,0.6);
+        }
+        .gen-bar {
+            display: flex; align-items: center; gap: 0.9rem;
+            padding: 0.75rem 1.1rem; background: var(--mist);
+            border-bottom: 1px solid var(--line);
+        }
+        .gen-dots { display: inline-flex; gap: 0.35rem; flex: 0 0 auto; }
+        .gen-dots i {
+            width: 0.6rem; height: 0.6rem; border-radius: 50%;
+            background: var(--lav-2); display: block;
+        }
+        .gen-dots i:first-child { background: var(--violet); opacity: 0.55; }
+        .gen-path {
+            flex: 1 1 auto; min-width: 0;
+            font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.04em;
+            color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .gen-status {
+            flex: 0 0 auto; display: inline-flex; align-items: center; gap: 0.4rem;
+            font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+        }
+        .gen-status .led {
+            width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--lime);
+            box-shadow: 0 0 0 3px rgba(203,239,23,0.25);
+        }
+        .gen-frame.is-busy .gen-status { color: var(--violet); }
+        .gen-frame.is-busy .gen-status .led {
+            background: var(--violet); box-shadow: 0 0 0 3px rgba(107,78,245,0.22);
+            animation: led-pulse 0.9s ease-in-out infinite;
+        }
+        @keyframes led-pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.35 } }
+
+        /* prompt strip — the "ask" that produced this panel */
+        .gen-prompt {
+            display: flex; align-items: baseline; gap: 0.6rem;
+            padding: 0.95rem 1.2rem; background: #1a1443;
+            font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.5;
+            color: #efedff; overflow: hidden;
+        }
+        .gp-sign { color: var(--lime); flex: 0 0 auto; font-weight: 700; }
+        .gp-text { white-space: pre-wrap; word-break: break-word; }
+        .gp-text .flag { color: #a99cf5; }
+        .gp-caret {
+            display: inline-block; width: 0.5rem; height: 1em; flex: 0 0 auto;
+            background: var(--lime); transform: translateY(0.12em);
+            animation: caret-blink 1s steps(1) infinite;
+        }
+        .gen-frame.is-busy .gp-caret { animation: none; }
+        @keyframes caret-blink { 0%,49% { opacity: 1 } 50%,100% { opacity: 0 } }
+
+        .work-panels { padding: clamp(1.6rem, 3.2vw, 2.6rem); }
+        .work-panel { display: none; }
+        .work-panel.is-on { display: block; }
+        .work-panel > * { will-change: opacity; }
+
+        /* thin progress sweep while "generating" */
+        .gen-load { height: 2px; background: transparent; overflow: hidden; }
+        .gen-frame.is-busy .gen-load { background: var(--lav); }
+        .gen-frame.is-busy .gen-load::after {
+            content: ''; display: block; height: 100%; width: 32%;
+            background: linear-gradient(90deg, transparent, var(--violet), transparent);
+            animation: sweep 0.85s linear infinite;
+        }
+        @keyframes sweep { from { transform: translateX(-100%) } to { transform: translateX(420%) } }
+        @media (prefers-reduced-motion: reduce) {
+            .gp-caret, .gen-frame.is-busy .gen-status .led, .gen-frame.is-busy .gen-load::after { animation: none; }
+        }
+
+        @media (max-width: 1000px) {
+            .work-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .work-nav {
+                position: sticky; top: 4.6rem; z-index: 20;
+                background: var(--paper); padding: 0.7rem 0;
+                margin: 0 -6vw; padding-left: 6vw; padding-right: 6vw;
+                border-bottom: 1px solid var(--line);
+            }
+            .work-nav-k { display: none; }
+            .work-nav-list { flex-direction: row; overflow-x: auto; gap: 0.5rem; scrollbar-width: none; }
+            .work-nav-list::-webkit-scrollbar { display: none; }
+            .work-tab { width: auto; flex: 0 0 auto; grid-template-columns: auto; padding: 0.6rem 0.9rem; }
+            .work-tab .tn, .work-tab .ts { display: none; }
+            .work-tab .th { font-size: 0.85rem; }
+            .work-tab.is-on { transform: none; }
+        }
+
+        /* ── skill block ── */
+        .skill { padding: clamp(5rem, 9vw, 8rem) 0; border-top: 1px solid var(--line); counter-increment: acs; }
+        .skill-head { max-width: 62ch; }
+        .skill-num {
+            font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.2em; color: var(--dim); margin: 0 0 0.9rem;
+        }
+        .skill-name {
+            font-family: var(--font-mono);
+            font-weight: 700; font-size: clamp(1.5rem, 3.4vw, 2.6rem);
+            letter-spacing: -0.02em; margin: 0 0 1rem; color: var(--ink);
+            display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        .skill-name .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--lime); flex: 0 0 auto; }
+        .skill-one {
+            font-size: clamp(1.15rem, 2vw, 1.55rem); line-height: 1.45;
+            font-weight: 500; color: var(--ink-2); margin: 0 0 0.4rem; letter-spacing: -0.015em;
+        }
+
+        /* problem / need / solution cards */
+        .pns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.8rem; }
+        .pns-card {
+            background: var(--surface); border: 1px solid var(--line);
+            border-radius: 16px; padding: 1.6rem 1.5rem; position: relative; overflow: hidden;
+        }
+        .pns-card::before {
+            content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 3px;
+            background: var(--lav-2);
+        }
+        .pns-card.is-solution::before { background: var(--lime); }
+        .pns-k {
+            font-family: var(--font-mono); font-size: 0.64rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); margin: 0 0 0.7rem;
+        }
+        .pns-card.is-solution .pns-k { color: var(--violet); }
+        .pns-t { font-size: 0.98rem; line-height: 1.65; color: var(--muted); margin: 0; }
+
+        /* ── pipeline — a diagram, everything visible at once ── */
+        .flow { margin-top: 3rem; }
+        .flow-title {
+            font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim);
+            margin: 0 0 1.6rem; display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap;
+        }
+        .flow-list {
+            position: relative; margin: 0; padding: 0 0 0 3.6rem; list-style: none;
+        }
+        /* the spine */
+        .flow-list::before {
+            content: ''; position: absolute; left: 1.16rem; top: 0.9rem; bottom: 1.4rem;
+            width: 2px; border-radius: 2px;
+            background: linear-gradient(180deg, var(--violet) 0%, var(--lav-2) 55%, var(--lav) 100%);
+        }
+        .flow-item { position: relative; padding-bottom: 1.7rem; }
+        .flow-item:last-child { padding-bottom: 0; }
+        .flow-item > .idx {
+            position: absolute; left: -3.6rem; top: 0;
+            width: 2.35rem; height: 2.35rem; border-radius: 50%;
+            display: grid; place-items: center; z-index: 1;
+            background: var(--surface); border: 2px solid var(--lav-2);
+            font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--ink-2);
+        }
+        .flow-item:first-child > .idx { border-color: var(--violet); color: var(--violet); }
+        .flow-item .nm {
+            margin: 0.3rem 0 0.45rem; font-size: 1.06rem; font-weight: 700;
+            letter-spacing: -0.02em; color: var(--ink);
+        }
+        .flow-item .nm .step-key {
+            font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--violet); margin-right: 0.6rem;
+        }
+        .flow-item .ds {
+            margin: 0; color: var(--muted); line-height: 1.68; font-size: 0.98rem; max-width: 64ch;
+        }
+        .flow-item .why {
+            margin: 0.6rem 0 0; font-size: 0.87rem; line-height: 1.6; color: var(--ink-2);
+            padding-left: 0.85rem; border-left: 2px solid var(--lav-2); max-width: 60ch;
+        }
+        .flow-item .why b { color: var(--violet); font-weight: 700; }
+        .flow-loop {
+            margin: 1.5rem 0 0; padding: 0.85rem 1.1rem; border-radius: 12px;
+            background: var(--lav); font-family: var(--font-mono); font-size: 0.72rem;
+            letter-spacing: 0.04em; color: var(--ink-2);
+        }
+        @media (max-width: 700px) {
+            .flow-list { padding-left: 3rem; }
+            .flow-list::before { left: 0.95rem; }
+            .flow-item > .idx { left: -3rem; width: 1.95rem; height: 1.95rem; font-size: 0.62rem; }
+        }
+
+        /* ── demo shell ── */
+        .demo {
+            margin-top: 2.6rem; background: var(--surface);
+            border: 1px solid var(--line); border-radius: 20px; overflow: hidden;
+            box-shadow: 0 50px 90px -60px rgba(36,28,140,0.5);
+        }
+        .demo-bar {
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+            padding: 0.95rem 1.3rem; border-bottom: 1px solid var(--line);
+            background: var(--mist); flex-wrap: wrap;
+        }
+        .demo-bar .t {
+            font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700;
+            letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2);
+        }
+        .demo-body { padding: clamp(1.4rem, 3vw, 2.2rem); }
+
+        .seg { display: inline-flex; padding: 3px; background: var(--lav); border-radius: 999px; gap: 2px; }
+        .seg button {
+            cursor: none; border: 0; background: transparent; border-radius: 999px;
+            padding: 0.45rem 0.95rem; font-family: inherit; font-size: 0.78rem; font-weight: 600;
+            color: var(--ink-2); transition: background 0.25s ease, color 0.25s ease;
+        }
+        .seg button.is-on { background: var(--ink); color: #fff; }
+
+        /* verify gate — both outcomes side by side, nothing hidden */
+        .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+        .vs-col { border-radius: 16px; padding: 1.3rem 1.25rem; border: 1px solid var(--line); }
+        .vs-col.is-bad  { background: #fff6f7; border-color: rgba(176,32,58,0.2); }
+        .vs-col.is-good { background: #fbfdf2; border-color: rgba(36,28,140,0.14); }
+        .vs-hd {
+            display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;
+            font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em;
+        }
+        .vs-hd .tagpill {
+            font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            padding: 0.25rem 0.55rem; border-radius: 999px;
+        }
+        .is-bad  .vs-hd .tagpill { background: #ffdfe3; color: #b0203a; }
+        .is-good .vs-hd .tagpill { background: var(--lime); color: var(--ink); }
+        .vf-row {
+            display: flex; align-items: flex-start; gap: 0.7rem;
+            padding: 0.6rem 0; font-size: 0.9rem; color: var(--ink-2); line-height: 1.45;
+            border-top: 1px solid rgba(36,28,140,0.07);
+        }
+        .vf-row:first-of-type { border-top: 0; }
+        .vf-row .mark {
+            flex: 0 0 auto; width: 1.25rem; height: 1.25rem; border-radius: 50%; margin-top: 0.05rem;
+            display: grid; place-items: center; font-size: 0.7rem; font-weight: 800;
+        }
+        .vf-row.pass .mark { background: var(--lime); color: var(--ink); }
+        .vf-row.fail .mark { background: #ffdcdc; color: #b0203a; }
+        .vf-row .lbl { flex: 1 1 auto; }
+        .vf-row .note {
+            display: block; margin-top: 0.15rem;
+            font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--dim);
+        }
+        .vf-row.fail .note { color: #b0203a; }
+        .vs-verdict {
+            margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid rgba(36,28,140,0.1);
+            font-size: 0.88rem; font-weight: 600; color: var(--ink);
+        }
+        .is-bad .vs-verdict { color: #b0203a; }
+        @media (max-width: 760px) { .vs { grid-template-columns: 1fr; } }
+
+        /* icon size scrubber */
+        .sz-stage {
+            display: grid; place-items: center; min-height: 17rem;
+            background: var(--paper); border: 1px solid var(--line);
+            border-radius: 16px; padding: 1.5rem; position: relative;
+        }
+        .sz-stage img { display: block; image-rendering: auto; }
+        .sz-readout {
+            position: absolute; top: 0.85rem; left: 0.95rem;
+            font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700;
+            letter-spacing: 0.1em; color: var(--dim);
+        }
+        .sz-flag {
+            position: absolute; bottom: 0.85rem; left: 0.95rem; right: 0.95rem;
+            font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em;
+            color: var(--violet);
+        }
+        .sz-flag.warn { color: #b0203a; }
+        .sz-controls { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
+        .sz-slider { display: flex; align-items: center; gap: 1rem; }
+        .sz-slider input[type=range] { flex: 1 1 auto; accent-color: var(--violet); cursor: none; }
+        .sz-marks { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .chip {
+            cursor: none; border: 1px solid var(--line-2); background: var(--surface);
+            border-radius: 999px; padding: 0.4rem 0.85rem;
+            font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; color: var(--ink-2);
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+        .chip:hover { border-color: var(--lav-2); }
+        .chip.is-on { background: var(--ink); color: #fff; border-color: var(--ink); }
+        .icon-picker { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .icon-picker button {
+            cursor: none; width: 3rem; height: 3rem; padding: 0.3rem;
+            border-radius: 12px; border: 1px solid var(--line); background: var(--surface);
+            transition: border-color 0.25s ease, transform 0.25s var(--ease-out);
+        }
+        .icon-picker button img { width: 100%; height: 100%; display: block; }
+        .icon-picker button:hover { transform: translateY(-2px); }
+        .icon-picker button.is-on { border-color: var(--violet); box-shadow: 0 0 0 2px rgba(107,78,245,0.18); }
+
+        /* score calculator */
+        .calc { display: grid; grid-template-columns: 1.2fr 0.9fr; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
+        .calc-row { margin-bottom: 1.4rem; }
+        .calc-row:last-child { margin-bottom: 0; }
+        .calc-row .top {
+            display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .calc-row .nm { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+        .calc-row .w {
+            font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--dim);
+        }
+        .calc-row .val { font-family: var(--font-mono); font-size: 0.86rem; font-weight: 700; color: var(--violet); }
+        .calc-row input[type=range] { width: 100%; accent-color: var(--violet); cursor: none; }
+        .calc-out {
+            background: var(--ink); border-radius: 18px; padding: 1.8rem 1.6rem; color: #fff; text-align: center;
+        }
+        .calc-out .score {
+            font-size: clamp(3rem, 7vw, 4.6rem); font-weight: 800; line-height: 1;
+            letter-spacing: -0.05em; color: var(--lime);
+        }
+        .calc-out .of { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-top: 0.5rem; }
+        .calc-out .status {
+            margin-top: 1.1rem; display: inline-block; padding: 0.4rem 0.9rem; border-radius: 999px;
+            font-size: 0.78rem; font-weight: 700; background: rgba(255,255,255,0.14);
+        }
+        .calc-out .formula {
+            margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.16);
+            font-family: var(--font-mono); font-size: 0.66rem; line-height: 1.7;
+            color: rgba(255,255,255,0.72); letter-spacing: 0.02em;
+        }
+
+        /* media shot */
+        .ac-shot {
+            margin-top: 2.6rem; border-radius: 18px; overflow: hidden; background: #0f0d24;
+            border: 1px solid var(--line);
+            box-shadow: 0 50px 90px -55px rgba(36,28,140,0.55);
+        }
+        .ac-shot video, .ac-shot img { width: 100%; height: auto; display: block; }
+        .ac-cap { margin: 0.9rem 0 0; font-size: 0.84rem; color: var(--dim); }
+
+        /* privacy pill row */
+        .pill-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+        .pill {
+            padding: 0.45rem 0.9rem; border-radius: 999px; background: var(--lav);
+            font-size: 0.78rem; font-weight: 600; color: var(--ink-2);
+        }
+
+        /* ── Dolly: plain chat vs Dolly comparison ── */
+        .cmp {
+            margin-top: 2.6rem; border: 1px solid var(--line); border-radius: 18px;
+            overflow: hidden; background: var(--surface);
+            box-shadow: 0 40px 70px -55px rgba(36,28,140,0.45);
+        }
+        .cmp-row { display: grid; grid-template-columns: 11rem 1fr 1fr; border-top: 1px solid var(--line); }
+        .cmp-row:first-child { border-top: 0; }
+        .cmp-row > * { padding: 0.9rem 1.1rem; font-size: 0.92rem; line-height: 1.55; }
+        .cmp-k { font-weight: 700; color: var(--ink); background: var(--paper); }
+        .cmp-a { color: var(--dim); border-left: 1px solid var(--line); }
+        .cmp-b { color: var(--ink-2); border-left: 1px solid var(--line); background: rgba(203,239,23,0.07); }
+        .cmp-head > * {
+            font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
+            background: var(--mist);
+        }
+        .cmp-head .cmp-b { color: var(--ink); background: var(--lime); }
+        .cmp-quote {
+            margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+        }
+        .cmp-q {
+            border-radius: 14px; padding: 1.15rem 1.25rem; font-size: 0.94rem; line-height: 1.6;
+            border: 1px solid var(--line); background: var(--surface);
+        }
+        .cmp-q .qk {
+            display: block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem;
+        }
+        .cmp-q.is-b { background: rgba(203,239,23,0.09); border-color: rgba(36,28,140,0.16); }
+        .cmp-q.is-b .qk { color: var(--violet); }
+        .cmp-q em { font-style: italic; color: var(--ink); }
+
+        /* ── Dolly: the session loop ── */
+        .loop { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem; margin-top: 2.4rem; }
+        .loop-node {
+            border-radius: 14px; padding: 1.05rem 1rem;
+            background: var(--surface); border: 1px solid var(--line);
+        }
+        .loop-node .ln {
+            font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+            letter-spacing: 0.16em; color: var(--dim); display: block; margin-bottom: 0.45rem;
+        }
+        .loop-node .lh { font-size: 0.96rem; font-weight: 700; margin: 0 0 0.35rem; letter-spacing: -0.015em; }
+        .loop-node .lp { margin: 0; font-size: 0.85rem; line-height: 1.55; color: var(--muted); }
+        .loop-node.is-gate { background: var(--ink); border-color: var(--ink); }
+        .loop-node.is-gate .lh { color: #fff; }
+        .loop-node.is-gate .lp { color: rgba(255,255,255,0.72); }
+        .loop-node.is-gate .ln { color: var(--lime); }
+        .loop-return {
+            margin-top: 0.7rem; padding: 0.85rem 1.15rem; border-radius: 12px;
+            border: 1px dashed var(--line-2); background: transparent;
+            font-size: 0.88rem; color: var(--ink-2);
+        }
+        .loop-return b { color: var(--violet); font-weight: 700; }
+
+        /* ── Dolly: memory layers ── */
+        .mem { margin-top: 2.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+        .mem-row {
+            display: grid; grid-template-columns: 8.5rem 1fr; gap: 1.1rem; align-items: center;
+        }
+        .mem-row .mk { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+        .mem-row .mk span {
+            display: block; font-family: var(--font-mono); font-size: 0.66rem;
+            font-weight: 500; color: var(--dim); margin-top: 0.15rem;
+        }
+        .mem-bar {
+            border-radius: 10px; padding: 0.75rem 1rem; color: var(--ink-2);
+            font-size: 0.88rem; line-height: 1.5; background: var(--lav); border: 1px solid var(--line);
+        }
+        .mem-row:nth-child(1) .mem-bar { width: 34%; min-width: 12rem; background: var(--lime); }
+        .mem-row:nth-child(2) .mem-bar { width: 62%; min-width: 14rem; background: var(--lav-2); }
+        .mem-row:nth-child(3) .mem-bar { width: 100%; }
+
+        /* ── Dolly: what grows ── */
+        .grow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.2rem; }
+        .grow-card {
+            background: var(--surface); border: 1px solid var(--line);
+            border-radius: 14px; padding: 1.25rem 1.2rem;
+        }
+        .grow-card .gk {
+            font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 0.16em; text-transform: uppercase; color: var(--violet); margin: 0 0 0.55rem;
+        }
+        .grow-card .gh { margin: 0 0 0.4rem; font-size: 0.98rem; font-weight: 700; letter-spacing: -0.015em; }
+        .grow-card .gp { margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--muted); }
+
+        .note-box {
+            margin-top: 2.4rem; padding: 1.3rem 1.45rem; border-radius: 14px;
+            background: var(--mist); border: 1px solid var(--line);
+        }
+        .note-box p { margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--ink-2); }
+        .note-box .nk {
+            display: block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .loop { grid-template-columns: repeat(2, 1fr); }
+            .grow { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 760px) {
+            .cmp-row { grid-template-columns: 1fr; }
+            .cmp-a, .cmp-b { border-left: 0; border-top: 1px solid var(--line); }
+            .cmp-head { display: none; }
+            .cmp-a::before { content: 'Plain chat — '; font-weight: 700; color: var(--ink-2); }
+            .cmp-b::before { content: 'Dolly — '; font-weight: 700; color: var(--violet); }
+            .cmp-quote { grid-template-columns: 1fr; }
+            .loop { grid-template-columns: 1fr; }
+            .mem-row { grid-template-columns: 1fr; gap: 0.4rem; }
+            .mem-row .mem-bar { width: 100% !important; min-width: 0 !important; }
+        }
+
+        /* outro */
+        .ac-outro {
+            padding: clamp(5rem, 10vw, 8rem) 0; background: var(--ink); color: #fff; text-align: center;
+        }
+        .ac-outro h2 {
+            font-weight: 700; font-size: clamp(1.8rem, 4.2vw, 3.2rem);
+            line-height: 1.1; letter-spacing: -0.035em; margin: 0 auto 1.4rem; max-width: 20ch;
+        }
+        .ac-outro h2 .spark { color: var(--lime); }
+        .ac-outro p { margin: 0 auto; max-width: 56ch; color: rgba(255,255,255,0.7); line-height: 1.7; font-size: 1.03rem; }
+
+        /* reveal */
+        .fade-up { opacity: 0; }
+        @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1 !important; } }
+
+        @media (max-width: 980px) {
+            .calc { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 760px) {
+            .ac-meta { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+            .pns { grid-template-columns: 1fr; }
+            .flow-step { min-width: 7.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <a class="inner-back" href="index.html"><span class="arrow">←</span> Back</a>
+
+    <div class="cursor"><span class="cursor-text"></span></div>
+
+    <!-- About overlay -->
+    <div class="about-overlay" aria-hidden="true">
+        <video class="about-video" src="./homePage/aboutVideo.mp4" autoplay loop muted playsinline></video>
+        <div class="about-scrim"></div>
+        <a class="about-back" href="#"><span class="arrow">←</span> Back</a>
+        <div class="about-content">
+            <div class="about-info">
+                <div class="about-block">
+                    <p class="about-block-label">About</p>
+                    <p class="about-block-text">I am Sasha Mayboroda, a Senior Product Designer who lives and breathes design. With years of experience building design systems and cohesive graphical languages across web, mobile and game platforms, I turn complex products into clear, considered experiences that scale.</p>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Social</p>
+                    <div class="about-social">
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda-177b17bb/" target="_blank" rel="noopener">LinkedIn</a>
+                    </div>
+                </div>
+                <div class="about-block">
+                    <p class="about-block-label">Contact</p>
+                    <p class="about-block-text">
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maybosasha@gmail.com" target="_blank" rel="noopener">maybosasha@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="nav-header">
+        <a id="logo" href="index.html"></a>
+        <div class="nav-links-inline">
+            <a class="nav-link" data-page="about" href="#">About</a>
+        </div>
+    </nav>
+
+    <main class="ac">
+
+        <!-- HERO -->
+        <section class="ac-hero">
+            <div class="ac-hero-art" aria-hidden="true"></div>
+            <div class="ac-hero-tag fade-up">
+                <p class="eyebrow"><span class="spark">✦</span> Optimove · AI Champion</p>
+                <h1>Optimove <em>AI</em> Champion</h1>
+                <p class="ac-hero-sub">Teaching AI to do product design work the way our team already does it — inside our design system, with our rules, on our evidence.</p>
+            </div>
+            <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="scroll-cue-line"></span></div>
+        </section>
+
+        <!-- META -->
+        <section class="ac-metabar">
+            <div class="ac-wrap">
+                <div class="ac-meta fade-up">
+                    <div><span class="k">Role</span><span class="v">AI Champion · Product</span></div>
+                    <div><span class="k">Company</span><span class="v">Optimove</span></div>
+                    <div><span class="k">Discipline</span><span class="v">Agent Skills · Design Systems · Research Ops</span></div>
+                    <div><span class="k">Year</span><span class="v">2026</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEDE -->
+        <section class="ac-lede">
+            <div class="ac-wrap">
+                <p class="big fade-up">A small group across Optimove owns AI inside their own department. I own it for <span class="spark">product design</span>.</p>
+                <p class="sub fade-up">The interesting part was never "can AI make a screen." It can — and the screen is wrong. It uses components we do not have, spacing nobody measured, and icons that miss the house style by just enough to be unusable. So instead of prompting harder, I wrote <strong>skills</strong>: repeatable procedures that give the model our real data, our real constraints, and a way to check its own output before handing it over. Three of them are below.</p>
+            </div>
+        </section>
+
+        <!-- ══════════ WORK — side menu + one panel at a time ══════════ -->
+        <section class="ac-work">
+            <div class="ac-wrap">
+                <div class="work-grid">
+
+                    <!-- side menu -->
+                    <aside class="work-nav">
+                        <p class="work-nav-k">AI Champion skills</p>
+                        <div class="work-nav-list" role="tablist" aria-label="Skills">
+                            <button class="work-tab is-on" type="button" role="tab" aria-selected="true" aria-controls="p-dsui" data-panel="p-dsui">
+                                <span class="tn">01</span>
+                                <span class="tt"><span class="th">generate-ds-ui</span><span class="ts">Screens from real components</span></span>
+                            </button>
+                            <button class="work-tab" type="button" role="tab" aria-selected="false" aria-controls="p-icon" data-panel="p-icon">
+                                <span class="tn">02</span>
+                                <span class="tt"><span class="th">generate-misc-icon</span><span class="ts">Icons that match the set</span></span>
+                            </button>
+                            <button class="work-tab" type="button" role="tab" aria-selected="false" aria-controls="p-ux" data-panel="p-ux">
+                                <span class="tn">03</span>
+                                <span class="tt"><span class="th">ux-test-analysis</span><span class="ts">Research that compounds</span></span>
+                            </button>
+                        </div>
+                        <p class="work-nav-k">Personal project</p>
+                        <div class="work-nav-list" role="tablist" aria-label="Personal project">
+                            <button class="work-tab" type="button" role="tab" aria-selected="false" aria-controls="p-dolly" data-panel="p-dolly">
+                                <span class="tn">✦</span>
+                                <span class="tt"><span class="th">Dolly</span><span class="ts">A personal design OS</span></span>
+                            </button>
+                        </div>
+                    </aside>
+
+                    <!-- panels, inside a generative frame -->
+                    <div class="gen-frame" id="genFrame">
+                    <div class="gen-bar">
+                        <span class="gen-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="gen-path" id="genPath">optimove ~ /skills/generate-ds-ui</span>
+                        <span class="gen-status" id="genStatus"><i class="led"></i><span class="lbl">ready</span></span>
+                    </div>
+                    <div class="gen-prompt">
+                        <span class="gp-sign" aria-hidden="true">✦</span>
+                        <span class="gp-text" id="genType"></span><span class="gp-caret" aria-hidden="true"></span>
+                    </div>
+                    <div class="gen-load" aria-hidden="true"></div>
+                    <div class="work-panels">
+
+                    <!-- ══════════ SKILL 01 — generate-ds-ui ══════════ -->
+                    <article class="work-panel is-on" id="p-dsui" role="tabpanel">
+                <div class="skill-head">
+                    <p class="skill-num fade-up">Skill 01</p>
+                    <h2 class="skill-name fade-up"><span class="dot"></span>generate-ds-ui</h2>
+                    <p class="skill-one fade-up">Screens built only from components that actually exist.</p>
+                    <p class="ac-body fade-up" style="margin-top:1.2rem">A design system is only worth what people actually build with it — and a library of a few hundred components is genuinely hard to reach. Designers know it best and still lose time checking which variant is current before starting a screen. Everyone else is further away again. The distance between <em>"we have a design system"</em> and <em>"this screen uses it"</em> is exactly where consistency leaks, quietly, one file at a time.</p>
+                    <p class="ac-body fade-up">This skill closes that distance by making the system <strong>reachable instead of memorable</strong>. It fetches the live inventory itself and refuses to output anything it cannot trace back to a real component — so a designer gets a consistent, on-system starting point without auditing it by hand, and someone in product can produce something genuinely buildable without knowing the library at all.</p>
+                    <p class="ac-body fade-up">It has two output modes. <strong>Code</strong> produces a live prototype from the token file — good for feeling an interaction. <strong>Figma</strong> places real component instances in a real file, where fidelity is guaranteed by construction: an instance of a real component physically cannot have the wrong padding. Same brief, same pipeline, two deliverables depending on whether you need to click it or review it.</p>
+
+                    <div class="grow fade-up" style="margin-top:2.4rem">
+                        <div class="grow-card">
+                            <p class="gk">Product Design</p>
+                            <p class="gh">Consistency by default</p>
+                            <p class="gp">The main use. Start from a screen that is already on-system, so review is about the idea rather than about which button variant this is and whether the spacing is ours.</p>
+                        </div>
+                        <div class="grow-card">
+                            <p class="gk">Product</p>
+                            <p class="gh">A real starting point</p>
+                            <p class="gp">A PM can put a concrete, buildable screen into a conversation instead of a wireframe that has to be redrawn — without learning the component inventory first.</p>
+                        </div>
+                        <div class="grow-card">
+                            <p class="gk">Engineering</p>
+                            <p class="gh">Nothing to translate</p>
+                            <p class="gp">What arrives is composed of components that already exist, with real tokens — so the handoff conversation is about behaviour, not about what half of it should have been.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pns fade-up">
+                    <div class="pns-card">
+                        <p class="pns-k">Problem</p>
+                        <p class="pns-t">Ask any AI for a settings page and you get one — with invented components, hardcoded spacing and a button variant we never shipped. It looks plausible in a screenshot and falls apart the moment a developer opens it. Meanwhile the real system sits there, correct and underused.</p>
+                    </div>
+                    <div class="pns-card">
+                        <p class="pns-k">The need</p>
+                        <p class="pns-t">Anyone shaping a screen — designer, PM or developer — should land on something <em>already</em> design-system-correct: consistent for the design team by default, and reachable for everyone else without knowing the inventory.</p>
+                    </div>
+                    <div class="pns-card is-solution">
+                        <p class="pns-k">Solution</p>
+                        <p class="pns-t">Sync the live component inventory before every run, compose only real components with measured tokens, then verify the output against that same data — and fail the run if anything was invented.</p>
+                    </div>
+                </div>
+
+                <div class="flow fade-up" data-flow="dsui">
+                    <p class="flow-title">How it works</p>
+                    <ol class="flow-list"></ol>
+                    <p class="flow-loop">↻ Render → Compare → Verify repeats until the output matches the real thing.</p>
+                </div>
+
+                <div class="demo fade-up">
+                    <div class="demo-bar">
+                        <span class="t">The verify gate — same brief, two ways in</span>
+                    </div>
+                    <div class="demo-body">
+                        <div class="vs" id="vsGrid"></div>
+                    </div>
+                </div>
+
+                <div class="ac-shot fade-up">
+                    <video src="./assets/ai-champion/generate-ds-ui.mp4" muted loop playsinline preload="none"></video>
+                </div>
+                <p class="ac-cap fade-up">The skill running end to end — sync, compose, render, verify.</p>
+                    </article>
+
+                    <!-- ══════════ SKILL 02 — generate-misc-icon ══════════ -->
+                    <article class="work-panel" id="p-icon" role="tabpanel">
+                <div class="skill-head">
+                    <p class="skill-num fade-up">Skill 02</p>
+                    <h2 class="skill-name fade-up"><span class="dot"></span>generate-misc-icon</h2>
+                    <p class="skill-one fade-up">New brand icons that read as siblings, not cousins.</p>
+                    <p class="ac-body fade-up" style="margin-top:1.2rem">Our spot icons are a real graphical language: indigo outlines with round joins, white and lavender fills, exactly one lime focal, and a recurring four-point sparkle whenever something is AI-driven. Those rules are easy to state and surprisingly hard to hit. A generic AI gets close enough to be tempting and wrong enough to be unusable — the stroke is a third of a pixel heavy, the lime lands in two places, the ink is a hex nobody uses.</p>
+                    <p class="ac-body fade-up">The fix was to stop describing the style and start measuring it. Every run re-imports the real icon folder and derives the palette, stroke weight and canvas from the actual files, so the skill is always calibrated to the set as it exists today — not as it looked when the instructions were written. Then it proves the result: rendered at the sizes it ships at, placed beside a real icon, and refined until the differences are gone.</p>
+                </div>
+
+                <div class="pns fade-up">
+                    <div class="pns-card">
+                        <p class="pns-k">Problem</p>
+                        <p class="pns-t">Every new spot icon drifts. Drawn from memory it misses the stroke weight, the exact ink, the lavender-and-one-lime rule, the sparkle convention — and then blurs into mush at the size it actually ships at.</p>
+                    </div>
+                    <div class="pns-card">
+                        <p class="pns-k">The need</p>
+                        <p class="pns-t">Icons that belong to the existing set on first delivery, proven legible at the two real header sizes — 48px and 38px — before anyone opens Figma.</p>
+                    </div>
+                    <div class="pns-card is-solution">
+                        <p class="pns-k">Solution</p>
+                        <p class="pns-t">Learn from the <em>real</em> icon set every single run, draw to canonical tokens, then render at ship sizes and compare side by side with a real icon — looping until the deltas are gone.</p>
+                    </div>
+                </div>
+
+                <div class="flow fade-up" data-flow="icon">
+                    <p class="flow-title">How it works</p>
+                    <ol class="flow-list"></ol>
+                    <p class="flow-loop">↻ Render → Compare → Refine repeats until it reads as part of the family.</p>
+                </div>
+
+                <div class="demo fade-up">
+                    <div class="demo-bar">
+                        <span class="t">Legibility at ship size</span>
+                        <div class="icon-picker" id="iconPicker"></div>
+                    </div>
+                    <div class="demo-body">
+                        <div class="sz-stage">
+                            <span class="sz-readout" id="szReadout">512 px</span>
+                            <img id="szImg" src="./assets/ai-champion/icons/audience-segmentation.svg" alt="Real Optimove design-system icon shown at an adjustable size" width="512" height="512">
+                            <span class="sz-flag" id="szFlag"></span>
+                        </div>
+                        <div class="sz-controls">
+                            <div class="sz-slider">
+                                <input type="range" id="szRange" min="24" max="512" value="512" step="1" aria-label="Icon render size in pixels">
+                            </div>
+                            <div class="sz-marks">
+                                <button class="chip" data-size="512">512 · detail</button>
+                                <button class="chip" data-size="48">48 · Md</button>
+                                <button class="chip" data-size="38">38 · Sm</button>
+                                <button class="chip" data-size="24">24 · too small</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="ac-cap fade-up">Real icons from the Optimove set. 38px is the legibility floor — below it, detail merges and the skill simplifies instead of shrinking.</p>
+                    </article>
+
+                    <!-- ══════════ SKILL 03 — ux-test-analysis ══════════ -->
+                    <article class="work-panel" id="p-ux" role="tabpanel">
+                <div class="skill-head">
+                    <p class="skill-num fade-up">Skill 03</p>
+                    <h2 class="skill-name fade-up"><span class="dot"></span>ux-test-analysis</h2>
+                    <p class="skill-one fade-up">Research that compounds instead of evaporating.</p>
+                    <p class="ac-body fade-up" style="margin-top:1.2rem">Analysis is the part of research that quietly gets skipped. Running the session is the fun bit; turning six transcripts into something comparable is hours of work with no visible output, so it slips — and the insight decays until someone asks "didn't we test this?" and nobody can answer.</p>
+                    <p class="ac-body fade-up">This skill treats a transcript as structured data rather than a document. It pulls out participants, tasks, ratings, issues and quotes; separates what a user <em>did</em> from what that might <em>mean</em>; infers severity from the evidence instead of asking someone to pick a number; and writes the whole thing into linked Notion databases. The payoff is not the report — it is that the fiftieth test is as searchable as the first, and a new question can be asked of research nobody remembers running.</p>
+                </div>
+
+                <div class="pns fade-up">
+                    <div class="pns-card">
+                        <p class="pns-k">Problem</p>
+                        <p class="pns-t">Usability tests end as a transcript and a deck. Findings live in whoever ran the session; nothing is queryable, nothing accumulates, and the same issue gets rediscovered a quarter later.</p>
+                    </div>
+                    <div class="pns-card">
+                        <p class="pns-k">The need</p>
+                        <p class="pns-t">Evidence you can search, scores you can compare across tests, and a way to check a design assumption against what the team already learned — before building on it.</p>
+                    </div>
+                    <div class="pns-card is-solution">
+                        <p class="pns-k">Solution</p>
+                        <p class="pns-t">Turn a raw transcript into a structured Notion workspace — sessions, issues, recommendations, participants, quotes — with a computed UX Health Score, an analysis page, and dated notes pinned onto the Figma designs.</p>
+                    </div>
+                </div>
+
+                <div class="flow fade-up" data-flow="ux">
+                    <p class="flow-title">How it works</p>
+                    <ol class="flow-list"></ol>
+                    <p class="flow-loop">↻ Every new test re-aggregates the feature score from raw data — never an average of averages.</p>
+                </div>
+
+                <div class="demo fade-up">
+                    <div class="demo-bar">
+                        <span class="t">UX Health Score — try it</span>
+                        <span class="t" style="color:var(--dim)">50 / 25 / 25</span>
+                    </div>
+                    <div class="demo-body">
+                        <div class="calc">
+                            <div>
+                                <div class="calc-row">
+                                    <div class="top">
+                                        <span class="nm">Task success <span class="w">· 50%</span></span>
+                                        <span class="val" id="v-succ">78%</span>
+                                    </div>
+                                    <input type="range" id="r-succ" min="0" max="100" value="78" aria-label="Task success rate">
+                                </div>
+                                <div class="calc-row">
+                                    <div class="top">
+                                        <span class="nm">Mission difficulty <span class="w">· 25% · 1 easy → 10 hard</span></span>
+                                        <span class="val" id="v-diff">4.0</span>
+                                    </div>
+                                    <input type="range" id="r-diff" min="10" max="100" value="40" aria-label="Average mission difficulty">
+                                </div>
+                                <div class="calc-row">
+                                    <div class="top">
+                                        <span class="nm">Issue severity <span class="w">· 25% · low → critical</span></span>
+                                        <span class="val" id="v-sev">Medium</span>
+                                    </div>
+                                    <input type="range" id="r-sev" min="0" max="100" value="45" aria-label="Overall issue severity">
+                                </div>
+                            </div>
+                            <div class="calc-out">
+                                <div class="score" id="calcScore">72</div>
+                                <div class="of">UX Health Score</div>
+                                <span class="status" id="calcStatus">Watch</span>
+                                <div class="formula" id="calcFormula"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="ac-body fade-up" style="margin-top:2.4rem">Company names stay — they are what makes research findable a year later. Personal identifiers never enter the workspace at all.</p>
+                <div class="pill-row fade-up">
+                    <span class="pill">Client name kept</span>
+                    <span class="pill">Participants → P1, P2</span>
+                    <span class="pill">No emails or phone numbers</span>
+                    <span class="pill">Roles over identities</span>
+                </div>
+                    </article>
+
+                    <!-- ══════════ DOLLY — a personal design OS ══════════ -->
+                    <article class="work-panel" id="p-dolly" role="tabpanel">
+                <p class="ac-label fade-up">Separate personal project</p>
+                <h2 class="ac-h2 fade-up">Dolly — a personal design OS</h2>
+                <p class="ac-body fade-up">Dolly is not one of the skills, and it does not depend on them. It is the environment I work in: a Senior Product Designer agent running on Claude Code, built as a personal operating system rather than a tool with a fixed job.</p>
+                <p class="ac-body fade-up">It is not a different model, and not a smarter one. It is the same Claude, wrapped in a working layer that gives it a role, a memory that survives between sessions, real tooling, and rules about what it may touch without asking. <strong>Claude is the reasoning. Dolly is the reasoning plus memory, a specialism, tools, and a permission model.</strong></p>
+
+                <h3 class="ac-h2 fade-up" style="font-size:clamp(1.3rem,2.4vw,1.9rem);margin-top:3.4rem;margin-bottom:0.6rem">Where it differs from a plain chat</h3>
+                <p class="ac-body fade-up">Nine differences, and none of them are about intelligence.</p>
+
+                <div class="cmp fade-up" id="cmpTable"></div>
+
+                <div class="cmp-quote fade-up">
+                    <div class="cmp-q">
+                        <span class="qk">Plain chat — every time</span>
+                        <p style="margin:0"><em>"This is the strategy creation flow, here are the requirements, here's what we decided last month, use our format, and check it against the design system."</em></p>
+                    </div>
+                    <div class="cmp-q is-b">
+                        <span class="qk">Dolly — same task</span>
+                        <p style="margin:0"><em>"Let's carry on with strategy creation."</em></p>
+                    </div>
+                </div>
+
+                <h3 class="ac-h2 fade-up" style="font-size:clamp(1.3rem,2.4vw,1.9rem);margin-top:3.6rem;margin-bottom:0.6rem">How a session runs</h3>
+                <p class="ac-body fade-up">Five steps and one gate. Reading is free; changing anything real waits for a yes.</p>
+
+                <div class="loop fade-up" id="loopViz"></div>
+                <p class="loop-return fade-up">↺ <b>The return arrow is the whole point.</b> What was worth keeping is written back before the session ends — so the next one starts where this one finished, not from scratch. Everything else is a nicer interface; this loop is what makes tomorrow better than today.</p>
+
+                <h3 class="ac-h2 fade-up" style="font-size:clamp(1.3rem,2.4vw,1.9rem);margin-top:3.6rem;margin-bottom:0.6rem">Three memory layers</h3>
+                <p class="ac-body fade-up">Each layer has one job, and a fact lives in exactly one of them — writing the same thing twice is how two copies start quietly contradicting each other.</p>
+
+                <div class="mem fade-up" id="memViz"></div>
+
+                <h3 class="ac-h2 fade-up" style="font-size:clamp(1.3rem,2.4vw,1.9rem);margin-top:3.6rem;margin-bottom:0.6rem">Built to grow, and to be someone else's</h3>
+                <p class="ac-body fade-up">Nothing about Dolly is finished, and that is the design. It is a shape you extend rather than a product you use — the knowledge base is deliberately empty in the repo, so anyone who forks it fills it with their own people, projects and decisions and ends up with a different assistant that behaves like theirs.</p>
+
+                <div class="grow fade-up" id="growViz"></div>
+
+                <p class="ac-body fade-up" style="margin-top:2.2rem">The privacy line is drawn in the same spirit: the vault is local-only and kept out of git by an allowlist, because it holds named colleagues, customer accounts and meeting transcripts. The repo is the shape of the system. What it knows stays on my machine.</p>
+
+                <div class="note-box fade-up">
+                    <span class="nk">When a plain chat is the better tool</span>
+                    <p>Anything that does not need your history — a generic question, a quick explanation, throwaway code, a topic unrelated to the day job. Loading project context costs tokens and adds nothing there. Dolly earns its keep on work that is continuous, opinionated and design-system-bound; pretending it wins everywhere would just make it slower at the easy things.</p>
+                </div>
+                    </article>
+
+                    </div><!-- /.work-panels -->
+                    </div><!-- /.gen-frame -->
+                </div><!-- /.work-grid -->
+            </div><!-- /.ac-wrap -->
+        </section>
+
+        <!-- OUTRO -->
+        <section class="ac-outro">
+            <div class="ac-wrap">
+                <h2>Build the system, not the <span class="spark">output</span>.</h2>
+                <p>A good prompt makes one good screen. A skill makes every screen after it correct by default, and anyone on the team can run it without knowing what I know. An OS goes further — it remembers why, so the next question starts from everything already settled. Both are the same bet: spend the effort once, upstream, where it keeps paying.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script>
+    (function () {
+        document.body.style.opacity = '1';
+
+        var lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+        gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+        gsap.ticker.lagSmoothing(0);
+
+        var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ── side menu ⇄ panels ─────────────────────────────────── */
+        var tabs = document.querySelectorAll('.work-tab');
+        var panels = document.querySelectorAll('.work-panel');
+        var workSec = document.querySelector('.ac-work');
+        // Panel content is behind a tab, so it must not depend on scroll-reveal.
+        document.querySelectorAll('.work-panel .fade-up').forEach(function (el) {
+            el.classList.remove('fade-up');
+        });
+
+        // What each panel "was asked", shown as a typed prompt in the frame.
+        var PROMPTS = {
+            'p-dsui':  { path: 'optimove ~ /skills/generate-ds-ui',
+                         cmd: 'run generate-ds-ui --screen "strategy settings" --mode figma' },
+            'p-icon':  { path: 'optimove ~ /skills/generate-misc-icon',
+                         cmd: 'run generate-misc-icon --subject "application center" --size md,sm' },
+            'p-ux':    { path: 'optimove ~ /skills/ux-test-analysis',
+                         cmd: 'run ux-test-analysis --transcript session-04.txt --mode new' },
+            'p-dolly': { path: 'dolly ~ /soul.md',
+                         cmd: 'dolly --explain "what are you, and why not just a chat?"' }
+        };
+        var genFrame  = document.getElementById('genFrame');
+        var genPath   = document.getElementById('genPath');
+        var genType   = document.getElementById('genType');
+        var genStatus = document.getElementById('genStatus');
+        var typeTimer = null;
+
+        function paintCmd(text) {
+            // highlight --flags without letting user text become markup
+            var safe = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            genType.innerHTML = safe.replace(/(\s--[a-z-]+)/g, '<span class="flag">$1</span>');
+        }
+        function setStatus(busy) {
+            genFrame.classList.toggle('is-busy', busy);
+            var lbl = genStatus.querySelector('.lbl');
+            if (lbl) lbl.textContent = busy ? 'generating' : 'ready';
+        }
+        function revealPanel(target) {
+            setStatus(false);
+            if (reduceMotion) return;
+            gsap.fromTo(target.children, { opacity: 0, y: 14 },
+                { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out',
+                  stagger: 0.045, overwrite: true, clearProps: 'transform' });
+        }
+        function typeCmd(id, target) {
+            var cfg = PROMPTS[id];
+            if (!cfg) { revealPanel(target); return; }
+            genPath.textContent = cfg.path;
+            clearInterval(typeTimer);
+            if (reduceMotion) { paintCmd(cfg.cmd); revealPanel(target); return; }
+            setStatus(true);
+            genType.textContent = '';
+            var i = 0;
+            typeTimer = setInterval(function () {
+                i += Math.random() < 0.25 ? 2 : 1;         // slight human unevenness
+                if (i >= cfg.cmd.length) {
+                    i = cfg.cmd.length;
+                    clearInterval(typeTimer);
+                    paintCmd(cfg.cmd);
+                    setTimeout(function () { revealPanel(target); }, 230);
+                } else {
+                    paintCmd(cfg.cmd.slice(0, i));
+                }
+            }, 16);
+        }
+
+        function showPanel(id, fromClick, skipType) {
+            var target = document.getElementById(id);
+            if (!target) return;
+            panels.forEach(function (p) { p.classList.toggle('is-on', p === target); });
+            tabs.forEach(function (t) {
+                var on = t.dataset.panel === id;
+                t.classList.toggle('is-on', on);
+                t.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            if (fromClick) {
+                // If the reader has scrolled past the top of the section, bring it back
+                // so a shorter panel never leaves them stranded below the content.
+                var top = workSec.getBoundingClientRect().top;
+                if (top < 0) {
+                    var y = window.scrollY + top - 90;
+                    if (window.lenisInstance && window.lenisInstance.scrollTo) window.lenisInstance.scrollTo(y);
+                    else if (lenis && lenis.scrollTo) lenis.scrollTo(y);
+                    else window.scrollTo(0, y);
+                }
+                if (history.replaceState) history.replaceState(null, '', '#' + id.replace(/^p-/, ''));
+            }
+            if (!skipType) typeCmd(id, target);
+        }
+        tabs.forEach(function (t) {
+            t.addEventListener('click', function () { showPanel(t.dataset.panel, true); });
+        });
+
+        // First run types itself as soon as the frame is actually looked at.
+        var firstPlayed = false;
+        if (genFrame) {
+            var fio = new IntersectionObserver(function (es) {
+                es.forEach(function (e) {
+                    if (!e.isIntersecting || firstPlayed) return;
+                    firstPlayed = true;
+                    var on = document.querySelector('.work-panel.is-on');
+                    if (on) typeCmd(on.id, on);
+                    fio.disconnect();
+                });
+            }, { threshold: 0.15 });
+            fio.observe(genFrame);
+        }
+        // deep link: #generate-ds-ui style hashes
+        var HASH_MAP = { 'generate-ds-ui': 'p-dsui', dsui: 'p-dsui', 'generate-misc-icon': 'p-icon',
+                         icon: 'p-icon', 'ux-test-analysis': 'p-ux', ux: 'p-ux', dolly: 'p-dolly' };
+        // Deep link only selects the panel — the typing plays when the frame is seen.
+        var initial = HASH_MAP[(location.hash || '').replace('#', '')];
+        if (initial) showPanel(initial, false, true);
+
+        /* ── reveal ─────────────────────────────────────────────── */
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                var items = e.target.classList.contains('fade-up')
+                    ? [e.target] : e.target.querySelectorAll('.fade-up');
+                if (!items.length) return;
+                if (reduceMotion) { gsap.set(items, { opacity: 1, y: 0 }); return; }
+                if (e.isIntersecting) {
+                    gsap.fromTo(items, { opacity: 0, y: 48 },
+                        { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out',
+                          stagger: 0.08, overwrite: true, clearProps: 'transform' });
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.ac-hero, .ac-metabar, .ac-lede, .ac-sec').forEach(function (s) { io.observe(s); });
+
+        /* ── Dolly: plain chat vs Dolly ─────────────────────────── */
+        var CMP = [
+            ['Context',       'You re-supply it every time.',                'Loads what is relevant from the vault itself.'],
+            ['Continuity',    'Each task starts near-fresh.',                'Resumes where the project stopped.'],
+            ['Role',          'A general assistant.',                        'A defined role, priorities and a house voice.'],
+            ['Design system', 'Describes components generically.',           'Queries the live library and uses real component keys.'],
+            ['Corrections',   'Apply to this conversation only.',            'Durable ones get written down and change future work.'],
+            ['Tools',         'Bound to the conversation.',                  'Figma, Notion, Slack, Asana, calendar, meeting transcripts.'],
+            ['Procedures',    'Re-improvised each time.',                    'Versioned skills with worked examples — optional, not required.'],
+            ['Output shape',  'Answers the question.',                       'Decision first, then rationale, with a named tradeoff.'],
+            ['Permissions',   'No project-specific model.',                  'An explicit gate before writing or sending anything.']
+        ];
+        var cmpTable = document.getElementById('cmpTable');
+        if (cmpTable) {
+            var head = document.createElement('div');
+            head.className = 'cmp-row cmp-head';
+            head.innerHTML = '<div class="cmp-k"></div><div class="cmp-a">Plain Claude chat</div><div class="cmp-b">Dolly</div>';
+            cmpTable.appendChild(head);
+            CMP.forEach(function (r) {
+                var row = document.createElement('div');
+                row.className = 'cmp-row';
+                row.innerHTML = '<div class="cmp-k">' + r[0] + '</div>' +
+                                '<div class="cmp-a">' + r[1] + '</div>' +
+                                '<div class="cmp-b">' + r[2] + '</div>';
+                cmpTable.appendChild(row);
+            });
+        }
+
+        /* ── Dolly: the session loop ────────────────────────────── */
+        var LOOP = [
+            { n: '01', h: 'Load',   p: 'Identity, protocol and a one-line index of everything it knows — before the request is even read.' },
+            { n: '02', h: 'Gather', p: 'Pulls only what this task needs: a vault page, a skill, a live tool.' },
+            { n: '03', h: 'Gate',   p: 'Does this change anything real? If yes — state a plan and wait.', gate: true },
+            { n: '04', h: 'Answer', p: 'Decision first, then the rationale, with the tradeoff named out loud.' },
+            { n: '05', h: 'Keep',   p: 'Writes down what is durable and points to it from the index.' }
+        ];
+        var loopViz = document.getElementById('loopViz');
+        if (loopViz) {
+            LOOP.forEach(function (d) {
+                var n = document.createElement('div');
+                n.className = 'loop-node' + (d.gate ? ' is-gate' : '');
+                n.innerHTML = '<span class="ln">' + d.n + (d.gate ? ' · GATE' : '') + '</span>' +
+                              '<p class="lh">' + d.h + '</p><p class="lp">' + d.p + '</p>';
+                loopViz.appendChild(n);
+            });
+        }
+
+        /* ── Dolly: memory layers ───────────────────────────────── */
+        var MEM = [
+            ['Identity', 'always loaded first', 'Who it is, how it speaks, what it prioritises. Kept tiny on purpose — this channel truncates, and a cut-off identity fails silently.'],
+            ['Index',    'one line per fact',   'A pointer to every durable thing it knows. Cheap enough to carry in full, every session.'],
+            ['Depth',    'read on demand',      'The vault — people, projects, competitors, research, decisions. Only the page the task needs is ever opened.']
+        ];
+        var memViz = document.getElementById('memViz');
+        if (memViz) {
+            MEM.forEach(function (m) {
+                var row = document.createElement('div');
+                row.className = 'mem-row';
+                row.innerHTML = '<div class="mk">' + m[0] + '<span>' + m[1] + '</span></div>' +
+                                '<div class="mem-bar">' + m[2] + '</div>';
+                memViz.appendChild(row);
+            });
+        }
+
+        /* ── Dolly: what you extend ─────────────────────────────── */
+        var GROW = [
+            { k: 'Knowledge', h: 'The vault', p: 'Every project, person and decision becomes a linked page. The longer it runs, the less you have to explain.' },
+            { k: 'Behaviour', h: 'Identity & protocol', p: 'Its role, voice, priorities and routing are plain text files. Disagree with how it works and you edit it, not prompt around it.' },
+            { k: 'Reach',     h: 'Tools & commands', p: 'New integrations and slash commands get added as the work needs them — not bundled up front.' },
+            { k: 'Procedure', h: 'Skills', p: 'Anything done the same way twice can be written down as a skill. Entirely optional — Dolly works without a single one.' },
+            { k: 'Rhythm',    h: 'Rituals', p: 'Scheduled runs handle the recurring work: status sweeps, ingesting notes, keeping the vault tidy.' },
+            { k: 'Judgment',  h: 'Corrections that stick', p: 'Tell it something once and, if it is durable, it is written down — so the same correction is not needed next month.' }
+        ];
+        var growViz = document.getElementById('growViz');
+        if (growViz) {
+            GROW.forEach(function (g) {
+                var c = document.createElement('div');
+                c.className = 'grow-card';
+                c.innerHTML = '<p class="gk">' + g.k + '</p><p class="gh">' + g.h + '</p><p class="gp">' + g.p + '</p>';
+                growViz.appendChild(c);
+            });
+        }
+
+        /* ── pipelines ──────────────────────────────────────────── */
+        var FLOWS = {
+            dsui: [
+                { n: 'Sync',     h: 'Pull the live inventory',
+                  p: 'Before anything is written, the skill re-reads which components actually exist in the design system and what their keys are. Every run, never from memory of a past session.',
+                  w: 'A design system changes weekly. <b>Memory goes stale; a sync does not.</b>' },
+                { n: 'Study',    h: 'Read the real specs',
+                  p: 'Tokens, measured component geometry and the layout blueprints get read before generation — so spacing and radii come from the system, not from a guess that looks about right.',
+                  w: 'A 20px gap where the system says 24 is <b>invisible in review</b> and permanent once shipped.' },
+                { n: 'Generate', h: 'Compose, do not invent',
+                  p: 'The screen is assembled from real components only — either as a live code prototype built from the token file, or as real component instances placed in an actual Figma file.',
+                  w: 'In Figma mode fidelity is <b>guaranteed by construction</b> — an instance of the real component cannot have the wrong spacing.' },
+                { n: 'Render',   h: 'Screenshot it',
+                  p: 'The result is rendered so it can be looked at rather than assumed. Generating is not the same as knowing it came out right.',
+                  w: 'Rendering is not verifying — <b>you still have to look.</b>' },
+                { n: 'Compare',  h: 'Diff against the source',
+                  p: 'The output is put next to the real component data and the deltas are named: wrong variant, off token, spacing that drifted.',
+                  w: 'Naming the delta is what makes the next pass <b>converge</b> instead of wander.' },
+                { n: 'Verify',   h: 'Fail on anything invented',
+                  p: 'A last gate checks every component against the synced inventory and every value against the token set. A component that does not exist fails the run.',
+                  w: 'The gate is the point: <b>plausible is not the same as real.</b>' },
+                { n: 'Deliver',  h: 'Hand over the raw file',
+                  p: 'No wrapper, no branded preview template — those got mistaken for part of the design. Just the file, the screenshot, the components used and the verify status.',
+                  w: 'Chrome around a mockup <b>becomes part of the mockup</b> in the reader’s head.' }
+            ],
+            icon: [
+                { n: 'Sync',     h: 'Import the real set',
+                  p: 'Any new icons dropped into the design-system folder are pulled in and the palette, stroke weight and canvas profile are re-derived from the actual files.',
+                  w: 'The style is <b>measured from the set</b>, not described from memory.' },
+                { n: 'Study',    h: 'Look at the closest icons',
+                  p: 'Two or three existing icons nearest the new subject get rendered and actually examined — stroke weight, corner radii, how fills layer, how the sparkle is drawn.',
+                  w: 'Reading the SVG source teaches <b>construction</b>, not just appearance.' },
+                { n: 'Metaphor', h: 'Widen before committing',
+                  p: 'How do other products draw this same idea? The first metaphor that comes to mind is rarely the clearest one, so the pool gets widened before a shape is locked.',
+                  w: 'A whole batch is explored together so the set reads as <b>a family</b>.' },
+                { n: 'Draw',     h: 'Canonical canvas, tokens only',
+                  p: 'The SVG is written on the standard canvas with round caps and joins, two-tone fills, and exactly one lime focal point.',
+                  w: 'Exactly one lime accent — <b>a second focal point is no focal point.</b>' },
+                { n: 'Render',   h: 'Export at ship sizes',
+                  p: 'Rendered at 512 for detail and at 48 and 38 — the two sizes the icon will really appear at in product headers.',
+                  w: 'An icon that only works at 512 is <b>a drawing, not an icon.</b>' },
+                { n: 'Compare',  h: 'Side by side with a real one',
+                  p: 'The candidate is placed next to an actual design-system icon and every difference is named: stroke weight, ink hex, radius, subject scale, centring.',
+                  w: 'Two icons that each pass alone can still <b>clash with each other</b>.' },
+                { n: 'Refine',   h: 'Loop until it matches',
+                  p: 'The deltas get fixed in the SVG and the render-compare pass runs again. The loop is the skill — convergence is the whole point.',
+                  w: 'Stroke weight snaps to <b>five quantised targets</b>, never an arbitrary decimal.' },
+                { n: 'Deliver',  h: 'Ship it in an inspector',
+                  p: 'Not a bare file — a drag-and-snap inspector where each part can be repositioned, variants compared, and the exact thing on the canvas copied or downloaded.',
+                  w: 'The deliverable is <b>adjustable</b>, so review does not mean another round trip.' }
+            ],
+            ux: [
+                { n: 'Mode',     h: 'New, existing, or find',
+                  p: 'Three ways in: a first test for a feature, another test on a feature already tracked, or Find — search everything captured so far without adding anything new.',
+                  w: 'Find mode also runs <b>Evidence Check</b>: state an assumption, get what supports or contradicts it.' },
+                { n: 'Read',     h: 'Parse the transcript',
+                  p: 'Client, participants, roles, tasks run, ratings given and quotes said all get pulled straight out of the transcript instead of being asked for in a setup form.',
+                  w: 'Nothing gets invented — a missing rating is <b>marked missing</b>, not filled in.' },
+                { n: 'Extract',  h: 'Split every finding',
+                  p: 'Each finding is separated into what the user actually did, what that may indicate, and what should change. Severity is inferred from the evidence itself.',
+                  w: 'Observation and interpretation kept apart, so <b>the reader can disagree</b> with one.' },
+                { n: 'Score',    h: 'Compute UX Health',
+                  p: 'A single comparable number: half task success, a quarter self-rated difficulty, a quarter issue severity — with the calculation shown so it can be audited.',
+                  w: 'Shown, not asserted — <b>an unauditable score is an opinion.</b>' },
+                { n: 'Structure', h: 'Write it as data',
+                  p: 'Six linked databases — features, sessions, issues, recommendations, participants and quotes — so findings become queryable rows instead of paragraphs in a deck.',
+                  w: 'A recurring issue <b>gains evidence</b> instead of becoming a duplicate row.' },
+                { n: 'Analyse',  h: 'Build the analysis page',
+                  p: 'One page, no tabs: is the feature usable, where did users struggle, what should we fix first — as KPI cards, mission charts and a prioritised fix list.',
+                  w: 'Top answers "usable?", middle answers "where?", bottom answers <b>"what first?"</b>' },
+                { n: 'Annotate', h: 'Pin it back onto the design',
+                  p: 'Dated notes land next to the specific UI area they came from in Figma — each test gets its own annotation set, so a repeat problem is visible as a pattern.',
+                  w: 'Three tests flagging one area gets a <b>recurring-issue</b> note of its own.' }
+            ]
+        };
+
+        document.querySelectorAll('[data-flow]').forEach(function (flow) {
+            var steps = FLOWS[flow.dataset.flow];
+            if (!steps) return;
+            var list = flow.querySelector('.flow-list');
+            if (!list) return;
+
+            steps.forEach(function (s, i) {
+                var li = document.createElement('li');
+                li.className = 'flow-item';
+                li.innerHTML =
+                    '<span class="idx">' + String(i + 1).padStart(2, '0') + '</span>' +
+                    '<p class="nm"><span class="step-key">' + s.n + '</span>' + s.h + '</p>' +
+                    '<p class="ds">' + s.p + '</p>' +
+                    '<p class="why">' + s.w + '</p>';
+                list.appendChild(li);
+            });
+        });
+
+        /* ── verify gate demo ───────────────────────────────────── */
+        var VF = {
+            hand: {
+                tag: 'Generic AI', title: 'Prompted from memory',
+                rows: [
+                    ['Every component exists in the inventory', 'fail', '3 invented — no such card, tab or badge'],
+                    ['No hardcoded values — tokens only', 'fail', '18 raw hex and px literals'],
+                    ['Spacing matches measured DS geometry', 'fail', 'gaps of 20px where the system says 24'],
+                    ['Variants exist on the real component', 'pass', 'correct, but by luck not by check']
+                ],
+                verdict: '✕ Looks right in a screenshot. Cannot be built without a redesign.',
+                bad: true
+            },
+            skill: {
+                tag: 'The skill', title: 'Composed from synced data',
+                rows: [
+                    ['Every component exists in the inventory', 'pass', '12 / 12 matched to live keys'],
+                    ['No hardcoded values — tokens only', 'pass', '0 literals — every value from tokens'],
+                    ['Spacing matches measured DS geometry', 'pass', 'within spec on every gap'],
+                    ['Variants exist on the real component', 'pass', '5 / 5 verified against the set']
+                ],
+                verdict: '✓ Passes the gate. Hands straight to a developer — or opens in Figma as real instances.',
+                bad: false
+            }
+        };
+        var vsGrid = document.getElementById('vsGrid');
+        if (vsGrid) {
+            ['hand', 'skill'].forEach(function (mode) {
+                var cfg = VF[mode];
+                var col = document.createElement('div');
+                col.className = 'vs-col ' + (cfg.bad ? 'is-bad' : 'is-good');
+                var rows = cfg.rows.map(function (r) {
+                    return '<div class="vf-row ' + r[1] + '">' +
+                           '<span class="mark">' + (r[1] === 'pass' ? '✓' : '✕') + '</span>' +
+                           '<span class="lbl">' + r[0] + '<span class="note">' + r[2] + '</span></span>' +
+                           '</div>';
+                }).join('');
+                col.innerHTML =
+                    '<div class="vs-hd"><span class="tagpill">' + cfg.tag + '</span>' + cfg.title + '</div>' +
+                    rows +
+                    '<p class="vs-verdict">' + cfg.verdict + '</p>';
+                vsGrid.appendChild(col);
+            });
+        }
+
+        /* ── icon size scrubber ─────────────────────────────────── */
+        var ICONS = [
+            ['audience-segmentation', 'Audience Segmentation'],
+            ['content-decisioning', 'Content Decisioning'],
+            ['journey-orchestration', 'Journey Orchestration'],
+            ['send-time-optimization', 'Send Time Optimization'],
+            ['offer-decisioning', 'Offer Decisioning'],
+            ['no-filter-distribution', 'No Filter Distribution']
+        ];
+        var szImg = document.getElementById('szImg');
+        var szRange = document.getElementById('szRange');
+        var szReadout = document.getElementById('szReadout');
+        var szFlag = document.getElementById('szFlag');
+        var iconPicker = document.getElementById('iconPicker');
+
+        function setSize(px) {
+            px = Math.max(24, Math.min(512, +px || 512));
+            szImg.style.width = px + 'px';
+            szImg.style.height = px + 'px';
+            szReadout.textContent = px + ' px';
+            var msg = '', warn = false;
+            if (px >= 400)      msg = 'Detail pass — every part is readable.';
+            else if (px >= 48)  msg = '48 px · Md — the primary product header size.';
+            else if (px >= 38)  msg = '38 px · Sm — the legibility floor. Still reads.';
+            else { msg = 'Below 38 px — detail merges. Simplify, do not shrink.'; warn = true; }
+            szFlag.textContent = msg;
+            szFlag.className = 'sz-flag' + (warn ? ' warn' : '');
+            document.querySelectorAll('.sz-marks .chip').forEach(function (c) {
+                c.classList.toggle('is-on', +c.dataset.size === px);
+            });
+        }
+        if (szRange) {
+            szRange.addEventListener('input', function () { setSize(this.value); });
+            document.querySelectorAll('.sz-marks .chip').forEach(function (c) {
+                c.addEventListener('click', function () {
+                    szRange.value = c.dataset.size;
+                    setSize(c.dataset.size);
+                });
+            });
+            ICONS.forEach(function (ic, i) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.className = i === 0 ? 'is-on' : '';
+                b.title = ic[1];
+                b.setAttribute('aria-label', 'Show ' + ic[1]);
+                b.innerHTML = '<img src="./assets/ai-champion/icons/' + ic[0] + '.svg" alt="">';
+                b.addEventListener('click', function () {
+                    szImg.src = './assets/ai-champion/icons/' + ic[0] + '.svg';
+                    szImg.alt = ic[1] + ' — real Optimove design-system icon';
+                    iconPicker.querySelectorAll('button').forEach(function (x) { x.classList.toggle('is-on', x === b); });
+                });
+                iconPicker.appendChild(b);
+            });
+            setSize(512);
+        }
+
+        /* ── UX Health Score calculator ─────────────────────────── */
+        var rSucc = document.getElementById('r-succ');
+        var rDiff = document.getElementById('r-diff');
+        var rSev  = document.getElementById('r-sev');
+        var SEV_LABELS = ['Low', 'Medium', 'High', 'Critical'];
+
+        function calc() {
+            var succ = +rSucc.value;                 // 0–100, higher is better
+            var diff = +rDiff.value / 10;            // 1–10, lower is better
+            var sev  = +rSev.value;                  // 0–100, lower is better
+
+            var sSucc = succ;                        // already 0–100
+            var sDiff = (10 - diff) / 9 * 100;       // invert: 1 → 100, 10 → 0
+            var sSev  = 100 - sev;                   // invert
+
+            var score = Math.round(sSucc * 0.5 + sDiff * 0.25 + sSev * 0.25);
+
+            document.getElementById('v-succ').textContent = succ + '%';
+            document.getElementById('v-diff').textContent = diff.toFixed(1);
+            document.getElementById('v-sev').textContent =
+                SEV_LABELS[Math.min(3, Math.floor(sev / 25.01))];
+
+            document.getElementById('calcScore').textContent = score;
+
+            var st = score >= 80 ? 'Healthy' : score >= 65 ? 'Watch' : score >= 45 ? 'At risk' : 'Critical';
+            document.getElementById('calcStatus').textContent = st;
+
+            document.getElementById('calcFormula').innerHTML =
+                '(' + Math.round(sSucc) + ' × 0.50) + (' + Math.round(sDiff) + ' × 0.25) + (' +
+                Math.round(sSev) + ' × 0.25)<br>= <b style="color:#cbef17">' + score + '</b>';
+        }
+        if (rSucc) {
+            [rSucc, rDiff, rSev].forEach(function (r) { r.addEventListener('input', calc); });
+            calc();
+        }
+
+        /* ── about overlay ──────────────────────────────────────── */
+        var overlay = document.querySelector('.about-overlay');
+        var navLinks = document.querySelectorAll('.nav-link');
+        var overlayOpen = false;
+        function openOverlay() {
+            overlayOpen = true; overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden', 'false');
+            gsap.to(overlay, { clipPath: 'circle(150vmax at 100% 0%)', duration: 1.1, ease: 'power3.inOut' });
+            document.documentElement.style.overflow = 'hidden';
+        }
+        function closeOverlay() {
+            overlayOpen = false; overlay.setAttribute('aria-hidden', 'true');
+            gsap.to(overlay, { clipPath: 'circle(0px at 100% 0%)', duration: 0.9, ease: 'power3.inOut',
+                onComplete: function () { overlay.classList.remove('is-open'); } });
+            document.documentElement.style.overflow = '';
+        }
+        navLinks.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                if (link.dataset.page === 'about') { e.preventDefault(); overlayOpen ? closeOverlay() : openOverlay(); }
+            });
+        });
+        document.addEventListener('click', function (e) {
+            var back = e.target.closest('.about-back');
+            if (!back) return;
+            e.preventDefault(); e.stopPropagation(); closeOverlay();
+        });
+    })();
+    </script>
+    <script src="./js/workMenu.js"></script>
+    <script src="./js/cursor.js"></script>
+    <script src="./js/transitionFade.js"></script>
+    <script src="./js/projectNav.js"></script>
+    <script src="./js/lazyVideo.js"></script>
+</body>
+</html>
