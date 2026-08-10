@@ -510,6 +510,15 @@ body:has(.about-overlay.is-open) #logo {
     object-fit: contain;
     background: #000;
 }
+/* Crops a generated-clip watermark out of the bottom of the frame.
+   A small zoom biased downward: ~9% comes off the bottom, ~1% off the top,
+   so the badge goes without losing the composition.
+   Targeted by ATTRIBUTE, not class — the shared-element page transition
+   strips class names off the media it moves, and the crop must survive that. */
+[data-crop="bottom"] {
+    object-fit: cover !important;
+    transform: scale(1.1) translateY(-3.6%);
+}
 /* Phone variant — portrait app screenshot shown in full (e.g. Tetris loading screen) */
 .project-img-wrap.is-phone {
     width: auto;
