@@ -1,0 +1,312 @@
+/* ============================================================
+   Command Bar — a ⌘K palette: type to filter, arrows to move,
+   Enter to run. Standalone: no libraries, no build step.
+   Pairs with ./command-bar.js
+   ============================================================ */
+
+[data-command-bar] { display: block; width: 100%; height: 100%; }
+
+.cbar {
+  --cb-accent: #a78bfa;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(167, 139, 250, 0.14) 0%, transparent 60%),
+    linear-gradient(180deg, #16151d 0%, #0f0e14 60%, #0b0a0f 100%);
+  color: #ece9f5;
+  font-family: var(--font-display, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+  user-select: none;
+}
+
+/* drifting grid so the closed state is not dead space */
+.cbar__grid {
+  position: absolute;
+  inset: -40%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(60% 50% at 50% 50%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(60% 50% at 50% 50%, #000 0%, transparent 75%);
+  animation: cbar-drift 24s linear infinite;
+  pointer-events: none;
+}
+@keyframes cbar-drift {
+  to { transform: translate(44px, 44px); }
+}
+
+/* ── closed state: the trigger ──────────────────────────── */
+.cbar__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px 14px 20px;
+  min-width: min(340px, 78%);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 24px 50px -24px rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: rgba(236, 233, 245, 0.6);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.35s ease;
+}
+.cbar__trigger:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34), 0 30px 60px -24px rgba(0, 0, 0, 1), 0 0 44px -12px var(--cb-accent);
+}
+.cbar__trigger svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.cbar__trigger span { flex: 1; text-align: left; }
+.cbar__keys { display: flex; gap: 4px; }
+.cbar kbd {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 0 rgba(0, 0, 0, 0.35);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(236, 233, 245, 0.85);
+}
+.cbar.is-open .cbar__trigger { opacity: 0; transform: scale(0.96); pointer-events: none; }
+
+/* ── open state: the palette ────────────────────────────── */
+.cbar__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 10, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s;
+}
+.cbar.is-open .cbar__scrim { opacity: 1; visibility: visible; }
+
+.cbar__palette {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: min(520px, 86%);
+  max-height: 84%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(30, 28, 40, 0.92), rgba(18, 17, 24, 0.94));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 50px 90px -30px rgba(0, 0, 0, 1), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  transform: translate(-50%, -14px) scale(0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.42s;
+}
+.cbar.is-open .cbar__palette { transform: translate(-50%, 0) scale(1); opacity: 1; visibility: visible; }
+
+/* travelling accent line across the top edge */
+.cbar__palette::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, var(--cb-accent), transparent);
+  animation: cbar-sweep 3.4s ease-in-out infinite;
+}
+@keyframes cbar-sweep {
+  0%, 100% { transform: translateX(-40%); opacity: 0.2; }
+  50% { transform: translateX(160%); opacity: 1; }
+}
+
+.cbar__field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.cbar__field > svg { flex: none; width: 17px; height: 17px; fill: none; stroke: rgba(236, 233, 245, 0.45); stroke-width: 1.8; stroke-linecap: round; }
+.cbar__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  outline: none;
+  user-select: text;
+  font-family: inherit;
+  font-size: 15px;
+  color: #fff;
+}
+.cbar__input::placeholder { color: rgba(236, 233, 245, 0.32); }
+.cbar__esc { flex: none; }
+
+.cbar__list {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+.cbar__list::-webkit-scrollbar { width: 4px; }
+.cbar__list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.16); border-radius: 4px; }
+
+.cbar__group {
+  padding: 12px 10px 6px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(236, 233, 245, 0.32);
+}
+.cbar__group.is-hidden, .cbar__cmd.is-hidden { display: none; }
+
+.cbar__cmd {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 11px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.cbar__cmd.is-current {
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+.cbar__cmd.is-current::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 22%;
+  bottom: 22%;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--cb-accent);
+  box-shadow: 0 0 12px var(--cb-accent);
+}
+.cbar__ico {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(150deg, var(--c1), var(--c2));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 16px -10px var(--c2);
+}
+.cbar__ico svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.cbar__body { display: grid; gap: 2px; min-width: 0; }
+.cbar__label {
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cbar__label mark { background: rgba(167, 139, 250, 0.34); color: #fff; border-radius: 3px; padding: 0 1px; }
+.cbar__sub {
+  font-size: 10.5px;
+  color: rgba(236, 233, 245, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cbar__empty {
+  display: none;
+  padding: 34px 10px;
+  text-align: center;
+}
+.cbar.is-empty .cbar__empty { display: block; }
+.cbar__empty b { display: block; font-size: 13px; }
+.cbar__empty small { font-size: 11px; color: rgba(236, 233, 245, 0.4); }
+
+.cbar__foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(236, 233, 245, 0.35);
+}
+.cbar__foot span { display: inline-flex; align-items: center; gap: 6px; }
+.cbar__foot kbd { min-width: 20px; height: 19px; font-size: 10px; }
+.cbar__hits { margin-left: auto; text-transform: none; letter-spacing: 0.04em; }
+.cbar__hits b { color: var(--cb-accent); }
+
+/* ── the toast that proves a command ran ────────────────── */
+.cbar__toast {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 20px 40px -18px rgba(0, 0, 0, 1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 12.5px;
+  white-space: nowrap;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.45s;
+}
+.cbar.is-toasting .cbar__toast { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+.cbar__toast i {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cb-accent);
+}
+.cbar__toast svg { width: 12px; height: 12px; fill: none; stroke: #17151f; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 560px) {
+  .cbar__palette { width: 92%; top: 5%; max-height: 90%; }
+  .cbar__foot span:nth-child(2) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cbar__grid, .cbar__palette::before { animation: none; }
+  .cbar__trigger, .cbar__palette, .cbar__scrim, .cbar__toast { transition-duration: 0.01ms; }
+}

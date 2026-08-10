@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playground — Portfolio</title>
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./assets/personal/file-vault/file-vault.css">
+    <link rel="stylesheet" href="./assets/personal/command-bar/command-bar.css">
+    <link rel="stylesheet" href="./assets/personal/radial-toolkit/radial-toolkit.css">
+    <link rel="stylesheet" href="./assets/personal/activation-button/activation-button.css">
+    <link rel="stylesheet" href="./assets/personal/selection/selection.css">
+    <link rel="stylesheet" href="./assets/personal/multi-select/multi-select.css">
     <script>try{if(sessionStorage.getItem("heroZoom")){var d=document.documentElement;d.classList.add("instant");var p=sessionStorage.getItem("heroPoster");if(p)d.style.setProperty("--hero-poster","url("+p+")");sessionStorage.removeItem("heroZoom");sessionStorage.removeItem("heroPoster");}}catch(e){}</script>
     <style>
         :root {
@@ -185,6 +191,29 @@
                 0 0 70px var(--glow);
         }
         .pg-tile:hover .pg-frame video { transform: scale(1.04); }
+
+        /* live component tile — needs real height once the layout narrows,
+           where a 16/9 frame gets too short for the panel */
+        .pg-frame--live { background: #0c0c10; }
+        @media (max-width: 900px) {
+            .pg-frame--live { aspect-ratio: auto; height: 540px; }
+        }
+
+        /* a light-canvas component sitting on the dark page — give it a
+           paper edge instead of the usual inset white hairline */
+        .pg-frame--light {
+            background: #fcfcfd;
+            max-height: 620px;
+            box-shadow:
+                0 40px 90px -30px rgba(0,0,0,0.75),
+                0 0 0 1px rgba(255,255,255,0.14);
+        }
+        .pg-tile:hover .pg-frame--light {
+            box-shadow:
+                0 60px 120px -30px rgba(0,0,0,0.85),
+                0 0 0 1px rgba(255,255,255,0.22),
+                0 0 70px var(--glow);
+        }
 
         /* duo — two clips inside one wide tile */
         .pg-duo {
@@ -512,12 +541,133 @@
                 </figcaption>
             </figure>
 
+            <!-- 08 File Vault — live component, not a video -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame pg-frame--live">
+                    <div data-file-vault data-accent="#8b6cff"
+                         data-title="Campaign Briefs" data-subtitle="Client &amp; Internal Notes"
+                         data-unit="Files"></div>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">08 — Interface</p>
+                    <h2 class="pg-cap-title">File Vault</h2>
+                    <p class="pg-cap-desc">
+                        Not a render — a live interface you can use. Click the folder to open the vault, search to filter the files, and pick a row to pull its card out of the stack. Built as vanilla JS and CSS, no libraries.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">UI Design</span>
+                        <span class="pg-tag">Micro-interaction</span>
+                        <span class="pg-tag">Front-end</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 09 Command Bar -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame pg-frame--live">
+                    <div data-command-bar data-accent="#A78BFA"></div>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">09 — Interface</p>
+                    <h2 class="pg-cap-title">Command Bar</h2>
+                    <p class="pg-cap-desc">
+                        A ⌘K palette with real keyboard flow — type to filter, arrows to move, Enter to run. Group headers fold away as the list narrows.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Keyboard UX</span>
+                        <span class="pg-tag">Search</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 10 Radial Toolkit -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame pg-frame--live pg-frame--light">
+                    <div data-radial-toolkit data-accent="#1a7af0"></div>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">10 — Interface</p>
+                    <h2 class="pg-cap-title">Radial Toolkit</h2>
+                    <p class="pg-cap-desc">
+                        A canvas tool ring that gets summoned where you press — hold anywhere (or hit Alt&nbsp;+&nbsp;W) and eight tools spring out on a stagger. Drag toward one and a wedge tracks your direction, release to pick. Motion is GSAP: an overshooting open, an elastic snap on the armed tool.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Gesture</span>
+                        <span class="pg-tag">GSAP</span>
+                        <span class="pg-tag">Canvas UI</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 11 Activation Button -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame pg-frame--live pg-frame--light">
+                    <div data-activation-button data-accent="#2f9ce9"></div>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">11 — Interface</p>
+                    <h2 class="pg-cap-title">Activation Button</h2>
+                    <p class="pg-cap-desc">
+                        One pill carrying a whole job without ever leaving its spot. Hover and the arrow flips into a tick; press and the badge collapses into a spinner while the label rolls from <em>Activate</em> to <em>Waiting</em> and the pill resizes to fit it. When the work lands the ring closes, the disc pops back and the button morphs to green — then the face rolls over like a split-flap to reset itself.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Micro-interaction</span>
+                        <span class="pg-tag">State machine</span>
+                        <span class="pg-tag">GSAP</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 12 Selection Controls -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame pg-frame--live pg-frame--light">
+                    <div data-selection data-accent="#2B55F5"></div>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">12 — Interface</p>
+                    <h2 class="pg-cap-title">Selection Controls</h2>
+                    <p class="pg-cap-desc">
+                        Checkbox, radio and switch rebuilt as soft bodies. The box squeezes under the press then pops as the tick strokes itself in. The radio's hole shuts to nothing before the old fill drains, and springs back open on the one you picked. The switch knob leads with one edge and lets the other catch up, so it stretches the length of the track and lands round on the far side. Native inputs underneath — full keyboard, no libraries.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Micro-interaction</span>
+                        <span class="pg-tag">Form UI</span>
+                        <span class="pg-tag">Accessibility</span>
+                    </div>
+                </figcaption>
+            </figure>
+
+            <!-- 13 Multi Select -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame pg-frame--live pg-frame--light">
+                    <div data-multi-select data-accent="#A06BF0"></div>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">13 — Interface</p>
+                    <h2 class="pg-cap-title">Multi Select</h2>
+                    <p class="pg-cap-desc">
+                        A multi-select where the choice physically moves. Press a row and the ink floods out from exactly where you pressed, squeezes down to a dot, flies up into the field and unfolds into a chip — the slot widening under it as it travels. Picked tools leave the list; clear a chip and it folds back into its original slot. Full keyboard flow, vanilla JS and CSS.
+                    </p>
+                    <div class="pg-tags">
+                        <span class="pg-tag">Micro-interaction</span>
+                        <span class="pg-tag">Form UI</span>
+                        <span class="pg-tag">Motion</span>
+                    </div>
+                </figcaption>
+            </figure>
+
         </section>
 
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script type="module" src="./assets/personal/file-vault/file-vault.js"></script>
+    <script type="module" src="./assets/personal/command-bar/command-bar.js"></script>
+    <script type="module" src="./assets/personal/radial-toolkit/radial-toolkit.js"></script>
+    <script type="module" src="./assets/personal/activation-button/activation-button.js"></script>
+    <script type="module" src="./assets/personal/selection/selection.js"></script>
+    <script type="module" src="./assets/personal/multi-select/multi-select.js"></script>
 
     <script>
         // Force-show body in case anything below fails to run
@@ -564,9 +714,12 @@
             let unlockTimer;
             gsap.ticker.add(() => { if (!isLocked) { setLeft(rawX); setTop(rawY); } });
 
+            // --cursor-ring so light panels (e.g. the Radial Toolkit) keep a dark ring
             const reset = () => gsap.to(cursorEl, {
                 width: '2rem', height: '2rem', borderRadius: '50%',
-                borderColor: 'rgba(255,255,255,0.78)', backgroundColor: 'transparent',
+                borderColor: getComputedStyle(cursorEl).getPropertyValue('--cursor-ring').trim()
+                    || 'rgba(255,255,255,0.78)',
+                backgroundColor: 'transparent',
                 duration: 0.25, ease: 'power2.out', overwrite: true,
             });
 

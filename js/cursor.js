@@ -36,7 +36,9 @@
         requestAnimationFrame(loop);
     }
 
-    const ring = () => getComputedStyle(document.documentElement)
+    // Read off the cursor itself, not :root — the value still inherits from
+    // :root, but a class on the cursor can now override it locally.
+    const ring = () => getComputedStyle(cursor)
         .getPropertyValue('--cursor-ring').trim() || 'rgba(255,255,255,0.85)';
 
     function reset() {
@@ -69,6 +71,32 @@
     document.addEventListener('mouseout', e => {
         if (!(e.target.closest && e.target.closest(SEL))) return;
         unlockT = setTimeout(reset, 40);
+    });
+
+    // ── Light surfaces ────────────────────────────────────────────────
+    // A white ring vanishes over a light panel, so anything marked
+    // data-cursor="dark" flips the ring (and its ripples) to ink.
+    const LIGHT = '[data-cursor="dark"]';
+    let overLight = null;
+
+    function setLight(on) {
+        cursor.classList.toggle('on-light', on);
+        // GSAP writes border-color inline, so only an inline tween can undo it
+        if (g) g.to(cursor, {
+            borderColor: ring(), duration: 0.25, ease: 'power2.out', overwrite: 'auto',
+        });
+    }
+
+    document.addEventListener('mouseover', e => {
+        const el = e.target.closest && e.target.closest(LIGHT);
+        if (el === overLight) return;   // moving between children — same surface
+        overLight = el;
+        setLight(!!el);
+    });
+    document.addEventListener('mouseleave', () => {
+        if (!overLight) return;
+        overLight = null;
+        setLight(false);
     });
 
     reset();

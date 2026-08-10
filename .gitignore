@@ -12,3 +12,10 @@ skills-lock.json
 # Raw AI-skill source drops (nested git repos + zips). The site uses the
 # curated copies in assets/ai-champion/ instead.
 assets/skills/
+
+# Screen recordings kept beside a component as its design reference. Used
+# while building the interaction, never served by a page — so they stay on
+# disk and out of history. Add a line here for each new reference drop.
+assets/personal/selection/*.mp4
+assets/personal/activationBTn/*.mp4
+assets/personal/uimultiple select/*.mp4
