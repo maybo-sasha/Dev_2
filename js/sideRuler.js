@@ -61,7 +61,9 @@
         const el = document.getElementById(a.getAttribute('href').slice(1));
         if (!el) return;
         e.preventDefault();
-        if (window.lenis && window.lenis.scrollTo) window.lenis.scrollTo(el, { offset: 0 });
+        // the two pages name their Lenis instance differently
+        const l = window.lenis || window.lenisInstance;
+        if (l && l.scrollTo) l.scrollTo(el, { offset: 0 });
         else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
