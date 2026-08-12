@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Decisioning Studio · Optimove Case study</title>
     <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./assets/flow/flow.css">
     <script>try{if(sessionStorage.getItem("heroZoom")){var d=document.documentElement;d.classList.add("instant");var p=sessionStorage.getItem("heroPoster");if(p)d.style.setProperty("--hero-poster","url("+p+")");sessionStorage.removeItem("heroZoom");sessionStorage.removeItem("heroPoster");}}catch(e){}</script>
     <style>
         /* ───────── Optimove product language ─────────
@@ -165,36 +164,22 @@
         /* ── the agents ────────────────────────────────────────
            One full-width block each, stacked. They were side by side,
            which forced the explanation into a narrow column and left
-           no room for a flow: four agents doing four different jobs
-           need four diagrams, not four thumbnails. */
-        .agentrow { padding-top: clamp(2.5rem, 5vw, 4rem); }
+           no room to explain anything: four agents doing four
+           different jobs need four accounts of themselves. */
+        .agentrow {
+            display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            gap: clamp(2rem, 4vw, 4.5rem); align-items: center;
+            padding-top: clamp(2.5rem, 5vw, 4rem);
+        }
+        @media (max-width: 900px) { .agentrow { grid-template-columns: minmax(0, 1fr); } }
         .agentrow + .agentrow { border-top: 1px solid var(--line); margin-top: clamp(2.5rem, 5vw, 4rem); }
         .agentrow-head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1rem; }
         .agentblk-ic { flex: 0 0 auto; width: 54px; height: 54px; border-radius: 14px; background: var(--lav); display: grid; place-items: center; }
         .agentblk-ic img { width: 74%; height: 74%; object-fit: contain; }
         .agentrow h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 700; letter-spacing: -0.025em; margin: 0; }
-        .agentrow p { font-size: clamp(1rem, 1.3vw, 1.1rem); line-height: 1.7; color: var(--muted); margin: 0 0 1rem; max-width: 68ch; }
+        .agentrow p { font-size: clamp(1rem, 1.3vw, 1.1rem); line-height: 1.7; color: var(--muted); margin: 0 0 1rem; }
+        .agentrow p:last-child { margin-bottom: 0; }
         .agentrow .does { color: var(--ink); font-weight: 500; font-size: clamp(1.05rem, 1.45vw, 1.22rem); }
-        .agentrow .ads-shot { margin-top: clamp(1.6rem, 3vw, 2.4rem); }
-
-        /* ── flow diagrams ─────────────────────────────────────
-           The component ships neutral. Remapping its tokens here
-           keeps the diagrams in the page's palette instead of
-           importing a second one. */
-        .ads-flow { margin-top: clamp(2rem, 4vw, 3.2rem); }
-        .ads-flow .fl {
-            --fl-ink: #1d1850;
-            --fl-ink-rgb: 29, 24, 80;
-            --fl-mute: #8e8caa;
-            --fl-bg: var(--paper);
-            --fl-paper: var(--paper);
-            --fl-line: rgba(29, 24, 80, 0.30);
-            box-shadow: 0 40px 80px -50px rgba(29, 24, 80, 0.45), 0 0 0 1px var(--line);
-        }
-        .ads-sec:not(.ads-sec--mist) .ads-flow .fl { --fl-bg: var(--mist); --fl-paper: var(--paper); }
-        /* start and end of a path take the product's primary */
-        .ads-flow .fl__node--start { box-shadow: inset 0 0 0 2px var(--violet); }
-        .ads-flow .fl__node--start em { color: var(--violet); }
 
         /* reveal */
         .fade-up { opacity: 0; }
@@ -328,12 +313,11 @@
                 <div class="ads-shot fade-up">
                     <video src="./assets/Opimove/Ai%20studio/flows/modal.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
-                <div class="ads-flow fade-up" data-flow="activation"></div>
                 <div class="ads-duo" style="margin-top: clamp(2rem, 4vw, 3rem);">
                     <div class="princ fade-up">
-                        <span class="n">What the flow showed</span>
+                        <span class="n">What activation showed</span>
                         <h3>One hub, four different ways in</h3>
-                        <p>Drawing activation for all four agents on one page made the real state of the feature obvious. Two agents had no setup screen at all. Send Time Optimization had one, but it lived on its own page and was never connected to the hub, so the card promised a route that did not exist.</p>
+                        <p>Mapping activation for all four agents side by side made the real state of the feature obvious. Two agents had no setup screen at all. Send Time Optimization had one, but it lived on its own page and was never connected to the hub, so the card promised a route that did not exist.</p>
                     </div>
                     <div class="princ fade-up">
                         <span class="n">The consequence</span>
@@ -353,52 +337,56 @@
                     <p class="ads-body">Each one is a different optimization agent doing a genuinely different job, and a marketer meets them all on the same hub. They share a typographic family and a fixed "an AI agent that..." sentence so that the boundary of each one is legible on first contact, before anybody reads the detail.</p>
                 </div>
                 <article class="agentrow fade-up">
-                    <div class="agentrow-head">
-                        <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (1).png" alt=""></div>
-                        <h3>Journey Decisioning</h3>
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (1).png" alt=""></div>
+                            <h3>Journey Decisioning</h3>
+                        </div>
+                        <p class="does">An AI agent that decides which campaign wins when a customer qualifies for several on the same day.</p>
+                        <p>It replaces the priority rules marketers used to maintain by hand, ranking overlapping journeys on predicted future value. The design problem was orchestration: showing which campaigns competed and why one was chosen, without turning the screen into a rules editor. That screen does not exist yet, and neither does the one that switches the agent on.</p>
                     </div>
-                    <p class="does">An AI agent that decides which campaign wins when a customer qualifies for several on the same day.</p>
-                    <p>It replaces the priority rules marketers used to maintain by hand, ranking overlapping journeys on predicted future value. The design problem was orchestration: showing which campaigns competed and why one was chosen, without turning the screen into a rules editor. That screen does not exist yet, and neither does the one that switches the agent on.</p>
                     <div class="ads-shot">
                         <video src="./assets/Opimove/Ai%20studio/flows/journey.mp4" muted loop playsinline preload="metadata"></video>
                     </div>
-                    <div class="ads-flow" data-flow="agent-journey"></div>
                 </article>
                 <article class="agentrow fade-up">
-                    <div class="agentrow-head">
-                        <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons.png" alt=""></div>
-                        <h3>Offer Decisioning</h3>
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons.png" alt=""></div>
+                            <h3>Offer Decisioning</h3>
+                        </div>
+                        <p class="does">An AI agent that finds the right incentive per customer instead of the one that won on average.</p>
+                        <p>A static test picks a single winner and gives everyone the same discount, which quietly costs margin on every customer who would have converted for less. The interface problem is that the saving is invisible: the agent protects margin, and nothing on screen reports how much, which is exactly the number a marketer is asked to justify.</p>
                     </div>
-                    <p class="does">An AI agent that finds the right incentive per customer instead of the one that won on average.</p>
-                    <p>A static test picks a single winner and gives everyone the same discount, which quietly costs margin on every customer who would have converted for less. The interface problem is that the saving is invisible: the agent protects margin, and nothing on screen reports how much, which is exactly the number a marketer is asked to justify.</p>
                     <div class="ads-shot">
                         <video src="./assets/Opimove/Ai%20studio/flows/offer.mp4" muted loop playsinline preload="metadata"></video>
                     </div>
-                    <div class="ads-flow" data-flow="agent-offer"></div>
                 </article>
                 <article class="agentrow fade-up">
-                    <div class="agentrow-head">
-                        <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (2).png" alt=""></div>
-                        <h3>Send Time Optimization</h3>
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (2).png" alt=""></div>
+                            <h3>Send Time Optimization</h3>
+                        </div>
+                        <p class="does">An AI agent that predicts when each customer is most likely to be paying attention.</p>
+                        <p>The simplest of the four to explain and the most awkward to reach. Its setup already existed on a page built before the hub, so the card advertising it points at a route that was never connected. The two screens do not reference each other in either direction. Naming that was most of the contribution here.</p>
                     </div>
-                    <p class="does">An AI agent that predicts when each customer is most likely to be paying attention.</p>
-                    <p>The simplest of the four to explain and the most awkward to reach. Its setup already existed on a page built before the hub, so the card advertising it points at a route that was never connected. The two screens do not reference each other in either direction. Naming that was most of the contribution here.</p>
                     <div class="ads-shot">
                         <video src="./assets/Opimove/Ai%20studio/flows/send-time.mp4" muted loop playsinline preload="metadata"></video>
                     </div>
-                    <div class="ads-flow" data-flow="agent-send-time"></div>
                 </article>
                 <article class="agentrow fade-up">
-                    <div class="agentrow-head">
-                        <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (3).png" alt=""></div>
-                        <h3>Content Decisioning</h3>
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (3).png" alt=""></div>
+                            <h3>Content Decisioning</h3>
+                        </div>
+                        <p class="does">An AI agent that writes and tests copy variations, then keeps the one that performs.</p>
+                        <p>The only agent designed end to end, and the one the rest of this page follows. It is also the hardest to hand over, because it changes words a marketer wrote, which is why its setup ends in a review rather than an Apply button. It is the only one of the four with a setup screen, a live state and a result a marketer can point at.</p>
                     </div>
-                    <p class="does">An AI agent that writes and tests copy variations, then keeps the one that performs.</p>
-                    <p>The only agent designed end to end, and the one the rest of this page follows. It is also the hardest to hand over, because it changes words a marketer wrote, which is why its setup ends in a review rather than an Apply button. The three sections after this one all follow it: how it is set up, what it does once live, and what happens after.</p>
                     <div class="ads-shot">
                         <video src="./assets/Opimove/Ai%20studio/flows/content.mp4" muted loop playsinline preload="metadata"></video>
                     </div>
-                    <div class="ads-flow" data-flow="agent-content"></div>
                 </article>
             </div>
         </section>
@@ -474,6 +462,5 @@
     <script src="./js/transitionFade.js"></script>
     <script src="./js/projectNav.js"></script>
     <script src="./js/lazyVideo.js"></script>
-    <script type="module" src="./assets/flow/flows.data.js"></script>
 </body>
 </html>
