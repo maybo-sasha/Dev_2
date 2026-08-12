@@ -56,8 +56,7 @@ function highlight(name, q) {
 
 let uid = 0;
 
-export function createFileVault({
-  accent = '#4DA6FF',
+export function createFileVault({
   files = FILES,
   title = 'Campaign Briefs',
   subtitle = 'Client & Internal Notes',
@@ -82,7 +81,7 @@ export function createFileVault({
     .join('');
 
   const root = el(`
-  <div class="fvault" style="--fv-accent:${accent}">
+  <div class="fvault ui" data-cursor="dark">
     <i class="fvault__aura"></i>
 
     <div class="fvault__stage">
@@ -253,8 +252,7 @@ export function createFileVault({
 document.querySelectorAll('[data-file-vault]').forEach((host) => {
   if (host.firstElementChild) return;
   const d = host.dataset;
-  host.appendChild(createFileVault({
-    accent: d.accent || '#4DA6FF',
+  host.appendChild(createFileVault({
     title: d.title || undefined,
     subtitle: d.subtitle || undefined,
     unit: d.unit || undefined,

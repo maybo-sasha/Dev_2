@@ -56,7 +56,7 @@ const keycaps = (keys) => keys.split(' ').map((k) => `<kbd>${esc(k)}</kbd>`).joi
 
 let uid = 0;
 
-export function createCommandBar({ accent = '#A78BFA', commands = COMMANDS } = {}) {
+export function createCommandBar({ commands = COMMANDS } = {}) {
   const id = `cbar-${++uid}`;
   const groups = [...new Set(commands.map((c) => c.group))];
 
@@ -85,31 +85,32 @@ export function createCommandBar({ accent = '#A78BFA', commands = COMMANDS } = {
     .join('');
 
   const root = el(`
-  <div class="cbar" style="--cb-accent:${accent}">
+  <div class="cbar ui" data-cursor="dark">
     <i class="cbar__grid"></i>
-
-    <button class="cbar__trigger" type="button" aria-haspopup="dialog" aria-controls="${id}">
-      <svg viewBox="0 0 24 24" aria-hidden="true">${I.search}</svg>
-      <span>Search commands…</span>
-      <span class="cbar__keys"><kbd>⌘</kbd><kbd>K</kbd></span>
-    </button>
 
     <div class="cbar__scrim"></div>
 
-    <div class="cbar__palette" id="${id}" role="dialog" aria-modal="false" aria-label="Command palette" aria-hidden="true">
+    <div class="cbar__shell" id="${id}" role="dialog" aria-modal="false" aria-label="Command palette">
       <div class="cbar__field">
         <svg viewBox="0 0 24 24" aria-hidden="true">${I.search}</svg>
-        <input class="cbar__input" type="text" placeholder="Type a command…" aria-label="Type a command" autocomplete="off" spellcheck="false" />
-        <span class="cbar__esc"><kbd>esc</kbd></span>
+        <input class="cbar__input" type="text" placeholder="Search commands…" aria-label="Search commands" autocomplete="off" spellcheck="false" />
+        <span class="cbar__hint">
+          <span class="cbar__call cbar__keys"><kbd>⌘</kbd><kbd>K</kbd></span>
+          <span class="cbar__esc"><kbd>esc</kbd></span>
+        </span>
       </div>
-      <ul class="cbar__list" role="listbox">
-        ${rows}
-        <li class="cbar__empty"><b>No command found</b><small>Try “copy”, “dark” or “email”</small></li>
-      </ul>
-      <div class="cbar__foot">
-        <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
-        <span><kbd>↵</kbd> run</span>
-        <span class="cbar__hits"><b>0</b> results</span>
+      <div class="cbar__panel">
+        <div class="cbar__panelin">
+          <ul class="cbar__list" role="listbox">
+            ${rows}
+            <li class="cbar__empty"><b>No command found</b><small>Try “copy”, “dark” or “email”</small></li>
+          </ul>
+          <div class="cbar__foot">
+            <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
+            <span><kbd>↵</kbd> run</span>
+            <span class="cbar__hits"><b>0</b> results</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -119,8 +120,9 @@ export function createCommandBar({ accent = '#A78BFA', commands = COMMANDS } = {
     </div>
   </div>`);
 
-  const trigger = root.querySelector('.cbar__trigger');
-  const palette = root.querySelector('.cbar__palette');
+  const shell = root.querySelector('.cbar__shell');
+  const panel = root.querySelector('.cbar__panel');
+  const panelIn = root.querySelector('.cbar__panelin');
   const scrim = root.querySelector('.cbar__scrim');
   const input = root.querySelector('.cbar__input');
   const hits = root.querySelector('.cbar__hits b');
@@ -160,6 +162,7 @@ export function createCommandBar({ accent = '#A78BFA', commands = COMMANDS } = {
 
     hits.textContent = visible.length;
     root.classList.toggle('is-empty', visible.length === 0);
+    grow();   // fewer rows means a shorter body, not a scrollbar
     if (!visible.includes(current)) current = visible.length ? visible[0] : -1;
     paint();
   }
@@ -185,18 +188,26 @@ export function createCommandBar({ accent = '#A78BFA', commands = COMMANDS } = {
     if (open === next) return;
     open = next;
     root.classList.toggle('is-open', open);
-    palette.setAttribute('aria-hidden', String(!open));
+    input.setAttribute('placeholder', open ? 'Type a command…' : 'Search commands…');
     if (open) {
-      setTimeout(() => open && input.focus({ preventScroll: true }), 120);
+      input.focus({ preventScroll: true });
+      grow();
     } else {
+      panel.style.height = '0px';
       input.value = '';
       query = '';
       filter();
-      trigger.focus({ preventScroll: true });
+      input.blur();
     }
   }
 
-  trigger.addEventListener('click', () => setOpen(true));
+  /* The panel is the shell, taller — so its height comes from measuring
+     the content, and has to be re-measured whenever filtering changes how
+     many rows there are. A fixed height would jump on every keystroke. */
+  function grow() { if (open) panel.style.height = `${panelIn.offsetHeight}px`; }
+
+  shell.addEventListener('click', () => setOpen(true));
+  input.addEventListener('focus', () => setOpen(true));
   scrim.addEventListener('click', () => setOpen(false));
   cmdEls.forEach((btn, i) => {
     btn.addEventListener('click', () => run(i));
@@ -236,5 +247,5 @@ export function createCommandBar({ accent = '#A78BFA', commands = COMMANDS } = {
 
 document.querySelectorAll('[data-command-bar]').forEach((host) => {
   if (host.firstElementChild) return;
-  host.appendChild(createCommandBar({ accent: host.dataset.accent || '#A78BFA' }).el);
+  host.appendChild(createCommandBar().el);
 });

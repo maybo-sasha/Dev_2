@@ -1,0 +1,212 @@
+/* ============================================================
+   Playground UI — the shared design language.
+
+   Every component in assets/personal/ maps its own tokens onto
+   these, so a change here moves all of them together. The language
+   is the one the Gooey Menu is built in: a near-white canvas, ink
+   shapes, no colour at all. Form and motion carry the meaning that
+   an accent would normally carry, which is what lets six very
+   different components sit on one page without competing.
+
+   Rules of the system
+     · Monochrome — ink on paper plus alpha — with exactly one
+       exception, --ui-ok, reserved for completion. See its note.
+     · State reads as fill, not colour: resting = outline on paper,
+       active = solid ink with paper-coloured content on top.
+     · One ease for travel — the 0.22/1/0.36/1 curve. Springs are
+       reserved for things that should feel physical.
+     · Radii step 10 / 14 / 20 / 28 / full. Circles for anything
+       that is pressed, rounded rectangles for anything that holds.
+
+   Loaded once, before the component stylesheets.
+   ============================================================ */
+
+:root {
+  /* ── surface ─────────────────────────────────────────────── */
+  --ui-bg: #fcfcfd;                       /* the canvas a component sits on */
+  --ui-bg-sunk: #f4f4f6;                  /* wells, tracks, inset areas */
+  --ui-surface: #ffffff;                  /* raised cards above the canvas */
+
+  /* ── ink ─────────────────────────────────────────────────── */
+  --ui-fg: #12141a;                       /* primary ink + filled shapes */
+  --ui-fg-rgb: 18, 20, 26;
+  --ui-on-fg: #fcfcfd;                    /* content sitting ON filled ink */
+  --ui-text: #23262f;                     /* body copy */
+  --ui-text-2: #5b6070;                   /* secondary copy */
+  --ui-mute: #8d92a3;                     /* labels, placeholders, hints */
+
+  /* The single hue in the system, and only for completion. Every other
+     state is recoverable from form alone, but a tick reads the same
+     whether it means "done" or "confirm" — so success gets a colour
+     and nothing else does. */
+  --ui-ok: #3faa5a;
+  --ui-ok-rgb: 63, 170, 90;
+
+  /* ── lines and fills, all alpha so they ride any surface ─── */
+  --ui-line: rgba(18, 20, 26, 0.13);      /* visible border */
+  --ui-line-soft: rgba(18, 20, 26, 0.07); /* divider */
+  --ui-fill: rgba(18, 20, 26, 0.05);      /* chip / hover wash */
+  --ui-fill-strong: rgba(18, 20, 26, 0.09);
+
+  /* ── elevation. Ink shadows, never black ─────────────────── */
+  --ui-shadow-sm: 0 1px 2px rgba(18, 20, 26, 0.06);
+  --ui-shadow-md: 0 6px 16px -8px rgba(18, 20, 26, 0.28);
+  --ui-shadow-lg: 0 24px 48px -24px rgba(18, 20, 26, 0.34);
+
+  /* ── radii ───────────────────────────────────────────────── */
+  --ui-r-sm: 10px;
+  --ui-r-md: 14px;
+  --ui-r-lg: 20px;
+  --ui-r-xl: 28px;
+  --ui-r-full: 999px;
+
+  /* ── motion. One curve for travel; springs stay deliberate ─ */
+  --ui-e: cubic-bezier(0.22, 1, 0.36, 1);
+  --ui-e-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ui-spring: cubic-bezier(0.34, 1.5, 0.5, 1);
+  --ui-t-fast: 0.18s;
+  --ui-t: 0.38s;
+  --ui-t-slow: 0.72s;
+
+  /* ── type ────────────────────────────────────────────────── */
+  --ui-font: var(--font-display, 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif);
+  --ui-fs-cap: 9.5px;                     /* uppercase eyebrows */
+  --ui-fs-xs: 11px;
+  --ui-fs-sm: 13px;
+  --ui-fs-md: 15px;
+  --ui-ls-cap: 0.19em;
+}
+
+/* Shared shell. Every component's root gets this class so the
+   canvas, type and cursor treatment are identical across tiles. */
+.ui {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 430px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-family: var(--ui-font);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* the uppercase label that titles a component inside its tile */
+.ui-eyebrow {
+  margin: 0;
+  font-size: var(--ui-fs-cap);
+  font-weight: 700;
+  letter-spacing: var(--ui-ls-cap);
+  text-transform: uppercase;
+  color: var(--ui-mute);
+}
+
+/* the pill hint that sits at the bottom of a tile */
+.ui-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: var(--ui-r-full);
+  background: var(--ui-fill);
+  font-size: var(--ui-fs-xs);
+  color: var(--ui-text-2);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.ui-hint b { font-weight: 600; color: var(--ui-fg); }
+.ui-hint kbd {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--ui-surface);
+  box-shadow: inset 0 0 0 1px var(--ui-line);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ui-fg);
+}
+
+/* ── Breathing ───────────────────────────────────────────────
+   A living body reacts before it is touched. On hover a shape drifts
+   out of round — the corner radii wander asymmetrically and the mass
+   swells very slightly — so the component reads as responding to your
+   presence rather than sitting inert waiting for a click.
+
+   Two mechanisms, because one does not fit every shape:
+
+     ui-bend       round and square bodies. Animates border-radius
+                   only, so it never fights a transform a component is
+                   already using for travel or press.
+     ui-breathe    pills and bars, where percentage radii would
+                   collapse the caps into an ellipse. Breathes by mass
+                   instead — a sub-2% asymmetric scale, enough to read
+                   as alive and too small to read as a bounce.
+
+   The cycle is deliberately slower than any interaction (2.8s) and
+   out of phase with itself, so several breathing at once never
+   synchronise into a pulse. */
+:root {
+  --ui-breath: 2.8s;
+  --ui-breath-slow: 3.6s;
+}
+
+@keyframes ui-bend {
+  0%, 100% { border-radius: 42% 58% 50% 50% / 56% 44% 56% 44%; }
+  25%      { border-radius: 58% 42% 43% 57% / 44% 58% 42% 56%; }
+  50%      { border-radius: 50% 50% 60% 40% / 40% 50% 50% 60%; }
+  75%      { border-radius: 44% 56% 46% 54% / 58% 42% 48% 52%; }
+}
+
+/* squircles — checkboxes, icon tiles, chips. A wider drift than it
+   looks like it needs: on a 26px box a 3% swing is well under a
+   pixel, so the amplitude has to be generous to register at all
+   while still reading as a rounded square rather than a pebble. */
+@keyframes ui-bend-soft {
+  0%, 100% { border-radius: 38% 24% 32% 22% / 24% 38% 22% 32%; }
+  25%      { border-radius: 22% 38% 24% 32% / 38% 22% 32% 24%; }
+  50%      { border-radius: 32% 22% 38% 24% / 22% 32% 24% 38%; }
+  75%      { border-radius: 24% 32% 22% 38% / 32% 24% 38% 22%; }
+}
+
+@keyframes ui-breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50%      { transform: scale(1.014, 0.984); }
+}
+
+/* ── the page cursor over these components ───────────────────
+   Every component in this system sits on paper, so the site’s custom
+   cursor has to invert or it vanishes the moment you enter a tile.
+   js/cursor.js adds .on-light while the pointer is over anything
+   marked data-cursor="dark"; this is what that class means. It lived
+   in radial-toolkit.css until that component was removed, which is
+   how it went missing. */
+.cursor.on-light { --cursor-ring: rgba(18, 20, 26, 0.85); }
+.cursor.on-light .cursor-text { color: var(--ui-fg); }
+
+/* icons are one family: 24-box, 2px stroke, round caps */
+.ui-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui *,
+  .ui *::before,
+  .ui *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

@@ -36,8 +36,7 @@ const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matc
 
 let uid = 0;
 
-export function createMultiSelect({
-  accent = '#A06BF0',
+export function createMultiSelect({
   options = OPTIONS,
   label = 'Tools',
   placeholder = 'Add tools',
@@ -46,7 +45,7 @@ export function createMultiSelect({
   const id = `msel-${++uid}`;
 
   const root = el(`
-  <div class="msel${theme === 'dark' ? ' msel--dark' : ''}" style="--ms-accent:${accent}">
+  <div class="msel ui" data-cursor="dark">
     <div class="msel__aura"></div>
     <div class="msel__wrap">
       <div class="msel__caption"><span>${esc(label)}</span><span><b class="msel__count">0</b> selected</span></div>
@@ -347,8 +346,7 @@ export function createMultiSelect({
 
 document.querySelectorAll('[data-multi-select]').forEach((host) => {
   if (host.firstElementChild) return;
-  host.appendChild(createMultiSelect({
-    accent: host.dataset.accent || '#A06BF0',
+  host.appendChild(createMultiSelect({
     theme: host.dataset.theme || 'light',
   }).el);
 });

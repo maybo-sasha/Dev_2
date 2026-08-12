@@ -10,9 +10,9 @@
 .ab, .ab *, .ab *::before, .ab *::after { box-sizing: border-box; }
 
 .ab {
-  --ab-accent: #2f9ce9;
-  --ab-done: #46bb5b;
-  --ab-faint: #9aa2ae;
+  --ab-accent: var(--ui-fg);
+  --ab-done: var(--ui-ok);
+  --ab-faint: var(--ui-mute);
 
   position: relative;
   display: grid;
@@ -23,9 +23,9 @@
   padding: 44px 34px;
   overflow: hidden;
   isolation: isolate;
-  background: #fcfcfd;
-  color: #141922;
-  font-family: var(--font-display, 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif);
+  background: var(--ui-bg);
+  color: var(--ui-fg);
+  font-family: var(--ui-font);
   user-select: none;
 }
 
@@ -38,8 +38,8 @@
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(52% 48% at 22% 12%, rgba(47, 156, 233, 0.10) 0%, transparent 70%),
-    radial-gradient(48% 44% at 82% 92%, rgba(70, 187, 91, 0.08) 0%, transparent 70%);
+    radial-gradient(52% 48% at 22% 12%, rgba(var(--ui-fg-rgb), 0.05) 0%, transparent 70%),
+    radial-gradient(48% 44% at 82% 92%, rgba(var(--ui-fg-rgb), 0.04) 0%, transparent 70%);
 }
 
 .ab__stage {
@@ -88,7 +88,7 @@
   letter-spacing: -0.005em;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 12px 22px -14px rgba(47, 156, 233, 0.9);
+  box-shadow: 0 12px 22px -14px rgba(var(--ui-fg-rgb), 0.45);
   transition: box-shadow 0.45s ease, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
 }
 .ab-btn--lg { --h: 54px; --pad: 7px; --gap: 11px; --sw: 2.3; --rsw: 2.3; font-size: 16.5px; }
@@ -100,11 +100,16 @@
   --rsw: 1.5;
   font-size: 27px;
   letter-spacing: -0.02em;
-  box-shadow: 0 30px 54px -26px rgba(47, 156, 233, 0.95);
+  box-shadow: 0 30px 54px -26px rgba(var(--ui-fg-rgb), 0.45);
 }
-.ab-btn.is-done { box-shadow: 0 12px 22px -14px rgba(70, 187, 91, 0.95); }
-.ab-btn--xl.is-done { box-shadow: 0 30px 54px -26px rgba(70, 187, 91, 0.95); }
+.ab-btn.is-done { box-shadow: 0 12px 22px -14px rgba(var(--ui-ok-rgb), 0.55); }
+.ab-btn--xl.is-done { box-shadow: 0 30px 54px -26px rgba(var(--ui-ok-rgb), 0.55); }
 .ab-btn:active { transform: scale(0.965); }
+/* breathing. The press has to explicitly cancel the animation —
+   a running keyframe outranks a plain transform declaration. */
+.ab-btn.is-idle:not(:disabled):hover { animation: ui-breathe var(--ui-breath) ease-in-out infinite; }
+.ab-btn.is-idle:not(:disabled):hover .ab-btn__badge { animation: ui-bend var(--ui-breath-slow) ease-in-out infinite; }
+.ab-btn:active { animation: none; transform: scale(0.965); }
 .ab-btn.is-pending { cursor: default; }
 .ab-btn:disabled { opacity: 0.4; box-shadow: none; cursor: default; }
 .ab-btn:focus { outline: none; }
@@ -132,7 +137,7 @@
 }
 .ab-btn.is-done .ab-btn__face { background: var(--ab-done); }
 .ab-btn.is-idle:not(:disabled):hover .ab-btn__face {
-  background: color-mix(in srgb, var(--ab-accent) 88%, #0b1220);
+  background: var(--ui-fg);
 }
 
 /* The outgoing clone during a roll. The button has already flipped back to
@@ -146,6 +151,10 @@
 }
 .ab-btn__face--ghost,
 .ab-btn__face--ghost * { transition: none !important; }
+/* the flap keeps the outgoing pill's shape and colour, but drops its
+   word instantly — the previous label should never be readable once a
+   new state has been committed */
+.ab-btn__face--ghost .ab-btn__label { opacity: 0; }
 
 /* ── badge: white disc + glyph reel + spinner ring ──────── */
 .ab-btn__badge {
@@ -225,6 +234,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  will-change: transform, opacity;
   white-space: nowrap;
   line-height: 1.25;
 }

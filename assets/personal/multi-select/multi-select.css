@@ -16,14 +16,14 @@
 
 .msel {
   /* palette — light by default, matching the reference */
-  --ms-accent:      #a06bf0;   /* row hover fill             */
-  --ms-accent-deep: #3d1178;   /* press ink + travelling dot */
-  --ms-stage-1:     #f7f6fb;
-  --ms-stage-2:     #eceaf5;
-  --ms-surface:     #ffffff;
-  --ms-text:        #3c3a4e;
-  --ms-placeholder: #c6c1d7;
-  --ms-chip-line:   #b9a6f0;
+  --ms-accent:      var(--ui-fg);   /* row hover fill             */
+  --ms-accent-deep: var(--ui-fg);   /* press ink + travelling dot */
+  --ms-stage-1:     var(--ui-bg);
+  --ms-stage-2:     var(--ui-bg);
+  --ms-surface:     var(--ui-surface);
+  --ms-text:        var(--ui-text);
+  --ms-placeholder: var(--ui-mute);
+  --ms-chip-line:   var(--ui-line);
   --ms-row:         56px;
 
   position: relative;
@@ -37,19 +37,12 @@
   padding: clamp(20px, 4vh, 48px) clamp(16px, 4vw, 40px);
   background: linear-gradient(165deg, var(--ms-stage-1) 0%, var(--ms-stage-2) 100%);
   color: var(--ms-text);
-  font-family: var(--font-display, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+  font-family: var(--ui-font);
   user-select: none;
 }
 
-/* dark variant — opt in with data-theme="dark" */
-.msel--dark {
-  --ms-stage-1:     #17151f;
-  --ms-stage-2:     #100e17;
-  --ms-surface:     #201d2b;
-  --ms-text:        #ece9f5;
-  --ms-placeholder: #6b6480;
-  --ms-chip-line:   #7c5cd6;
-}
+/* The dark variant is gone on purpose — the playground runs one
+   language now, defined in ../_system/system.css. */
 
 /* ambient glow under the whole control */
 .msel__aura {
@@ -59,7 +52,7 @@
   width: min(520px, 80%);
   height: 320px;
   transform: translate(-50%, -40%);
-  background: radial-gradient(closest-side, rgba(140, 95, 235, 0.22), transparent 72%);
+  background: radial-gradient(closest-side, rgba(var(--ui-fg-rgb), 0.10), transparent 72%);
   filter: blur(18px);
   pointer-events: none;
   opacity: 0.75;
@@ -83,9 +76,10 @@
   border: 0;
   border-radius: 22px;
   background: var(--ms-surface);
+  box-shadow: inset 0 0 0 1px var(--ui-line);
   box-shadow:
-    0 1px 2px rgba(46, 24, 90, 0.05),
-    0 14px 30px -14px rgba(46, 24, 90, 0.28);
+    0 1px 2px rgba(var(--ui-fg-rgb), 0.05),
+    0 14px 30px -14px rgba(var(--ui-fg-rgb), 0.24);
   overflow: hidden;
   height: 0; /* driven by JS from the inner content */
   cursor: pointer;
@@ -93,7 +87,7 @@
   font: inherit;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
-  transition: height 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  transition: height 0.42s var(--ui-e), box-shadow 0.3s ease;
 }
 .msel__field:focus-visible {
   outline: 2px solid var(--ms-accent);
@@ -101,8 +95,8 @@
 }
 .msel.is-open .msel__field {
   box-shadow:
-    0 1px 2px rgba(46, 24, 90, 0.06),
-    0 18px 40px -16px rgba(46, 24, 90, 0.34);
+    0 1px 2px rgba(var(--ui-fg-rgb), 0.06),
+    0 18px 40px -16px rgba(var(--ui-fg-rgb), 0.30);
 }
 
 .msel__inner {
@@ -151,7 +145,7 @@
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.42s var(--ui-e);
 }
 .msel.is-open .msel__caret svg { transform: rotate(180deg); }
 
@@ -171,17 +165,17 @@
   color: var(--ms-text);
   white-space: nowrap;
   transition:
-    min-width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-    padding 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    min-width 0.4s var(--ui-e),
+    padding 0.4s var(--ui-e),
     opacity 0.24s ease,
-    transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.32s var(--ui-e),
     border-color 0.25s ease;
 }
 .msel__chip-label {
   display: inline-block;
   max-width: 200px;
   overflow: hidden;
-  transition: max-width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.26s ease 0.08s;
+  transition: max-width 0.4s var(--ui-e), opacity 0.26s ease 0.08s;
 }
 .msel__chip-x {
   display: grid;
@@ -197,7 +191,7 @@
   cursor: pointer;
   overflow: hidden;
   transition:
-    width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 0.4s var(--ui-e),
     opacity 0.26s ease 0.08s,
     background-color 0.2s ease;
 }
@@ -209,7 +203,7 @@
   stroke-width: 2.6;
   stroke-linecap: round;
 }
-.msel__chip-x:hover { background: rgba(160, 107, 240, 0.14); }
+.msel__chip-x:hover { background: var(--ui-fill); }
 .msel__chip-x:focus-visible { outline: 2px solid var(--ms-accent); outline-offset: 1px; }
 
 /* the empty box a chip is born as — it lands, then unfolds */
@@ -236,19 +230,20 @@
 .msel__panel {
   height: 0;
   overflow: hidden;
-  transition: height 0.44s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: height 0.44s var(--ui-e);
 }
 
 .msel__card {
   margin-top: 14px;
   border-radius: 20px;
   background: var(--ms-surface);
+  border: 1px solid var(--ui-line);
   box-shadow:
-    0 1px 2px rgba(46, 24, 90, 0.05),
-    0 18px 38px -16px rgba(46, 24, 90, 0.3);
+    0 1px 2px rgba(var(--ui-fg-rgb), 0.05),
+    0 18px 38px -16px rgba(var(--ui-fg-rgb), 0.26);
   opacity: 0;
   transform: translateY(-8px);
-  transition: opacity 0.32s ease, transform 0.44s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 0.32s ease, transform 0.44s var(--ui-e);
 }
 .msel.is-open .msel__card { opacity: 1; transform: none; }
 
@@ -272,7 +267,7 @@
      escapes as a disc across the whole component */
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
-  transition: height 0.36s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: height 0.36s var(--ui-e);
 }
 .msel__opt:focus { outline: none; }
 

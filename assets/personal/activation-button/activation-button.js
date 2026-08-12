@@ -112,12 +112,34 @@ export function createActivationButton({
     if (onState) onState(next);
   };
 
+  let widthTween = null;
+
+  /* Collapse the label to exactly one settled span.
+
+     Two things read the label as raw DOM: a second rollLabel arriving
+     before the first finished, and rollBack's deep clone. Either one
+     catching a roll mid-flight strands the outgoing text — you end up
+     seeing the previous label frozen behind the new one. So before
+     doing anything, kill the in-flight tweens and drop every span but
+     the newest. */
+  function settleLabel() {
+    const wrap = q('.ab-btn__label');
+    const spans = [...wrap.querySelectorAll('.ab-btn__t')];
+    const keep = spans.pop() || null;
+    spans.forEach((s) => { gsap.killTweensOf(s); s.remove(); });
+    if (keep) { gsap.killTweensOf(keep); gsap.set(keep, { yPercent: 0, opacity: 1 }); }
+    if (widthTween) { widthTween.kill(); widthTween = null; }
+    return keep;
+  }
+
   /* label swap — old rolls up and out, new rolls in from below,
      and the viewport width tweens so the pill resizes with it */
   function rollLabel(text) {
     ensureWidths();
     const wrap = q('.ab-btn__label');
-    const cur = wrap.querySelector('.ab-btn__t');
+    const cur = settleLabel();
+    if (cur && cur.textContent === text) return;   // already showing it
+
     const next = el(`<span class="ab-btn__t">${esc(text)}</span>`);
     wrap.appendChild(next);
 
@@ -132,12 +154,21 @@ export function createActivationButton({
     const box = { w: from };
     gsap.set(next, { yPercent: 100, opacity: 0 });
     gsap.to(next, { yPercent: 0, opacity: 1, duration: 0.38, ease: 'power3.out' });
-    if (cur) gsap.to(cur, { yPercent: -100, opacity: 0, duration: 0.34, ease: 'power3.in', onComplete: () => cur.remove() });
-    gsap.to(box, {
+    /* the outgoing word fades far faster than it travels. It still rolls
+       the full distance so the motion reads as one continuous reel, but it
+       is unreadable within ~a tenth of a second — long before it reaches
+       the clip edge, where sub-pixel rounding was letting glyph tops leak
+       back into view as fragments. */
+    if (cur) {
+      gsap.to(cur, { yPercent: -100, duration: 0.34, ease: 'power3.in', onComplete: () => cur.remove() });
+      gsap.to(cur, { opacity: 0, duration: 0.13, ease: 'power2.in' });
+    }
+    widthTween = gsap.to(box, {
       w: to,
       duration: 0.42,
       ease: 'power3.inOut',
       onUpdate: () => wrap.style.setProperty('--lw', `${box.w}px`),
+      onComplete: () => { widthTween = null; },
     });
   }
 
@@ -197,6 +228,11 @@ export function createActivationButton({
   function rollBack() {
     if (state === 'idle' || state === 'pending') return Promise.resolve();
     clearTimeout(holdTimer);
+
+    /* settle first — the clone below is a deep copy of the live face,
+       so a roll still running would be captured frozen mid-flight and
+       the old text would ride out inside the ghost */
+    settleLabel();
 
     const ghost = face.cloneNode(true);
     ghost.classList.add('ab-btn__face--ghost');
@@ -264,17 +300,16 @@ export function createActivationButton({
 /* ============================================================
    The stage — one button, centred, nothing to compete with it
    ============================================================ */
-export function createActivationPanel({ accent = '#2f9ce9' } = {}) {
+export function createActivationPanel() {
   if (!window.gsap) return null;
 
   const root = el(`
-    <div class="ab">
+    <div class="ab ui" data-cursor="dark">
       <div class="ab__stage">
         <p class="ab__hint">Click to activate</p>
       </div>
     </div>
   `);
-  root.style.setProperty('--ab-accent', accent);
 
   const btn = createActivationButton({
     size: 'xl',
@@ -290,6 +325,6 @@ export function createActivationPanel({ accent = '#2f9ce9' } = {}) {
 }
 
 document.querySelectorAll('[data-activation-button]').forEach((host) => {
-  const panel = createActivationPanel({ accent: host.dataset.accent || '#2f9ce9' });
+  const panel = createActivationPanel();
   if (panel) host.appendChild(panel.el);
 });

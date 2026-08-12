@@ -12,13 +12,13 @@
 [data-selection] { display: block; width: 100%; height: 100%; }
 
 .sl {
-  --sl-accent: #2b55f5;
-  --sl-accent-rgb: 43, 85, 245;
-  --sl-bg: #f4f4fe;
-  --sl-track: #ccceec;
-  --sl-line: #c7c9e2;
-  --sl-ink: #171c3a;
-  --sl-mute: #6c719c;
+  --sl-accent: var(--ui-fg);
+  --sl-accent-rgb: var(--ui-fg-rgb);
+  --sl-bg: var(--ui-bg);
+  --sl-track: rgba(var(--ui-fg-rgb), 0.14);
+  --sl-line: var(--ui-line);
+  --sl-ink: var(--ui-fg);
+  --sl-mute: var(--ui-mute);
 
   /* control sizing — one set of vars scales a whole cluster */
   --sl-size: 26px;
@@ -44,7 +44,7 @@
   padding: clamp(20px, 4vh, 44px) clamp(16px, 4vw, 48px);
   background: var(--sl-bg);
   color: var(--sl-ink);
-  font-family: var(--font-display, 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif);
+  font-family: var(--ui-font);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -90,7 +90,7 @@
   gap: clamp(24px, 5.5vw, 52px);
   padding: clamp(34px, 7vh, 62px) 24px;
   border-radius: 24px;
-  background: #fff;
+  background: var(--ui-surface);
   box-shadow:
     0 1px 0 rgba(23, 28, 58, 0.04),
     0 18px 40px -28px rgba(23, 28, 58, 0.5);
@@ -145,7 +145,7 @@
   width: var(--sl-size);
   height: var(--sl-size);
   border-radius: calc(var(--sl-size) * 0.31);
-  background: #fff;
+  background: var(--ui-surface);
   box-shadow: inset 0 0 0 1.5px var(--sl-line);
   transition:
     background-color 240ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -177,7 +177,7 @@
   width: 64%;
   height: 64%;
   fill: none;
-  stroke: #fff;
+  stroke: var(--ui-on-fg);
   stroke-width: 3.1;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -208,7 +208,7 @@
   width: var(--sl-size);
   height: var(--sl-size);
   border-radius: 50%;
-  background: #fff;
+  background: var(--ui-surface);
   box-shadow: inset 0 0 0 1.5px var(--sl-line);
   /* draining back to white waits for the hole to finish collapsing */
   transition:
@@ -220,7 +220,7 @@
   width: 42%;
   height: 42%;
   border-radius: 50%;
-  background: #fff;
+  background: var(--ui-surface);
   transform: scale(0);
   /* on the way out the hole shuts first, then the fill drains */
   transition: transform 200ms cubic-bezier(0.5, 0, 0.75, 0);
@@ -273,7 +273,7 @@
   left: var(--sl-sw-p);
   right: calc(var(--sl-sw-w) - var(--sl-sw-h) + var(--sl-sw-p));
   border-radius: 999px;
-  background: #fff;
+  background: var(--ui-surface);
   box-shadow: 0 2px 6px rgba(23, 28, 58, 0.28);
   /* switching OFF — the left edge leads, the right edge lags */
   transition:

@@ -1,0 +1,177 @@
+/* ============================================================
+   Gooey Tabs — a folder whose active tab is fused to the panel
+   below it. Moving between tabs drags that fusion along: the tab
+   stretches off the panel edge, necks, and seals shut in its new
+   slot, because both shapes live inside one gooey filter.
+
+   Ported from the gooey tabs panel on ui.unlumen.com — same four
+   slots, same spring on the moving tab, same blurred cross-fade
+   on the list. Skinned with ../_system/system.css.
+
+   Standalone. Pairs with ./gooey-tabs.js
+   ============================================================ */
+
+[data-gooey-tabs] { display: block; width: 100%; height: 100%; }
+
+.gt {
+  --gt-tab-h: 48px;
+  --gt-body-h: 300px;
+  --gt-n: 4;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 430px;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vh, 40px) clamp(14px, 4vw, 36px);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-family: var(--ui-font);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+.gt__def { position: absolute; width: 0; height: 0; }
+
+.gt__wrap {
+  position: relative;
+  width: min(760px, 100%);
+  padding: 4px;
+}
+
+/* ── the filtered layer: the panel and the tab, nothing else ──
+   The moving tab and the panel body are one gooey mass. As the tab
+   travels, the blur keeps it tethered to the panel edge and the
+   alpha pass snaps that tether into a solid neck — so the shape
+   appears to pour from one slot to the next instead of sliding. */
+.gt__goo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  filter: var(--gt-goo);
+}
+
+.gt__tabsrow {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: var(--gt-tab-h);
+}
+
+/* one shape, moved between slots — the vanilla stand-in for the
+   original's shared-layout tab */
+.gt__pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: calc(100% / var(--gt-n));
+  border-radius: var(--ui-r-lg) var(--ui-r-lg) 0 0;
+  background: var(--ui-fg);
+  transform: translateX(calc(var(--gt-i, 0) * 100%));
+  /* spring(stiffness 320, damping 30) lands just past its mark and
+     settles — this curve carries the same slight overshoot */
+  transition: transform 0.5s cubic-bezier(0.22, 1.15, 0.3, 1);
+}
+
+.gt__body {
+  width: 100%;
+  height: var(--gt-body-h);
+  border-radius: 0 0 var(--ui-r-xl) var(--ui-r-xl);
+  background: var(--ui-fg);
+}
+
+/* ── the unfiltered layer: labels and content ─────────────── */
+.gt__top { position: relative; z-index: 1; }
+
+.gt__tabs {
+  display: flex;
+  width: 100%;
+  height: var(--gt-tab-h);
+}
+.gt__tab {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--ui-fs-sm);
+  font-weight: 500;
+  color: var(--ui-fg);
+  cursor: pointer;
+  transition: color var(--ui-t) var(--ui-e), transform var(--ui-t-fast) var(--ui-e);
+}
+.gt__tab[aria-selected='true'] { color: var(--ui-on-fg); }
+.gt__tab:active { transform: scale(0.98); }
+.gt__tab:focus-visible { outline: 2px solid var(--ui-fg); outline-offset: -4px; }
+
+.gt__panel {
+  height: var(--gt-body-h);
+  padding: 26px clamp(22px, 5vw, 48px);
+  overflow: hidden;
+}
+
+.gt__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gt__list li {
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(252, 252, 253, 0.14);
+  font-size: var(--ui-fs-md);
+  color: var(--ui-on-fg);
+}
+.gt__list li:last-child { border-bottom: 0; }
+
+/* the list leaves upward and arrives from below, both through blur */
+.gt__view { position: relative; }
+.gt__view.is-leaving .gt__list {
+  opacity: 0;
+  transform: translateY(-50px);
+  filter: blur(10px);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out, filter 0.2s ease-out;
+}
+.gt__view.is-entering .gt__list {
+  opacity: 0;
+  transform: translateY(50px);
+  filter: blur(10px);
+  transition: none;
+}
+.gt__list {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out, filter 0.2s ease-out;
+}
+
+.gt__cap {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  padding: 7px 14px;
+  border-radius: var(--ui-r-full);
+  background: var(--ui-fill);
+  font-size: var(--ui-fs-xs);
+  color: var(--ui-text-2);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.gt__cap b { font-weight: 600; color: var(--ui-fg); }
+
+@media (max-width: 720px) {
+  .gt { --gt-tab-h: 40px; --gt-body-h: 240px; }
+  .gt__list li { font-size: var(--ui-fs-sm); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gt__pill, .gt__list { transition-duration: 0.01ms !important; }
+}

@@ -68,11 +68,11 @@ export function createRadioGroup({ name, label = '', options = [] } = {}) {
     </div>`);
 }
 
-export function createSelection({ accent = '#2B55F5' } = {}) {
+export function createSelection()  {
   const group = `sl-radio-${++uid}`;
 
   const root = el(`
-  <div class="sl" data-cursor="dark" style="--sl-accent:${esc(accent)};--sl-accent-rgb:${toRgb(accent)}">
+  <div class="sl ui" data-cursor="dark">
     <div class="sl__inner">
 
       <header class="sl__head">
@@ -120,5 +120,5 @@ export function createSelection({ accent = '#2B55F5' } = {}) {
 
 document.querySelectorAll('[data-selection]').forEach((host) => {
   if (host.firstElementChild) return;
-  host.appendChild(createSelection({ accent: host.dataset.accent || '#2B55F5' }).el);
+  host.appendChild(createSelection().el);
 });
