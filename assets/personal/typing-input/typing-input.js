@@ -107,7 +107,11 @@ export function createTypingInput({
     };
 
     const x = edge(s);
-    caret.style.setProperty('--ti-x', `${x}px`);
+    /* the native input scrolls itself once the text outruns the field;
+       mirroring that offset is what keeps the drawn glyphs and the real
+       caret describing the same position */
+    root.style.setProperty('--ti-x', `${x}px`);
+    root.style.setProperty('--ti-sx', `${input.scrollLeft}px`);
     caret.style.width = hasSel ? `${Math.max(edge(e) - x, 2)}px` : 'var(--ti-caret)';
 
     chs.forEach((c, i) => c.classList.toggle('is-sel', hasSel && i >= s && i < e));
@@ -134,6 +138,7 @@ export function createTypingInput({
   });
 
   input.addEventListener('input', () => sync({ typed: true }));
+  input.addEventListener('scroll', place);
   /* selectionchange is the only event that fires for every way a
      selection can move — arrows, shift-drag, double-click, select-all */
   document.addEventListener('selectionchange', () => {

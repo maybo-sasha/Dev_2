@@ -50,7 +50,8 @@
 /* ── the field ───────────────────────────────────────────── */
 .ti__field {
   position: relative;
-  min-height: calc(var(--ti-fs) * var(--ti-lh));
+  height: calc(var(--ti-fs) * var(--ti-lh));
+  overflow: hidden;
 }
 
 /* both layers must metric-match exactly or the caret drifts off
@@ -67,10 +68,11 @@
 .ti__mirror {
   position: relative;
   z-index: 1;
-  white-space: pre-wrap;
-  word-break: break-word;
+  white-space: pre;
   pointer-events: none;
   color: var(--ui-fg);
+  transform: translateX(calc(var(--ti-sx, 0px) * -1));
+  will-change: transform;
 }
 
 .ti__input {
@@ -138,7 +140,7 @@
   border-radius: 2px;
   background: var(--ui-fg);
   opacity: 0;
-  transform: translateX(var(--ti-x, 0));
+  transform: translateX(calc(var(--ti-x, 0px) - var(--ti-sx, 0px)));
   transition:
     transform 0.28s var(--ui-e),
     width 0.28s var(--ui-e),
