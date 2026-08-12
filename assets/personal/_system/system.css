@@ -31,6 +31,7 @@
   --ui-fg: #12141a;                       /* primary ink + filled shapes */
   --ui-fg-rgb: 18, 20, 26;
   --ui-on-fg: #fcfcfd;                    /* content sitting ON filled ink */
+  --ui-on-fg-rgb: 252, 252, 253;          /* …at any alpha */
   --ui-text: #23262f;                     /* body copy */
   --ui-text-2: #5b6070;                   /* secondary copy */
   --ui-mute: #8d92a3;                     /* labels, placeholders, hints */
