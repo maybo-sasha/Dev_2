@@ -132,6 +132,11 @@
             document.documentElement.scrollTop = y;
             const l = window.lenisInstance || window.lenis;
             if (l && l.scrollTo) l.scrollTo(y, { immediate: true, force: true });
+            // Tell everything that reacts to scrolling that the page moved.
+            // Jumping like this produces no scroll event of its own, so the
+            // lazy-video pass and anything else listening would otherwise
+            // still believe we are at the top and leave videos paused.
+            window.dispatchEvent(new Event('scroll'));
             if (Math.abs(window.scrollY - y) < 4) settled = true;
         }
         // Applied repeatedly rather than once: the deck resets itself to the
