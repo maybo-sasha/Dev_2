@@ -37,6 +37,21 @@
 // project page without any of them opting in. Every hero is a *-hero section,
 // which is the only assumption made about the markup.
 (function () {
+    // Only when we arrived from a card zoom. The head script sets .instant for
+    // exactly that case, which is a truer signal than the timestamp: it holds
+    // even when the card was an image and left no playhead behind.
+    if (!document.documentElement.classList.contains('instant')) return;
+
+    const v = document.querySelector('[class*="hero"] video') || document.querySelector('main video');
+    if (!v) return;
+
+    // The hero is already backed by heroPoster, the frame captured at the
+    // instant we navigated. A video's own poster attribute is a different
+    // picture entirely, and it paints over that captured frame for the moment
+    // before the video decodes. On ai-champion that poster is a still from a
+    // different skill, so it reads as a blink of unrelated footage.
+    v.removeAttribute('poster');
+
     let t;
     try {
         t = sessionStorage.getItem('heroTime');
@@ -47,14 +62,9 @@
     t = parseFloat(t);
     if (!isFinite(t) || t <= 0) return;
 
-    const v = document.querySelector('[class*="hero"] video') || document.querySelector('main video');
-    if (!v) return;
-
-    // Hold the video back until it is sitting on the right frame. The hero is
-    // already backed by heroPoster, the snapshot taken at the instant we
-    // navigated, so hiding the video shows that same frame rather than a gap.
-    // Without this the hero renders from the top for a beat and then jumps,
-    // which reads as a blink.
+    // Hold the video back until it is sitting on the right frame, so the
+    // captured still shows through instead of the video running from the top
+    // and then jumping.
     const wasHidden = v.style.visibility;
     v.style.visibility = 'hidden';
     try { v.pause(); } catch (e) {}

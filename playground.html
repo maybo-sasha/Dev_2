@@ -354,6 +354,58 @@
             .pg-tile--wide { grid-column: auto; }
             .pg-foot { margin: 5rem 6vw 0; }
         }
+
+        /* ── side ruler ───────────────────────────────────────────
+           A measuring rule down the edge: one tick per tile, grouped
+           under the two section names. It doubles as a position
+           readout, so it says where you are as well as where you can
+           go. Hidden on narrow screens, where there is no margin to
+           put it in and the thumb is already doing the scrolling. */
+        .pg-rule {
+            position: fixed;
+            right: clamp(10px, 1.6vw, 26px);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 45;
+            display: grid;
+            gap: 7px;
+            justify-items: end;
+        }
+        @media (max-width: 1100px) { .pg-rule { display: none; } }
+        .pg-rule a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .pg-rule i {
+            display: block;
+            height: 1px;
+            width: 12px;
+            background: currentColor;
+            opacity: 0.26;
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease, background-color 0.3s ease;
+        }
+        .pg-rule-g i { width: 26px; opacity: 0.5; }
+        /* the label sits to the left of its tick, so the ticks stay flush */
+        .pg-rule span {
+            order: -1;
+            font-family: var(--font-mono);
+            font-size: 0.56rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+        .pg-rule a:hover i { opacity: 0.9; width: 30px; }
+        .pg-rule a:hover span,
+        .pg-rule a:focus-visible span { color: var(--text); }
+        .pg-rule a.is-on i { opacity: 1; width: 34px; background: var(--yellow); }
+        .pg-rule a.is-on span { color: var(--text); }
+        @media (prefers-reduced-motion: reduce) { .pg-rule i { transition: none; } }
     </style>
 </head>
 <body>
@@ -675,6 +727,7 @@
 
         // ── Lenis smooth scroll ───────────────────────────────────────
         const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+        window.lenis = lenis;   // the side ruler scrolls through it
         function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
@@ -774,6 +827,73 @@
             e.stopPropagation();
             closeOverlay();
         });
+    </script>
+    <script>
+
+        // ── side ruler ────────────────────────────────────────────
+        // Built from the DOM rather than written by hand, so it cannot fall
+        // out of step with the tiles it indexes.
+        (function () {
+            const secs = Array.from(document.querySelectorAll('.pg-sec'));
+            const gals = Array.from(document.querySelectorAll('.pg-gallery'));
+            if (!secs.length || secs.length !== gals.length) return;
+
+            const nav = document.createElement('nav');
+            nav.className = 'pg-rule';
+            nav.setAttribute('aria-label', 'Sections');
+
+            const marks = [];
+            const add = (cls, target, id, label) => {
+                target.id = id;
+                const a = document.createElement('a');
+                a.className = cls;
+                a.href = '#' + id;
+                a.innerHTML = '<i></i>' + (label ? '<span></span>' : '');
+                if (label) a.querySelector('span').textContent = label;
+                else a.setAttribute('aria-label', 'Item');
+                nav.appendChild(a);
+                marks.push({ el: a, target: target });
+                return a;
+            };
+
+            secs.forEach((sec, i) => {
+                const title = sec.querySelector('.pg-sec-title');
+                add('pg-rule-g', sec, 'pg-s' + i, title ? title.textContent.trim() : 'Section');
+                Array.from(gals[i].querySelectorAll('.pg-tile')).forEach((tile, j) => {
+                    const name = tile.querySelector('.pg-cap-title');
+                    const a = add('pg-rule-t', tile, 'pg-t' + i + '-' + j, '');
+                    if (name) a.setAttribute('aria-label', name.textContent.trim());
+                });
+            });
+
+            document.body.appendChild(nav);
+
+            // Lenis owns the scroll, so let it do the travelling when there is
+            // one; a raw hash jump would fight it.
+            nav.addEventListener('click', (e) => {
+                const a = e.target.closest('a');
+                if (!a) return;
+                const el = document.getElementById(a.getAttribute('href').slice(1));
+                if (!el) return;
+                e.preventDefault();
+                if (window.lenis && window.lenis.scrollTo) window.lenis.scrollTo(el, { offset: -80 });
+                else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+
+            // A thin band across the middle of the viewport: whatever is
+            // crossing it is what you are looking at.
+            const seen = new Set();
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target);
+                });
+                let cur = null;
+                for (const m of marks) { if (seen.has(m.target)) { cur = m; break; } }
+                marks.forEach((m) => m.el.classList.toggle('is-on', m === cur));
+            }, { rootMargin: '-45% 0px -45% 0px' });
+
+            marks.forEach((m) => io.observe(m.target));
+        })();
     </script>
     <script src="./js/workMenu.js"></script>
     <script src="./js/cursor.js"></script>
