@@ -137,7 +137,6 @@
            when something follows it in the same column */
         .ads-lead .ads-head { margin-bottom: clamp(1.6rem, 3vw, 2.2rem); }
         .ads-lead .ads-head:only-child { margin-bottom: 0; }
-        .ads-lead .ads-purpose:last-child { margin-bottom: 0; }
 
         /* ── product showcase ── */
         .ads-shot { border-radius: 18px; overflow: hidden; background: var(--paper); box-shadow: 0 50px 90px -45px rgba(29,24,80,0.5), 0 0 0 1px var(--line); }
@@ -149,27 +148,6 @@
         .princ h3 { font-size: clamp(1.2rem, 1.8vw, 1.5rem); font-weight: 700; letter-spacing: -0.02em; margin: 0.6rem 0 0.7rem; }
         .princ p { font-size: 0.98rem; line-height: 1.6; color: var(--muted); margin: 0; }
         @media (max-width: 760px) { .ads-princ { grid-template-columns: 1fr; } }
-
-        /* ── what a screen is for ──────────────────────────────
-           A short statement of intent above the artefact, so the
-           reader knows what they are looking at before they watch
-           forty seconds of someone clicking. */
-        .ads-purpose {
-            border-left: 3px solid var(--violet);
-            padding: 0.2rem 0 0.2rem 1.2rem;
-            margin: 0 0 clamp(1.6rem, 3vw, 2.4rem);
-            max-width: 62ch;
-        }
-        .ads-purpose b {
-            display: block;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--violet);
-            margin-bottom: 0.5rem;
-        }
-        .ads-purpose p { margin: 0; font-size: clamp(1rem, 1.3vw, 1.12rem); line-height: 1.65; color: var(--muted); }
 
         /* ── the agents ────────────────────────────────────────
            One full-width block each, stacked. They were side by side,
@@ -322,10 +300,6 @@
                             <h2 class="ads-h2">Inside a Strategy</h2>
                             <p class="ads-body">Opening a Strategy lands here. The page shows how it is performing against its KPI over time, the Optimization Score, what each of the four agents is contributing, and every campaign inside it. Optimizing a campaign starts from this table.</p>
                         </div>
-                        <div class="ads-purpose fade-up">
-                            <b>What this screen is for</b>
-                            <p>Two questions answered without leaving the page: is this Strategy working, and which campaign should I optimize next.</p>
-                        </div>
                     </div>
                     <div class="ads-shot fade-up">
                         <video src="./assets/Opimove/Ai%20studio/flows/hub.mp4" muted loop playsinline preload="metadata"></video>
@@ -350,13 +324,13 @@
                     </div>
                     <div class="princ fade-up">
                         <span class="n">The solution</span>
-                        <h3>One card per agent, in the campaign</h3>
-                        <p>The modal opens on the campaign it affects. Each agent gets a card that says what it does in one sentence, what it is worth right now in real numbers, and a single Setup button. Nothing to hunt for.</p>
+                        <h3>Explain first, then guide step by step</h3>
+                        <p>The modal opens on the campaign and starts by explaining what the AI has found there and what it is worth in real numbers. From there it walks the marketer through setup one step at a time, so the automation is handed over gradually rather than switched on blind.</p>
                     </div>
                     <div class="princ fade-up">
                         <span class="n">The rule</span>
-                        <h3>The same card, four times</h3>
-                        <p>All four cards share one layout, so learning to read one teaches you the other three. What differs between the agents sits in the words, never in the structure.</p>
+                        <h3>Automation, never a surprise</h3>
+                        <p>Each step says what it will change before it changes anything, and nothing is applied until the marketer approves it. Full automation once it runs, full control on the way there.</p>
                     </div>
                 </div>
                 <article class="agentrow fade-up">
