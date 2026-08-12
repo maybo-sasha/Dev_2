@@ -132,13 +132,23 @@
             document.documentElement.scrollTop = y;
             const l = window.lenisInstance || window.lenis;
             if (l && l.scrollTo) l.scrollTo(y, { immediate: true, force: true });
-            // Tell everything that reacts to scrolling that the page moved.
-            // Jumping like this produces no scroll event of its own, so the
-            // lazy-video pass and anything else listening would otherwise
-            // still believe we are at the top and leave videos paused.
-            window.dispatchEvent(new Event('scroll'));
             if (Math.abs(window.scrollY - y) < 4) settled = true;
         }
+
+        // Telling the page it moved is a separate job from moving it, and it
+        // has to happen later. A programmatic scroll fires no scroll event of
+        // its own, and this file runs before lazyVideo.js, so a notice sent
+        // while landing reaches nobody: the videos stay paused until the
+        // visitor scrolls and wakes them up by hand. These fire after the
+        // listeners exist, and keep going after the landing has settled.
+        function notify() {
+            window.dispatchEvent(new Event('scroll'));
+            window.dispatchEvent(new Event('resize'));
+        }
+        requestAnimationFrame(notify);
+        setTimeout(notify, 100);
+        setTimeout(notify, 400);
+        window.addEventListener('load', function () { notify(); setTimeout(notify, 120); });
         // Applied repeatedly rather than once: the deck resets itself to the
         // top during start-up (index.js does it outright, and the loader
         // finishes later still), so a single jump gets overwritten.
