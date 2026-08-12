@@ -56,12 +56,7 @@
   bottom: 0;
   left: 0;
   width: calc(100% / var(--mn-n));
-  /* Rounded on top, square on the bottom. The pill sits on the seam
-     where the bar meets the panel, so rounding the bottom corners
-     leaves a wedge of surface against the body edge and the marker
-     reads as a lozenge resting on the panel. Square, it reads as
-     continuous with it — which is the whole claim of the component. */
-  border-radius: calc(var(--ui-r-xl) - var(--mn-pad)) calc(var(--ui-r-xl) - var(--mn-pad)) 0 0;
+  border-radius: calc(var(--ui-r-xl) - var(--mn-pad));
   background: var(--ui-fg);
   transform: translateX(calc(var(--mn-i, 0) * 100%));
   opacity: 0;
@@ -70,6 +65,15 @@
     opacity 0.28s var(--ui-e);
 }
 .mn.is-open .mn__pill { opacity: 1; }
+
+/* Only at the ends. In a middle slot the marker floats inside the bar,
+   with the bar surface on both sides, and a rounded bottom is correct
+   there. At either end its outer edge is flush with the body, whose
+   edge runs straight down into the panel — so a rounded corner leaves
+   a wedge of surface caught between the two. Squaring that one corner
+   closes it, and leaves every other slot alone. */
+.mn.is-first .mn__pill { border-bottom-left-radius: 0; }
+.mn.is-last .mn__pill { border-bottom-right-radius: 0; }
 
 .mn__tab {
   position: relative;

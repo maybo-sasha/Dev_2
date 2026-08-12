@@ -120,6 +120,8 @@ export function createMorphNav({ sections = SECTIONS } = {}) {
   function paint() {
     tabs.forEach((t, i) => t.setAttribute('aria-selected', String(i === open)));
     root.classList.toggle('is-open', open >= 0);
+    root.classList.toggle('is-first', open === 0);
+    root.classList.toggle('is-last', open === n - 1);
     panel.style.height = open >= 0 ? `${measure()}px` : '0px';
   }
 
