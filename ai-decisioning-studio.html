@@ -100,15 +100,18 @@
         /* The claim is centred; the three points under it are not.
            Ranged left in columns, because a list is read line by line
            and centred text makes every line start somewhere new. */
-        /* scoped to the lede so it outranks .ads-own's own margin reset,
-           which is declared further down the sheet */
         .ads-lede .ads-new {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            list-style: none; padding: 0;
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: clamp(1.4rem, 3vw, 2.8rem); text-align: left;
             max-width: 1240px; margin: clamp(3rem, 6vw, 5rem) auto 0;
         }
         @media (max-width: 900px) { .ads-lede .ads-new { grid-template-columns: minmax(0, 1fr); max-width: 60ch; } }
-        .ads-lede .ads-new li { font-size: clamp(0.98rem, 1.25vw, 1.08rem); font-weight: 400; color: var(--muted); }
+        .ads-lede .ads-new li {
+            position: relative; padding-left: 1.7rem;
+            font-size: clamp(0.98rem, 1.25vw, 1.08rem); line-height: 1.55; color: var(--muted);
+        }
+        .ads-lede .ads-new li::before { content: '✦'; position: absolute; left: 0; top: 0.05em; color: var(--violet); font-size: 0.85em; }
 
         /* ── section scaffolding ── */
         .ads-sec { padding: clamp(4rem, 8vw, 7rem) 0; counter-increment: adss; }
@@ -137,15 +140,6 @@
         /* ── two columns of commentary under an artefact ──────*/
         .ads-duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.2rem, 2.5vw, 2rem); align-items: start; }
         @media (max-width: 860px) { .ads-duo { grid-template-columns: 1fr; } }
-
-        /* ── marked list, and the card it sits in ─────────────*/
-        .ads-own { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
-        .ads-own li { position: relative; padding-left: 1.7rem; font-size: clamp(1rem, 1.3vw, 1.15rem); font-weight: 500; line-height: 1.5; color: var(--ink); }
-        .ads-own li::before { content: '✦'; position: absolute; left: 0; top: 0.05em; color: var(--violet); font-size: 0.85em; }
-        .ads-own li strong { color: var(--ink); font-weight: 700; }
-        .ads-card { background: var(--paper); border-radius: 20px; padding: clamp(1.8rem, 3.5vw, 3rem); box-shadow: 0 40px 80px -50px rgba(29,24,80,0.45), 0 0 0 1px var(--line); max-width: 1100px; }
-        .ads-card .ads-own { gap: 1.3rem; }
-        .ads-card .ads-own li { color: var(--muted); }
 
         /* ── what a screen is for ──────────────────────────────
            A short statement of intent above the artefact, so the
@@ -201,14 +195,6 @@
         /* start and end of a path take the product's primary */
         .ads-flow .fl__node--start { box-shadow: inset 0 0 0 2px var(--violet); }
         .ads-flow .fl__node--start em { color: var(--violet); }
-
-        /* ── findings ──────────────────────────────────────────*/
-        .ads-find { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.4rem, 3vw, 2.6rem); margin-top: clamp(2rem, 4vw, 3rem); }
-        @media (max-width: 900px) { .ads-find { grid-template-columns: minmax(0, 1fr); } }
-        .find { border-top: 3px solid var(--violet); padding-top: 1.1rem; }
-        .find b { display: block; font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; color: var(--ink); }
-        .find h4 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 0.7rem 0 0.5rem; }
-        .find p { font-size: 0.96rem; line-height: 1.6; color: var(--muted); margin: 0; }
 
         /* reveal */
         .fade-up { opacity: 0; }
@@ -288,7 +274,7 @@
             <div class="ads-wrap">
                 <p class="big fade-up">Optimization Power <span class="sep">·</span> AI agents pulling in <span class="spark">one direction</span></p>
                 <p class="sub fade-up">Agents stop working in silos and begin working toward a shared goal, measuring and optimizing results across complete programs.</p>
-                <ul class="ads-own ads-new fade-up">
+                <ul class="ads-new fade-up">
                     <li>Group campaigns under one Strategy with a shared KPI goal</li>
                     <li>AI Journey Decisioning, AI Offer Decisioning and Send Time Optimization agents all work together as part of that Strategy (AI Content Decisioning coming soon)</li>
                     <li>Track KPI impact and AI coverage across the whole Strategy</li>
@@ -417,92 +403,6 @@
             </div>
         </section>
 
-        <!-- 04 THE WIZARD -->
-        <section class="ads-sec">
-            <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">Setup</p>
-                    <h2 class="ads-h2">Four questions and a review</h2>
-                    <p class="ads-body">Setup is a modal, not a page, because it belongs to the card that opened it. It asks which templates, what to write, how many variations, and in what tone. Then it shows every generated variation before anything is applied, since the review is the last point where a person is still in charge.</p>
-                </div>
-                <div class="ads-purpose fade-up">
-                    <b>What this screen is for</b>
-                    <p>Turning a vague instruction into something specific enough for the agent to act on, while never letting generated copy reach a customer without a human seeing it first.</p>
-                </div>
-                <div class="ads-flow fade-up" data-flow="creation"></div>
-                <div class="ads-duo" style="margin-top: clamp(2rem, 4vw, 3rem);">
-                    <div class="princ fade-up">
-                        <span class="n">The design</span>
-                        <h3>The path forks once</h3>
-                        <p>The wizard branches on a single question: how many templates the campaign has. One template goes straight to the content questions, several adds a selection step first where the AI pre-selects everything and the marketer removes what should not be touched. Defaulting to all and letting people subtract is faster than an empty list, and it teaches the scope of the change.</p>
-                    </div>
-                    <div class="princ fade-up">
-                        <span class="n">What the flow showed</span>
-                        <h3>The happy path was the only path</h3>
-                        <p>Drawing it revealed that almost everything hanging off the spine was undrawn: no ineligible state, no field validation, no generating state, no failure handling if the agent returns nothing. There was also a live design bug. The variation count offered "1", and a test with one arm is not a test.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 05 ONCE IT IS LIVE -->
-        <section class="ads-sec ads-sec--mist">
-            <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">Optimization</p>
-                    <h2 class="ads-h2">What the agent actually does</h2>
-                    <p class="ads-body">Once applied, the agent splits the audience across the variations, watches which one performs, and promotes the winner. That is the whole promise of the feature, and it is the part of the product with the least interface attached to it.</p>
-                </div>
-                <div class="ads-flow fade-up" data-flow="optimization"></div>
-                <div class="ads-duo" style="margin-top: clamp(2rem, 4vw, 3rem);">
-                    <div class="princ fade-up">
-                        <span class="n">The gap</span>
-                        <h3>Nobody had defined the split</h3>
-                        <p>How the audience divides across arms, how much signal counts as enough, and what the card shows while it is still learning were all unspecified. The feature was shipping a test whose rules had never been written down, which meant no two people in the room were describing the same behaviour.</p>
-                    </div>
-                    <div class="princ fade-up">
-                        <span class="n">The harder problem</span>
-                        <h3>Three agents move the same number</h3>
-                        <p>Content Decisioning measures itself on open and click rate. So does Send Time Optimization. So do Offer and Journey Decisioning, indirectly. Run them together, as the Strategy explicitly encourages, and no agent can honestly claim the lift it reports. Drawing the flows is what surfaced this, and it is a measurement question the UI cannot solve on its own.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 06 AFTER ACTIVATION -->
-        <section class="ads-sec">
-            <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">Live management</p>
-                    <h2 class="ads-h2">The screen that was missing</h2>
-                    <p class="ads-body">After a marketer applies the agent, the interface stops. The Active card is a read-only tile with two numbers on it. Every question a person has once something is live and touching real customers has no screen behind it.</p>
-                </div>
-                <div class="ads-flow fade-up" data-flow="management"></div>
-                <div class="ads-find">
-                    <div class="find fade-up">
-                        <b>1</b>
-                        <h4>Built state</h4>
-                        <p>Active, showing two benefit figures. That is the entire post-activation interface.</p>
-                    </div>
-                    <div class="find fade-up">
-                        <b>6</b>
-                        <h4>Controls with no screen</h4>
-                        <p>See per-variation results, reopen the setup, add or remove variations, pause, turn off and revert, and an audit trail of who applied what.</p>
-                    </div>
-                    <div class="find fade-up">
-                        <b>2</b>
-                        <h4>Unanswered questions</h4>
-                        <p>What happens to learning if the setup is edited mid-test, and what happens to customers who already received a variation that gets reverted.</p>
-                    </div>
-                </div>
-                <div class="ads-card fade-up" style="margin-top: clamp(2.5rem, 5vw, 4rem);">
-                    <ul class="ads-own">
-                        <li><strong>Why this is the finding, not a footnote.</strong> The third principle of the feature was that automation has to be reversible. The flow shows it is not. A marketer can switch the agent on in four clicks and then has no supported way to pause it, inspect it, or take it back.</li>
-                        <li><strong>Why the diagrams look like this.</strong> Solid outlines are screens that exist, dashed outlines are screens that do not. Drawing both in the same picture is the point. A flow that only documents what was built cannot show you what is missing, and what was missing here was most of the second half.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
 
 
     </main>
