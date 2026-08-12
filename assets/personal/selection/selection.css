@@ -11,7 +11,12 @@
 
 [data-selection] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
-.sl {
+/* Declared at :root, not on .sl. createCheckbox / createSwitch /
+   createRadioGroup are exported for use anywhere — the Lab screen
+   builds its option row out of them — and a control mounted outside
+   .sl would otherwise inherit none of this and collapse.
+   .sl still overrides them; .sl__specimen still scales the cluster. */
+:root {
   --sl-accent: var(--ui-fg);
   --sl-accent-rgb: var(--ui-fg-rgb);
   --sl-bg: var(--ui-bg);
@@ -25,13 +30,15 @@
   --sl-sw-w: 46px;
   --sl-sw-h: 26px;
   --sl-sw-p: 3px;
-  /* Knob travel is derived at the point of use, never cached in a var:
-     a var holding calc(var(…)) is substituted where it's declared, so a
-     nested size override (see .sl__specimen) would never reach it. */
 
   --sl-dur: 380ms;
   --sl-ease: cubic-bezier(0.2, 0.85, 0.25, 1);
   --sl-spring: cubic-bezier(0.34, 1.5, 0.5, 1);
+}
+.sl {
+  /* Knob travel is derived at the point of use, never cached in a var:
+     a var holding calc(var(…)) is substituted where it's declared, so a
+     nested size override (see .sl__specimen) would never reach it. */
 
   position: relative;
   width: 100%;

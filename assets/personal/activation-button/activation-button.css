@@ -9,10 +9,15 @@
 /* standalone — don't depend on the host page's box model */
 .ab, .ab *, .ab *::before, .ab *::after { box-sizing: border-box; }
 
-.ab {
+/* At :root for the same reason as Selection Controls: the button is
+   exported on its own and the Lab screen mounts one without the .ab
+   panel around it. */
+:root {
   --ab-accent: var(--ui-fg);
   --ab-done: var(--ui-ok);
   --ab-faint: var(--ui-mute);
+}
+.ab {
 
   position: relative;
   display: grid;
