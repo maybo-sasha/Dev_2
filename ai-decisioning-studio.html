@@ -132,6 +132,7 @@
             margin-bottom: clamp(2.5rem, 5vw, 4rem);
         }
         @media (max-width: 900px) { .ads-lead { grid-template-columns: minmax(0, 1fr); } }
+        .ads-lead:last-child { margin-bottom: 0; }
         /* the grid gap does the spacing, so the head only keeps a margin
            when something follows it in the same column */
         .ads-lead .ads-head { margin-bottom: clamp(1.6rem, 3vw, 2.2rem); }
@@ -148,10 +149,6 @@
         .princ h3 { font-size: clamp(1.2rem, 1.8vw, 1.5rem); font-weight: 700; letter-spacing: -0.02em; margin: 0.6rem 0 0.7rem; }
         .princ p { font-size: 0.98rem; line-height: 1.6; color: var(--muted); margin: 0; }
         @media (max-width: 760px) { .ads-princ { grid-template-columns: 1fr; } }
-
-        /* ── two columns of commentary under an artefact ──────*/
-        .ads-duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.2rem, 2.5vw, 2rem); align-items: start; }
-        @media (max-width: 860px) { .ads-duo { grid-template-columns: 1fr; } }
 
         /* ── what a screen is for ──────────────────────────────
            A short statement of intent above the artefact, so the
@@ -332,18 +329,6 @@
                     </div>
                     <div class="ads-shot fade-up">
                         <video src="./assets/Opimove/Ai%20studio/flows/hub.mp4" muted loop playsinline preload="metadata"></video>
-                    </div>
-                </div>
-                <div class="ads-duo" style="margin-top: clamp(2rem, 4vw, 3rem);">
-                    <div class="princ fade-up">
-                        <span class="n">What activation showed</span>
-                        <h3>One hub, four different ways in</h3>
-                        <p>Mapping activation for all four agents side by side made the real state of the feature obvious. Two agents had no setup screen at all. Send Time Optimization had one, but it lived on its own page and was never connected to the hub, so the card promised a route that did not exist.</p>
-                    </div>
-                    <div class="princ fade-up">
-                        <span class="n">The consequence</span>
-                        <h3>A card with only one state</h3>
-                        <p>The card was designed for the happy path and nothing else. There was no Ineligible state for a campaign the agent cannot run on, no Learning state while it gathers signal, and no Paused state after a failure. A card that can only say Active cannot be trusted to say anything.</p>
                     </div>
                 </div>
             </div>
