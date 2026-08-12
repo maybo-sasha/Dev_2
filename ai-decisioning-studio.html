@@ -124,64 +124,6 @@
         .ads-body { font-size: clamp(1.08rem, 1.5vw, 1.3rem); line-height: 1.65; color: var(--muted); max-width: 56ch; }
         .ads-head { max-width: 100ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 
-        /* ── low fidelity wireframe of the modal ───────────────
-           Drawn in CSS rather than exported as an image so the region
-           labels stay real text: selectable, searchable, and readable
-           to a screen reader. Grey bars stand in for copy on purpose,
-           because the point of the drawing is where things sit, not
-           what they say. */
-        .wf {
-            margin: 0 0 clamp(2.5rem, 5vw, 4rem);
-            padding: clamp(1.4rem, 3vw, 2.6rem);
-            border-radius: 20px;
-            background: var(--paper);
-            box-shadow: 0 40px 80px -50px rgba(29,24,80,0.45), 0 0 0 1px var(--line);
-        }
-        .wf figcaption { margin-bottom: clamp(1.2rem, 2.5vw, 1.8rem); max-width: 60ch; }
-        .wf figcaption b { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--violet); margin-bottom: 0.5rem; }
-        .wf figcaption span { display: block; font-size: 0.98rem; line-height: 1.6; color: var(--muted); }
-
-        .wf-modal { border: 1.5px solid rgba(29,24,80,0.28); border-radius: 12px; overflow: hidden; }
-        .wf-bar {
-            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-            padding: 0.9rem 1.1rem; border-bottom: 1.5px solid rgba(29,24,80,0.28);
-            background: rgba(29,24,80,0.03);
-        }
-        .wf-x { width: 14px; height: 14px; border: 1.5px solid rgba(29,24,80,0.4); border-radius: 4px; flex: 0 0 auto; }
-        .wf-body { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.1fr); }
-        @media (max-width: 760px) { .wf-body { grid-template-columns: minmax(0, 1fr); } }
-        .wf-side { padding: 1.1rem; border-right: 1.5px solid rgba(29,24,80,0.28); }
-        @media (max-width: 760px) { .wf-side { border-right: 0; border-bottom: 1.5px solid rgba(29,24,80,0.28); } }
-        .wf-main { padding: 1.1rem; display: grid; gap: 1.1rem; }
-
-        .wf-lbl { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--violet); margin: 0 0 0.6rem; }
-        /* a grey bar stands in for a line of copy */
-        .wf-line { height: 7px; border-radius: 3px; background: rgba(29,24,80,0.13); margin-bottom: 0.45rem; }
-        .wf-line.s { width: 55%; }
-        .wf-line.m { width: 78%; }
-        .wf-block { border: 1.5px solid rgba(29,24,80,0.2); border-radius: 8px; padding: 0.8rem; }
-
-        .wf-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1rem; align-items: center; }
-        .wf-ring { width: 46px; height: 46px; border-radius: 50%; border: 5px solid rgba(107,78,245,0.35); border-top-color: var(--violet); }
-        .wf-kpi { text-align: right; }
-        .wf-kpi .wf-line { margin-left: auto; }
-        .wf-note { border: 1.5px dashed rgba(107,78,245,0.5); border-radius: 8px; padding: 0.7rem 0.8rem; background: rgba(107,78,245,0.04); }
-        .wf-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
-        @media (max-width: 560px) { .wf-cards { grid-template-columns: minmax(0, 1fr); } }
-        .wf-card { border: 1.5px solid rgba(29,24,80,0.2); border-radius: 8px; padding: 0.8rem; display: grid; gap: 0.5rem; }
-        .wf-card-h { display: flex; align-items: center; gap: 0.55rem; }
-        .wf-ic { width: 20px; height: 20px; border-radius: 6px; background: var(--lav); flex: 0 0 auto; }
-        .wf-name { font-size: 0.78rem; font-weight: 700; letter-spacing: -0.01em; }
-        .wf-tag { margin-left: auto; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--violet); border: 1px solid rgba(107,78,245,0.4); border-radius: 999px; padding: 0.12rem 0.45rem; }
-        .wf-btn { justify-self: end; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--violet); border-radius: 6px; padding: 0.32rem 0.7rem; }
-
-        /* the numbered notes under the drawing */
-        .wf-key { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1rem, 2.2vw, 1.8rem); margin-top: clamp(1.3rem, 2.5vw, 2rem); }
-        @media (max-width: 860px) { .wf-key { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        @media (max-width: 520px) { .wf-key { grid-template-columns: minmax(0, 1fr); } }
-        .wf-key div b { display: block; font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 0.35rem; }
-        .wf-key div p { margin: 0; font-size: 0.92rem; line-height: 1.55; color: var(--muted); }
-
         /* ── a section opening: its copy beside its screen ─────*/
         .ads-lead {
             display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
@@ -394,67 +336,6 @@
                         <p>Each step says what it will change before it changes anything, and nothing is applied until the marketer approves it. Full automation once it runs, full control on the way there.</p>
                     </div>
                 </div>
-                <figure class="wf fade-up">
-                    <figcaption>
-                        <b>Wireframe</b>
-                        <span>The layout the modal settled on. Explanation at the top, the four agents underneath, and the campaign it is about kept on screen the whole time.</span>
-                    </figcaption>
-                    <div class="wf-modal">
-                        <div class="wf-bar">
-                            <div style="flex:1"><div class="wf-line s"></div><div class="wf-line m" style="margin:0"></div></div>
-                            <i class="wf-x"></i>
-                        </div>
-                        <div class="wf-body">
-                            <aside class="wf-side">
-                                <p class="wf-lbl">Campaign details</p>
-                                <div class="wf-line"></div><div class="wf-line m"></div>
-                                <div class="wf-line s" style="margin-bottom:1rem"></div>
-                                <div class="wf-block">
-                                    <div class="wf-line"></div><div class="wf-line m" style="margin:0"></div>
-                                </div>
-                            </aside>
-                            <div class="wf-main">
-                                <div class="wf-top">
-                                    <i class="wf-ring"></i>
-                                    <div><p class="wf-lbl">Optimization score</p><div class="wf-line"></div><div class="wf-line m" style="margin:0"></div></div>
-                                    <div class="wf-kpi"><p class="wf-lbl">KPI impact</p><div class="wf-line s"></div><div class="wf-line s" style="margin:0"></div></div>
-                                </div>
-                                <div class="wf-note">
-                                    <p class="wf-lbl" style="margin-bottom:0.4rem">What the AI found</p>
-                                    <div class="wf-line m" style="margin:0"></div>
-                                </div>
-                                <div class="wf-cards">
-                            <div class="wf-card">
-                                <div class="wf-card-h"><i class="wf-ic"></i><span class="wf-name">Agent 1</span><span class="wf-tag">Available</span></div>
-                                <div><div class="wf-line"></div><div class="wf-line m"></div></div>
-                                <span class="wf-btn">Setup</span>
-                            </div>
-                            <div class="wf-card">
-                                <div class="wf-card-h"><i class="wf-ic"></i><span class="wf-name">Agent 2</span><span class="wf-tag">Available</span></div>
-                                <div><div class="wf-line"></div><div class="wf-line m"></div></div>
-                                <span class="wf-btn">Setup</span>
-                            </div>
-                            <div class="wf-card">
-                                <div class="wf-card-h"><i class="wf-ic"></i><span class="wf-name">Agent 3</span><span class="wf-tag">Available</span></div>
-                                <div><div class="wf-line"></div><div class="wf-line m"></div></div>
-                                <span class="wf-btn">Setup</span>
-                            </div>
-                            <div class="wf-card">
-                                <div class="wf-card-h"><i class="wf-ic"></i><span class="wf-name">Agent 4</span><span class="wf-tag">Available</span></div>
-                                <div><div class="wf-line"></div><div class="wf-line m"></div></div>
-                                <span class="wf-btn">Setup</span>
-                            </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wf-key">
-                        <div><b>Campaign always visible</b><p>The details column stays on screen so the marketer can see what the AI is about to change.</p></div>
-                        <div><b>Score before agents</b><p>The score and the KPI come first, so the reason to act is read before the things that act.</p></div>
-                        <div><b>One recommendation</b><p>A single plain sentence saying what the AI found on this campaign, not a list of settings.</p></div>
-                        <div><b>Four identical cards</b><p>Same shape each time, so the choice is between agents rather than between layouts.</p></div>
-                    </div>
-                </figure>
                 <article class="agentrow fade-up">
                     <div class="agentrow-text">
                         <div class="agentrow-head">
