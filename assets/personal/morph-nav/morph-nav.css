@@ -56,7 +56,12 @@
   bottom: 0;
   left: 0;
   width: calc(100% / var(--mn-n));
-  border-radius: calc(var(--ui-r-xl) - var(--mn-pad));
+  /* Rounded on top, square on the bottom. The pill sits on the seam
+     where the bar meets the panel, so rounding the bottom corners
+     leaves a wedge of surface against the body edge and the marker
+     reads as a lozenge resting on the panel. Square, it reads as
+     continuous with it — which is the whole claim of the component. */
+  border-radius: calc(var(--ui-r-xl) - var(--mn-pad)) calc(var(--ui-r-xl) - var(--mn-pad)) 0 0;
   background: var(--ui-fg);
   transform: translateX(calc(var(--mn-i, 0) * 100%));
   opacity: 0;
