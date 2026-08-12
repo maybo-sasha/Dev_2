@@ -28,7 +28,7 @@
   --fl-line: rgba(18, 20, 26, 0.34);
   --fl-ok: #3faa5a;
 
-  --fl-col: 190px;   /* column pitch */
+  --fl-col: 172px;   /* column pitch */
   --fl-row: 96px;    /* row pitch    */
 
   position: relative;
@@ -161,8 +161,8 @@
 .fl__node--decision {
   display: grid;
   place-items: center;
-  width: 172px;
-  height: 92px;
+  width: 158px;
+  height: 88px;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -172,8 +172,8 @@
 }
 .fl__node--decision > * { grid-area: 1 / 1; }
 .fl__dia {
-  width: 172px;
-  height: 92px;
+  width: 158px;
+  height: 88px;
   fill: var(--fl-paper);
   stroke: rgba(var(--fl-ink-rgb), 0.5);
   stroke-width: 1.5;
@@ -214,14 +214,17 @@
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
 
-/* the diagram is wide by nature, so say so on a narrow screen */
+/* Shown only when the diagram really is wider than its frame, which JS
+   decides by measuring. Keying this to a breakpoint told people to
+   scroll a diagram that already fitted, and stayed silent on the one
+   that did not. */
 .fl__scroll {
   display: none;
   margin-top: 10px;
   font-size: 10.5px;
   color: var(--fl-mute);
 }
-@media (max-width: 900px) { .fl__scroll { display: block; } }
+.fl.is-clipped .fl__scroll { display: block; }
 
 @media (prefers-reduced-motion: no-preference) {
   .fl__node { transition: box-shadow 0.25s ease; }

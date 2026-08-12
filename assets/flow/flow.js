@@ -29,7 +29,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 const SVGNS = 'http://www.w3.org/2000/svg';
 
 /* column and row pitch, in px — the gutter is baked in */
-const COL = 246;
+const COL = 218;
 const ROW = 104;
 
 const KEY = [
@@ -175,12 +175,17 @@ export function createFlow(spec) {
     }
   }
 
+  /* the hint is only true when the frame is actually narrower than the
+     diagram, so it is measured rather than guessed at a breakpoint */
+  const gauge = () => root.classList.toggle('is-clipped', stage.offsetWidth > root.clientWidth - 2);
+
   /* Fonts landing late change how the text wraps, which changes the
      box heights the edges were anchored to. Redraw when the stage
      actually resizes rather than betting on a timer. */
-  const ro = new ResizeObserver(() => draw());
-  requestAnimationFrame(() => { draw(); ro.observe(stage); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  const ro = new ResizeObserver(() => { draw(); gauge(); });
+  requestAnimationFrame(() => { draw(); gauge(); ro.observe(stage); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { draw(); gauge(); });
+  addEventListener('resize', gauge, { passive: true });
 
   return { el: root, redraw: draw };
 }
