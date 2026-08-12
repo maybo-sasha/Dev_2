@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playground — Portfolio</title>
+    <title>Playground · Portfolio</title>
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./assets/personal/_system/system.css">
     <link rel="stylesheet" href="./assets/personal/file-vault/file-vault.css">
@@ -25,11 +25,10 @@
             --ink-3:      #1b1925;
             --line:       rgba(255,255,255,0.09);
             --text:       #f2f0f7;
-            --text-mute:  rgba(242,240,247,0.55);
+            --text-mute:  rgba(242,240,247,0.7);
             --text-dim:   rgba(242,240,247,0.34);
             --orange:     #8b6cff;   /* accent — violet */
             --yellow:     #d6ff3d;   /* accent-2 — acid lime */
-            --cyan:       #29b5ff;
             --glow:       rgba(139,108,255,0.22);
             --font-mono:  'SFMono-Regular', ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
         }
@@ -126,39 +125,13 @@
         }
         .pg-headline em { font-style: normal; color: var(--orange); }
         .pg-intro {
-            max-width: 60ch;
+            max-width: 52ch;
             font-size: clamp(1.1rem, 1.6vw, 1.45rem);
             line-height: 1.55;
             color: var(--text-mute);
             font-weight: 400;
         }
         .pg-intro em { color: var(--yellow); font-style: normal; font-weight: 600; }
-
-        /* meta */
-        .pg-meta {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 4rem;
-            padding-top: 2.6rem;
-            border-top: 1px solid var(--line);
-        }
-        .pg-meta-item .k {
-            display: block;
-            font-family: var(--font-mono);
-            font-size: 0.64rem;
-            font-weight: 500;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            margin-bottom: 0.6rem;
-        }
-        .pg-meta-item .v {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text);
-            letter-spacing: -0.005em;
-        }
 
         /* ── Gallery grid ───────────────────────────────────── */
         .pg-gallery {
@@ -228,8 +201,7 @@
         }
         .pg-tile:not(.pg-tile--wide) .pg-frame--light { max-height: none; }
 
-        /* the caption carries a description and a two-line probe, so it
-           needs to breathe less at half width than it did full-bleed */
+        /* Keep half-width captions compact so the work remains the focus. */
         .pg-tile:not(.pg-tile--wide) .pg-cap-desc { font-size: 0.9rem; }
 
         /* one column below the point where two would crush the live UI */
@@ -291,26 +263,6 @@
             max-width: 56ch;
             margin: 0;
         }
-        .pg-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 1.1rem;
-        }
-        .pg-tag {
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-mute);
-            padding: 0.4rem 0.85rem;
-            border-radius: 6px;
-            border: 1px solid var(--line);
-            transition: color 0.3s ease, border-color 0.3s ease;
-        }
-        .pg-tile:hover .pg-tag { border-color: rgba(139,108,255,0.4); }
-
         /* ── Research layer ─────────────────────────────────── */
         .pg-sec {
             max-width: 2000px;
@@ -336,73 +288,6 @@
             max-width: 20ch;
         }
         .pg-sec-title em { font-style: normal; color: var(--orange); }
-
-        .pg-thesis-lead {
-            max-width: 62ch;
-            font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-            line-height: 1.6;
-            color: var(--text-mute);
-            margin: 0 0 3rem;
-        }
-        .pg-thesis-lead em { color: var(--yellow); font-style: normal; font-weight: 600; }
-        .pg-thesis-lead b { color: var(--text); font-weight: 600; }
-
-        .pg-cols {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: clamp(1.5rem, 3vw, 3rem);
-            padding-top: 2.4rem;
-            border-top: 1px solid var(--line);
-        }
-        .pg-col h3 {
-            font-family: var(--font-mono);
-            font-size: 0.64rem;
-            font-weight: 500;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            margin: 0 0 0.9rem;
-        }
-        .pg-col p {
-            margin: 0;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: var(--text-mute);
-        }
-        .pg-col p b { color: var(--text); font-weight: 600; }
-        @media (max-width: 860px) { .pg-cols { grid-template-columns: 1fr; gap: 1.8rem; } }
-
-        /* the probe attached to each experiment */
-        .pg-probe {
-            display: grid;
-            gap: 0.55rem;
-            margin: 1.1rem 0 0;
-            padding-top: 1.1rem;
-            border-top: 1px solid var(--line);
-        }
-        .pg-probe p {
-            display: grid;
-            grid-template-columns: 5.2rem 1fr;
-            gap: 0.9rem;
-            margin: 0;
-            font-size: 0.87rem;
-            line-height: 1.55;
-            color: var(--text-mute);
-        }
-        .pg-probe span {
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            font-weight: 500;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            padding-top: 0.28rem;
-        }
-        .pg-probe .q span { color: var(--cyan); }
-        .pg-probe .a span { color: var(--yellow); }
-        .pg-probe .a { color: var(--text); }
-        @media (max-width: 620px) {
-            .pg-probe p { grid-template-columns: 1fr; gap: 0.25rem; }
-        }
 
         /* ── Footer ─────────────────────────────────────────── */
         .pg-foot {
@@ -453,7 +338,6 @@
         /* ── Mobile ─────────────────────────────────────────── */
         @media (max-width: 900px) {
             .pg-head { padding: 7rem 6vw 2.5rem; }
-            .pg-meta { grid-template-columns: repeat(2, 1fr); }
             .pg-gallery { grid-template-columns: 1fr; padding: 3rem 6vw 0; gap: 3rem; }
             .pg-tile--wide { grid-column: auto; }
             .pg-foot { margin: 5rem 6vw 0; }
@@ -507,361 +391,172 @@
 
         <!-- HEADER -->
         <header class="pg-head reveal">
-            <p class="pg-eyebrow">Ongoing research · Motion &amp; interface</p>
+            <p class="pg-eyebrow">Personal work · No client brief</p>
             <h1 class="pg-headline">Play<em>ground</em></h1>
             <p class="pg-intro">
-                A running investigation into a single question: what does motion actually <em>do</em> for an interface? The answer these experiments keep landing on is that it decides whether a component reads as a set of parts being swapped, or as <em>one living thing</em> changing shape. Every component here is a working experiment. <em>Press them.</em>
+                Things I make for myself. <em>No client, no brief, no deadline.</em> Just whatever I got curious about that week: how a control should feel under your finger, how a material catches light, what happens when a shape refuses to sit still. Some of it is interface, some of it is 3D. <em>All of it is live, so press anything.</em>
             </p>
-
-            <div class="pg-meta">
-                <div class="pg-meta-item"><span class="k">Method</span><span class="v">Build · press · discard · rebuild</span></div>
-                <div class="pg-meta-item"><span class="k">Subject</span><span class="v">Micro-animation · shape morphing</span></div>
-                <div class="pg-meta-item"><span class="k">Constraint</span><span class="v">Monochrome · no libraries</span></div>
-                <div class="pg-meta-item"><span class="k">Built with</span><span class="v">Vanilla CSS &amp; JS · SVG filters · Blender</span></div>
-            </div>
         </header>
 
         <!-- GALLERY -->
-        <section class="pg-gallery">
 
-            <!-- PART I -->
-
-            <!-- 08 Cubick World_2 — wide feature -->
-            <figure class="pg-tile pg-tile--wide reveal">
-                <div class="pg-frame">
-                    <video src="./assets/personal/cubickworld_2.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">01 — Environment</p>
-                    <h2 class="pg-cap-title">Cubick World</h2>
-                    <p class="pg-cap-desc">
-                        A world built entirely from cubes — an experiment in modular geometry, stylized lighting and finding a sense of scale and atmosphere from the simplest possible building block.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">3D</span>
-                        <span class="pg-tag">Environment</span>
-                        <span class="pg-tag">Stylised</span>
-                    </div>
-                </figcaption>
-            </figure>
-
-            <!-- 09 Fish Bot -->
-            <figure class="pg-tile reveal">
-                <div class="pg-frame">
-                    <video src="./assets/personal/fish_bot.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">02 — Creature design</p>
-                    <h2 class="pg-cap-title">Fish Bot</h2>
-                    <p class="pg-cap-desc">
-                        A mechanical sea-creature blending organic, swimming motion with hard-surface detail — an exercise in giving something rigid a real sense of life.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">Hard-surface</span>
-                        <span class="pg-tag">Rigging</span>
-                        <span class="pg-tag">Animation</span>
-                    </div>
-                </figcaption>
-            </figure>
-
-            <!-- 10 Robot modelling -->
-            <figure class="pg-tile reveal">
-                <div class="pg-frame">
-                    <video src="./assets/personal/comp.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">03 — Modelling</p>
-                    <h2 class="pg-cap-title">Robot Build</h2>
-                    <p class="pg-cap-desc">
-                        A hard-surface robot taken from blockout to final shot: clean mechanical topology, a working rig and animation that sells the weight of every moving part.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">Hard-surface</span>
-                        <span class="pg-tag">Rigging</span>
-                        <span class="pg-tag">Animation</span>
-                    </div>
-                </figcaption>
-            </figure>
-
-            <!-- 11 Robot — turntable + FX (wide duo) -->
-            <figure class="pg-tile reveal">
-                <div class="pg-frame">
-                    <video src="./assets/personal/robot_360.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">04 — Modelling</p>
-                    <h2 class="pg-cap-title">Expedition Robot</h2>
-                    <p class="pg-cap-desc">
-                        A full 360° turntable to lock silhouette, proportion and topology, with lookdev and lighting tuned until the robot reads as a real, physical build.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">Modelling</span>
-                        <span class="pg-tag">Hard-surface</span>
-                        <span class="pg-tag">Lookdev</span>
-                    </div>
-                </figcaption>
-            </figure>
-
-            <!-- 12 Robot — FX pass -->
-            <figure class="pg-tile reveal">
-                <div class="pg-frame">
-                    <video src="./assets/personal/robot_withEffects.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">05 — Rigging &amp; Animation</p>
-                    <h2 class="pg-cap-title">Expedition Robot</h2>
-                    <p class="pg-cap-desc">
-                        The same robot brought to life — rigged and animated, with sparks, energy and atmosphere layered in to push the shot from a clean turntable into something with real drama.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">Rigging</span>
-                        <span class="pg-tag">Animation</span>
-                        <span class="pg-tag">FX</span>
-                    </div>
-                </figcaption>
-            </figure>
-
-            <!-- 13 Final Cut — wide feature -->
-            <figure class="pg-tile reveal">
-                <div class="pg-frame">
-                    <video src="./assets/personal/final.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">06 — Game Asset</p>
-                    <h2 class="pg-cap-title">War Robot</h2>
-                    <p class="pg-cap-desc">
-                        A war robot built as a game-ready asset — one of a series of robots I model and texture for a personal game-asset collection, designed to drop straight into a real-time engine.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">Game Asset</span>
-                        <span class="pg-tag">3D</span>
-                        <span class="pg-tag">Hard-surface</span>
-                    </div>
-                </figcaption>
-            </figure>
-
-            <!-- 14 Helicopter -->
-            <figure class="pg-tile reveal">
-                <div class="pg-frame">
-                    <video src="./assets/personal/hel.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">07 — Game Asset</p>
-                    <h2 class="pg-cap-title">Helicopter</h2>
-                    <p class="pg-cap-desc">
-                        This is also a 3D game asset — a game-ready helicopter from my personal collection, modeled and textured to drop straight into a real-time engine.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">Game Asset</span>
-                        <span class="pg-tag">3D</span>
-                        <span class="pg-tag">Hard-surface</span>
-                    </div>
-                </figcaption>
-            </figure>
-        </section>
-
-        <!-- RESEARCH -->
+        <!-- INTERFACE -->
         <section class="pg-sec reveal">
-            <p class="pg-sec-num">Part II · The experiments</p>
-            <h2 class="pg-sec-title">Every component is <em>one living organism</em></h2>
+            <p class="pg-sec-num">Interface</p>
+            <h2 class="pg-sec-title">Built to feel <em>alive</em></h2>
             <p class="pg-thesis-lead">
-                A conventional interface is an assembly. Press it and a part is destroyed, another is created in its place, and the user pays — in attention — to work out what just happened. These are built the opposite way: as <b>a single continuous body</b> that never splits into a before and an after. It stretches, necks, floods and folds, but it is always the same mass. <em>Motion is not decoration laid over the component — it is the thing keeping it alive.</em>
+                Each of these is one shape that changes, rather than one thing swapped for another. That is the whole idea. <em>Press them.</em>
             </p>
-            <div class="pg-cols">
-                <div class="pg-col">
-                    <h3>The anatomy</h3>
-                    <p>One body, one mass. A core that limbs grow out of, membranes that stretch before they part, parts that stay attached while they travel. <b>No state here is reached by replacing an element</b> — every state is the same matter, rearranged.</p>
-                </div>
-                <div class="pg-col">
-                    <h3>The physics</h3>
-                    <p>Squash and stretch, surface tension, weight, follow-through — borrowed from character animation, where they exist for one reason: to make drawn matter read as alive rather than as geometry. <b>A control that deforms under pressure is read as a body</b>; one that cuts between states is read as a diagram.</p>
-                </div>
-                <div class="pg-col">
-                    <h3>The constraint</h3>
-                    <p>Strict monochrome, one shared token layer, no animation library. Removing colour was the most useful decision: with no accent to signal state, the form has to. <b>An organism that only seems alive because it turned blue was never alive.</b></p>
-                </div>
-            </div>
         </section>
 
         <section class="pg-gallery">
             
 
-            <!-- 15 Selection Controls -->
+            <!-- 01 Selection Controls -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-selection></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">08 — Interface</p>
+                    <p class="pg-cap-num">01 · Interface</p>
                     <h2 class="pg-cap-title">Selection Controls</h2>
                     <p class="pg-cap-desc">
-                        Checkbox, radio and switch rebuilt as soft bodies. The box squeezes under the press then pops as the tick strokes itself in. The radio's hole shuts to nothing before the old fill drains, and springs back open on the one you picked. The switch knob leads with one edge and lets the other catch up, so it stretches the length of the track and lands round on the far side. Native inputs underneath — full keyboard, no libraries.
+                        Checkbox, radio and switch built as soft bodies. The switch stretches across instead of jumping.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">Micro-interaction</span>
                         <span class="pg-tag">Form UI</span>
                         <span class="pg-tag">Accessibility</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Can state be signalled by form alone, with no colour at all?</p>
-                        <p class="a"><span>Shows</span>The knob stretches across the track instead of teleporting; the radio transfers its selection, shutting the hole here before opening it there. Continuity does the work the accent used to.</p>
-                    </div>
                 </figcaption>
             </figure>
-            <!-- 16 Typing Input -->
+            <!-- 02 Typing Input -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-typing-input></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">09 — Interface</p>
+                    <p class="pg-cap-num">02 · Interface</p>
                     <h2 class="pg-cap-title">Typing Input</h2>
                     <p class="pg-cap-desc">
-                        Characters arrive with weight — each one drops in through a blur and settles, and only genuinely new ones move, so pasting into the middle of a word does not re-land everything after it. The caret is a single body pinned by both edges: select a range and it stretches into the selection rather than being replaced by a highlight, inverting the glyphs it covers. A real input sits on top with its own caret hidden, so pointer selection, IME and screen readers all behave natively.
+                        Letters land with a bit of weight, and the caret stretches into your selection.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">Form UI</span>
                         <span class="pg-tag">Micro-interaction</span>
                         <span class="pg-tag">Accessibility</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Is a text selection a different object from a caret?</p>
-                        <p class="a"><span>Shows</span>It is the same one, widened. The caret is pinned by both edges — the switch knob trick — so selecting stretches it across the range instead of hiding a bar and drawing a highlight in its place.</p>
-                    </div>
                 </figcaption>
             </figure>
 
-            <!-- 17 Multi Select -->
+            <!-- 03 Multi Select -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-multi-select></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">10 — Interface</p>
+                    <p class="pg-cap-num">03 · Interface</p>
                     <h2 class="pg-cap-title">Multi Select</h2>
                     <p class="pg-cap-desc">
-                        A multi-select where the choice physically moves. Press a row and the ink floods out from exactly where you pressed, squeezes down to a dot, flies up into the field and unfolds into a chip — the slot widening under it as it travels. Picked tools leave the list; clear a chip and it folds back into its original slot. Full keyboard flow, vanilla JS and CSS.
+                        Pick a row and it travels up into the field, then unfolds into a chip.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">Micro-interaction</span>
                         <span class="pg-tag">Form UI</span>
                         <span class="pg-tag">Motion</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Can a choice be moved rather than merely recorded?</p>
-                        <p class="a"><span>Shows</span>The ink leaves the row, collapses to a dot, travels, and unfolds into the chip. The chip is not a receipt for the row: it is the row, relocated.</p>
-                    </div>
                 </figcaption>
             </figure>
-            <!-- 18 Activation Button -->
+            <!-- 04 Activation Button -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-activation-button></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">11 — Interface</p>
+                    <p class="pg-cap-num">04 · Interface</p>
                     <h2 class="pg-cap-title">Activation Button</h2>
                     <p class="pg-cap-desc">
-                        One pill carrying a whole job without ever leaving its spot. Hover and the arrow flips into a tick; press and the badge collapses into a spinner while the label rolls from <em>Activate</em> to <em>Waiting</em> and the pill resizes to fit it. When the work lands the ring closes, the disc pops back and the button morphs to green — then the face rolls over like a split-flap to reset itself.
+                        One pill runs the whole job, from idle to working to done, without ever moving.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">Micro-interaction</span>
                         <span class="pg-tag">State machine</span>
                         <span class="pg-tag">GSAP</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Can a full async state machine live inside a single shape?</p>
-                        <p class="a"><span>Shows</span>Idle, pending and resolved all happen without the button leaving its spot. There is no new element to find, so attention never has to be re-acquired.</p>
-                    </div>
                 </figcaption>
             </figure>
-            <!-- 19 Gooey Menu -->
+            <!-- 05 Gooey Menu -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-gooey-menu></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">12 — Interface</p>
+                    <p class="pg-cap-num">05 · Interface</p>
                     <h2 class="pg-cap-title">Gooey Menu</h2>
                     <p class="pg-cap-desc">
-                        Six actions folded inside one button. Press it and they swing out on rotating arms — the arm turns while the disc travels, so each one sweeps rather than slides, and the icon spins a full extra turn to land upright. The shapes stretch off the core and pinch free through an SVG gooey filter: a Gaussian blur lets neighbours bleed together, then a colour matrix cranks the alpha contrast to snap that bleed back into one solid edge. Icons ride in an unfiltered layer above, so they stay sharp.
+                        Six actions peel out of one button like liquid, and seal back into it.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">SVG Filter</span>
                         <span class="pg-tag">Micro-interaction</span>
                         <span class="pg-tag">Motion</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Can menu items read as part of the button rather than beside it?</p>
-                        <p class="a"><span>Shows</span>Separation is the animation. The items are the core until surface tension gives way, and a gooey filter makes that moment of becoming-separate the thing you watch.</p>
-                    </div>
                 </figcaption>
             </figure>
-            <!-- 20 Command Bar -->
+            <!-- 06 Command Bar -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-command-bar></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">13 — Interface</p>
+                    <p class="pg-cap-num">06 · Interface</p>
                     <h2 class="pg-cap-title">Command Bar</h2>
                     <p class="pg-cap-desc">
-                        A ⌘K palette with real keyboard flow — type to filter, arrows to move, Enter to run. Group headers fold away as the list narrows.
+                        ⌘K. The pill widens into the palette rather than being replaced by one.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">Keyboard UX</span>
                         <span class="pg-tag">Search</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>How much can a list change before the eye loses its place?</p>
-                        <p class="a"><span>Shows</span>Rows filter in position and only the ink rail travels. The list is never rebuilt as a new list, so the reading position survives every keystroke.</p>
-                    </div>
                 </figcaption>
             </figure>
-            <!-- 21 Morph Nav -->
+            <!-- 07 Morph Nav -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-morph-nav></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">14 — Interface</p>
+                    <p class="pg-cap-num">07 · Interface</p>
                     <h2 class="pg-cap-title">Morph Nav</h2>
                     <p class="pg-cap-desc">
-                        A navigation bar that does not open a panel — it becomes one. Hovering a section grows the same body downward while a single marker travels to the new slot, and the content enters from the side you were heading. Sweep across the bar and it never shuts and reopens: the body stays open and simply changes shape under you. Leave it and it returns to exactly the shape it started in.
+                        Hover a section and the bar grows into the panel. It never opens a second thing.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">Navigation</span>
                         <span class="pg-tag">Morph</span>
                         <span class="pg-tag">Motion</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Can a menu be read without committing to it?</p>
-                        <p class="a"><span>Shows</span>Hover opens it, so a section can be inspected and abandoned at no cost. Nothing is created on open — the bar grows, the marker moves rather than being redrawn in its new slot, and crossing between sections morphs one continuous body instead of closing and building another.</p>
-                    </div>
                 </figcaption>
             </figure>
-            <!-- 22 Gooey Tabs -->
+            <!-- 08 Gooey Tabs -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-gooey-tabs></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">15 — Interface</p>
+                    <p class="pg-cap-num">08 · Interface</p>
                     <h2 class="pg-cap-title">Gooey Tabs</h2>
                     <p class="pg-cap-desc">
-                        A folder whose active tab is fused to the panel below it, dressed like the nav next door — paper surface, soft shadow, hairline stroke — which takes two filtered layers over identical geometry, one filled and one eroded to leave the outline. Each year answers a different question, so each carries a different form: bars for volume, a line for how it accumulated, a lollipop for ranked kinds, and a single number where that is the whole answer.</p>
+                        The tab is stuck to the folder, so switching drags that join across.
+                    </p>
                     <div class="pg-tags">
                         <span class="pg-tag">SVG Filter</span>
                         <span class="pg-tag">Tabs</span>
                         <span class="pg-tag">Motion</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Can a tab be understood as bonded to its panel?</p>
-                        <p class="a"><span>Shows</span>Switching drags a fusion rather than sliding a shape. The tab necks, stretches and seals into its new slot, so the panel below is never read as a different panel.</p>
-                    </div>
                 </figcaption>
             </figure>
-            <!-- 23 File Vault -->
+            <!-- 09 File Vault -->
             <figure class="pg-tile pg-tile--wide reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-file-vault
@@ -869,48 +564,127 @@
                          data-unit="Files"></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">16 — Interface</p>
+                    <p class="pg-cap-num">09 · Interface</p>
                     <h2 class="pg-cap-title">File Vault</h2>
                     <p class="pg-cap-desc">
-                        Not a render — a live interface you can use. Click the folder to open the vault, search to filter the files, and pick a row to pull its card out of the stack. Built as vanilla JS and CSS, no libraries.
+                        A folder that opens. The drawer slides out with the files inside.
                     </p>
                     <div class="pg-tags">
                         <span class="pg-tag">UI Design</span>
                         <span class="pg-tag">Micro-interaction</span>
                         <span class="pg-tag">Front-end</span>
                     </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Can a container behave like a place rather than a screen?</p>
-                        <p class="a"><span>Shows</span>The vault slides aside instead of swapping views. The folder you pressed is the folder you are now inside, so nothing has to be re-identified.</p>
-                    </div>
                 </figcaption>
             </figure></section>
 
-        <!-- FINDING -->
+        <!-- 3D -->
         <section class="pg-sec reveal">
-            <p class="pg-sec-num">Part III · What it comes to</p>
-            <h2 class="pg-sec-title">Where the body <em>holds</em>, and where it does not</h2>
+            <p class="pg-sec-num">3D</p>
+            <h2 class="pg-sec-title">Worlds and <em>creatures</em></h2>
             <p class="pg-thesis-lead">
-                Across all seven, the components that felt alive were the ones where <b>no state change destroyed a part</b>. That is the whole finding, and it is cheaper than it sounds: it is a sequencing decision far more often than it is an expensive effect. The radio only reads as living because its hole shuts <em>before</em> the old fill drains — same two properties, same duration, different order.
+                Modelling, lighting and rigging. Mostly an excuse to find out how a material behaves once you stop reading about it.
             </p>
-            <div class="pg-cols">
-                <div class="pg-col">
-                    <h3>What held</h3>
-                    <p>Sequencing beats spectacle. Staggering two properties that already existed bought more life than any filter did — and <b>the switch, the radio and the checkbox use no filter at all</b>.</p>
-                </div>
-                <div class="pg-col">
-                    <h3>What it cost</h3>
-                    <p>The gooey merge is the expensive one. Its alpha-contrast pass is <b>Chromium-only</b>: Safari and Firefox render the blur and never re-sharpen it. A body that dissolves in two engines is a real price, not a footnote.</p>
-                </div>
-                <div class="pg-col">
-                    <h3>Where it fails</h3>
-                    <p>Not every change deserves a body. Motion earns its place only when removing it costs something — a lost position, an unnoticed change, an unclear cause. <b>Everywhere else it is taxidermy:</b> the shape of life on something inert.</p>
-                </div>
-            </div>
+        </section>
 
-            
+        <section class="pg-gallery">
 
-            
+            <!-- 10 Cubick World_2 — wide feature -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/cubickworld_2.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">10 · Environment</p>
+                    <h2 class="pg-cap-title">Cubick World</h2>
+                    <p class="pg-cap-desc">
+                        A whole world built out of cubes, to see how far one shape could go.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <!-- 11 Fish Bot -->
+            <figure class="pg-tile reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/fish_bot.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">11 · Creature design</p>
+                    <h2 class="pg-cap-title">Fish Bot</h2>
+                    <p class="pg-cap-desc">
+                        A mechanical sea creature. Hard surfaces trying to swim.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <!-- 12 Robot modelling -->
+            <figure class="pg-tile reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/comp.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">12 · Modelling</p>
+                    <h2 class="pg-cap-title">Robot Build</h2>
+                    <p class="pg-cap-desc">
+                        Modelling practice that turned into a character.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <!-- 13 Robot — turntable + FX (wide duo) -->
+            <figure class="pg-tile reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/robot_360.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">13 · Modelling</p>
+                    <h2 class="pg-cap-title">Expedition Robot</h2>
+                    <p class="pg-cap-desc">
+                        The same robot, rigged and sent somewhere cold.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <!-- 14 Robot — FX pass -->
+            <figure class="pg-tile reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/robot_withEffects.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">14 · Rigging &amp; Animation</p>
+                    <h2 class="pg-cap-title">Expedition Robot</h2>
+                    <p class="pg-cap-desc">
+                        The same robot, rigged and sent somewhere cold.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <!-- 15 Final Cut — wide feature -->
+            <figure class="pg-tile reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/final.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">15 · Game Asset</p>
+                    <h2 class="pg-cap-title">War Robot</h2>
+                    <p class="pg-cap-desc">
+                        Heavier armour, rougher lighting.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <!-- 16 Helicopter -->
+            <figure class="pg-tile reveal">
+                <div class="pg-frame">
+                    <video src="./assets/personal/hel.mp4" muted loop playsinline preload="metadata"></video>
+                </div>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">16 · Game Asset</p>
+                    <h2 class="pg-cap-title">Helicopter</h2>
+                    <p class="pg-cap-desc">
+                        A game-ready asset, built to a real budget for once.
+                    </p>
+                </figcaption>
+            </figure>
         </section>
 
     </main>
