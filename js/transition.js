@@ -113,7 +113,16 @@
         const slide = card && card.closest('.slide');
         if (!slide) return;
 
+        // Stop as soon as it lands, and the moment the visitor takes over.
+        // window.load fires seconds later once the videos are in, and a late
+        // jump would drag them back from wherever they had scrolled to.
+        let settled = false;
+        ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (ev) {
+            window.addEventListener(ev, function () { settled = true; }, { once: true, passive: true });
+        });
+
         function land() {
+            if (settled) return;
             const y = slide.getBoundingClientRect().top + window.scrollY;
             // Move the page natively and tell the smooth-scroller about it.
             // Going through Lenis alone is not enough: it silently ignores the
@@ -123,6 +132,7 @@
             document.documentElement.scrollTop = y;
             const l = window.lenisInstance || window.lenis;
             if (l && l.scrollTo) l.scrollTo(y, { immediate: true, force: true });
+            if (Math.abs(window.scrollY - y) < 4) settled = true;
         }
         // Applied repeatedly rather than once: the deck resets itself to the
         // top during start-up (index.js does it outright, and the loader
