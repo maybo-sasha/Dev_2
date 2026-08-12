@@ -125,6 +125,19 @@
         .ads-body { font-size: clamp(1.02rem, 1.4vw, 1.2rem); line-height: 1.7; color: var(--muted); max-width: 56ch; }
         .ads-head { max-width: 100ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 
+        /* ── a section opening: its copy beside its screen ─────*/
+        .ads-lead {
+            display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            gap: clamp(2rem, 4vw, 4.5rem); align-items: center;
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        }
+        @media (max-width: 900px) { .ads-lead { grid-template-columns: minmax(0, 1fr); } }
+        /* the grid gap does the spacing, so the head only keeps a margin
+           when something follows it in the same column */
+        .ads-lead .ads-head { margin-bottom: clamp(1.6rem, 3vw, 2.2rem); }
+        .ads-lead .ads-head:only-child { margin-bottom: 0; }
+        .ads-lead .ads-purpose:last-child { margin-bottom: 0; }
+
         /* ── product showcase ── */
         .ads-shot { border-radius: 18px; overflow: hidden; background: var(--paper); box-shadow: 0 50px 90px -45px rgba(29,24,80,0.5), 0 0 0 1px var(--line); }
         .ads-shot img, .ads-shot video { display: block; width: 100%; height: auto; }
@@ -270,13 +283,17 @@
         <!-- 01 THE SHIFT -->
         <section class="ads-sec ads-sec--mist">
             <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">What changed</p>
-                    <h2 class="ads-h2">Nothing added them up</h2>
-                    <p class="ads-body">Journey Decisioning, Offer Decisioning and Send Time Optimization each optimized their own slice of a campaign and reported their own numbers. Nothing added them up. Grouping campaigns under one Strategy with a shared KPI goal was the product idea. Giving it a surface was the design problem.</p>
-                </div>
-                <div class="ads-shot fade-up" style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
-                    <img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Default.png" alt="The strategy lobby, listing each strategy with its optimization score and revenue impact">
+                <div class="ads-lead">
+                    <div>
+                        <div class="ads-head fade-up">
+                            <p class="ads-label">What changed</p>
+                            <h2 class="ads-h2">Nothing added them up</h2>
+                            <p class="ads-body">Journey Decisioning, Offer Decisioning and Send Time Optimization each optimized their own slice of a campaign and reported their own numbers. Nothing added them up. Grouping campaigns under one Strategy with a shared KPI goal was the product idea. Giving it a surface was the design problem.</p>
+                        </div>
+                    </div>
+                    <div class="ads-shot fade-up">
+                        <img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Default.png" alt="The strategy lobby, listing each strategy with its optimization score and revenue impact">
+                    </div>
                 </div>
                 <div class="ads-princ">
                     <div class="princ fade-up">
@@ -301,17 +318,21 @@
         <!-- 02 THE HUB -->
         <section class="ads-sec">
             <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">The screen</p>
-                    <h2 class="ads-h2">Campaign Optimization</h2>
-                    <p class="ads-body">The hub is one card per agent, sitting on the campaign it optimizes. A card carries the agent's state, what it is worth, and the way in. It is the only screen in the feature a marketer is guaranteed to visit, so it does the explaining the others do not have room for.</p>
-                </div>
-                <div class="ads-purpose fade-up">
-                    <b>What this screen is for</b>
-                    <p>Answering "is anything optimizing this campaign, and should it be" without opening anything. Everything else in the feature is reachable from here.</p>
-                </div>
-                <div class="ads-shot fade-up">
-                    <video src="./assets/Opimove/Ai%20studio/flows/hub.mp4" muted loop playsinline preload="metadata"></video>
+                <div class="ads-lead">
+                    <div>
+                        <div class="ads-head fade-up">
+                            <p class="ads-label">The screen</p>
+                            <h2 class="ads-h2">Campaign Optimization</h2>
+                            <p class="ads-body">The hub is one card per agent, sitting on the campaign it optimizes. A card carries the agent's state, what it is worth, and the way in. It is the only screen in the feature a marketer is guaranteed to visit, so it does the explaining the others do not have room for.</p>
+                        </div>
+                        <div class="ads-purpose fade-up">
+                            <b>What this screen is for</b>
+                            <p>Answering "is anything optimizing this campaign, and should it be" without opening anything. Everything else in the feature is reachable from here.</p>
+                        </div>
+                    </div>
+                    <div class="ads-shot fade-up">
+                        <video src="./assets/Opimove/Ai%20studio/flows/hub.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
                 </div>
                 <div class="ads-duo" style="margin-top: clamp(2rem, 4vw, 3rem);">
                     <div class="princ fade-up">
