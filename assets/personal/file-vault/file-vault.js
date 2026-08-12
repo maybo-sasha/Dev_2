@@ -61,7 +61,9 @@ export function createFileVault({
   title = 'Campaign Briefs',
   subtitle = 'Client & Internal Notes',
   unit = 'Files',
-  date = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }),
+  /* short form on purpose: the long one ("Tuesday, August 12") is wider
+     than the pocket and gets clipped by the folder edge */
+  date = new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
 } = {}) {
   const id = `fvault-panel-${++uid}`;
   const n = files.length;

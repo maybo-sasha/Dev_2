@@ -95,7 +95,6 @@ export function createGooeyMenu({ actions = ACTIONS, strength = 14, open = false
       </button>
     </div>
 
-    <p class="gm__cap">Press the button — <b>gooey SVG filter</b></p>
   </div>`);
 
   const toggle = root.querySelector('.gm__toggle');

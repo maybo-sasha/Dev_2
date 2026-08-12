@@ -224,6 +224,8 @@
 /* date pill, sitting in the raised right-hand side of the notch */
 .fvault__date {
   position: absolute;
+  max-width: 84%;
+  white-space: nowrap;
   top: 5%;
   right: 6%;
   display: inline-flex;

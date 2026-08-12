@@ -203,24 +203,6 @@
 .gm.is-open .gm__plus { transform: rotate(0deg) scale(1); }
 .gm__toggle svg { width: 24px; height: 24px; display: block; }
 
-/* ── caption ────────────────────────────────────────────────── */
-.gm__cap {
-  position: absolute;
-  left: 50%;
-  bottom: 26px;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  background: var(--ui-fill);
-  font-size: 11.5px;
-  letter-spacing: 0.01em;
-  color: var(--ui-text-2);
-  white-space: nowrap;
-}
-.gm__cap b { font-weight: 600; color: var(--gm-fg); }
 
 @media (prefers-reduced-motion: reduce) {
   .gm__arm,
