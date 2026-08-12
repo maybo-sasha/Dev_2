@@ -43,38 +43,6 @@
                 try { v.pause(); } catch (e) {}
             }
         });
-
-        // Belt and braces. The observer below is the primary trigger, but it
-        // is not the only one: a page that jumps programmatically (returning
-        // to a project, or a side-ruler jump) can land with a video in view
-        // that never received an intersection callback, and it then sits
-        // there paused showing nothing. A throttled pass on scroll costs one
-        // getBoundingClientRect per video and removes that whole class of
-        // failure, whatever caused the callback to be missed.
-        function sync() {
-            all.forEach(function (v) {
-                if (v.__overlay) return;                     // overlay owns those
-                var r = v.getBoundingClientRect();
-                if (!r.height) return;                       // not laid out yet
-                var vis = r.top < (window.innerHeight || 0) && r.bottom > 0;
-                if (vis && v.paused) {
-                    var p = v.play(); if (p && p.catch) p.catch(function () {});
-                } else if (!vis && !v.paused) {
-                    v.pause();
-                }
-            });
-        }
-        var queued = false;
-        function onScroll() {
-            if (queued) return;
-            queued = true;
-            requestAnimationFrame(function () { queued = false; sync(); });
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll, { passive: true });
-        window.addEventListener('load', onScroll);
-        sync();
-
         if (!('IntersectionObserver' in window)) return;
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (e) {
