@@ -4,7 +4,7 @@
    Standalone. Pairs with ./smart-select.js
    ============================================================ */
 
-[data-smart-select] { display: block; width: 100%; height: 100%; }
+[data-smart-select] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .ssel {
   --ss-accent: #f97316;
@@ -16,7 +16,7 @@
   isolation: isolate;
   display: grid;
   place-items: start center;
-  padding: clamp(24px, 5vh, 64px) clamp(16px, 4vw, 40px);
+  padding: clamp(24px, 5vh, 64px) clamp(16px, 4cqw, 40px);
   background:
     radial-gradient(70% 55% at 50% 0%, rgba(249, 115, 22, 0.14) 0%, transparent 60%),
     linear-gradient(180deg, #1a1512 0%, #12100e 60%, #0c0a09 100%);

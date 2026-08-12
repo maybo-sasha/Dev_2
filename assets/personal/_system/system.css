@@ -79,8 +79,20 @@
 }
 
 /* Shared shell. Every component's root gets this class so the
-   canvas, type and cursor treatment are identical across tiles. */
+   canvas, type and cursor treatment are identical across tiles.
+
+   It is also a size container. Components used to scale their
+   internals with vw, which is the viewport — fine while every tile
+   was full-bleed, wrong the moment one sits in a column, because the
+   component keeps full-page proportions and overflows its frame.
+   With this, cqw inside a component means a share of the tile it was
+   actually given, so the same component works at any width.
+
+   Each component's host wrapper carries container-type too. An element
+   cannot query itself, so without that the root's own padding would
+   still fall back to the viewport — only its descendants would scale. */
 .ui {
+  container-type: inline-size;
   position: relative;
   width: 100%;
   height: 100%;

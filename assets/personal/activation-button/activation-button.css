@@ -4,7 +4,7 @@
    Pairs with ./activation-button.js (GSAP).
    ============================================================ */
 
-[data-activation-button] { display: block; width: 100%; height: 100%; }
+[data-activation-button] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 /* standalone — don't depend on the host page's box model */
 .ab, .ab *, .ab *::before, .ab *::after { box-sizing: border-box; }

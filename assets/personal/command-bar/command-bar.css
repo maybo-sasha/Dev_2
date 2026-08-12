@@ -8,7 +8,7 @@
    which is how "selected" reads everywhere in this system.
    ============================================================ */
 
-[data-command-bar] { display: block; width: 100%; height: 100%; }
+[data-command-bar] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .cbar {
   position: relative;

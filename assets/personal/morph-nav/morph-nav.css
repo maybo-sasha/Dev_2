@@ -11,7 +11,7 @@
    Standalone. Pairs with ./morph-nav.js
    ============================================================ */
 
-[data-morph-nav] { display: block; width: 100%; height: 100%; }
+[data-morph-nav] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .mn {
   --mn-bar-h: 52px;

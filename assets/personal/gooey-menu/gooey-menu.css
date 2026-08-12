@@ -11,7 +11,7 @@
    Standalone. Pairs with ./gooey-menu.js
    ============================================================ */
 
-[data-gooey-menu] { display: block; width: 100%; height: 100%; }
+[data-gooey-menu] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .gm {
   --gm-fg: var(--ui-fg);

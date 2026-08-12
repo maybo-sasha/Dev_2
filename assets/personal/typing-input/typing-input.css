@@ -16,7 +16,7 @@
    Standalone. Pairs with ./typing-input.js
    ============================================================ */
 
-[data-typing-input] { display: block; width: 100%; height: 100%; }
+[data-typing-input] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .ti {
   --ti-fs: 26px;

@@ -4,7 +4,7 @@
    Standalone. Pairs with ./form-flow.js
    ============================================================ */
 
-[data-form-flow] { display: block; width: 100%; height: 100%; }
+[data-form-flow] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .fflow {
   --ff-accent: #2dd4bf;
@@ -17,7 +17,7 @@
   isolation: isolate;
   display: grid;
   place-items: center;
-  padding: clamp(20px, 4vh, 44px) clamp(16px, 4vw, 40px);
+  padding: clamp(20px, 4vh, 44px) clamp(16px, 4cqw, 40px);
   background:
     radial-gradient(70% 55% at 50% 0%, rgba(45, 212, 191, 0.13) 0%, transparent 62%),
     linear-gradient(180deg, #0f1a19 0%, #0c1413 60%, #080e0d 100%);
@@ -28,7 +28,7 @@
 .fflow__card {
   position: relative;
   width: min(460px, 100%);
-  padding: clamp(20px, 3vw, 28px);
+  padding: clamp(20px, 3cqw, 28px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
@@ -68,7 +68,7 @@
 }
 .fflow__steps b { color: var(--ff-accent); }
 
-.fflow__title { margin: 0 0 4px; font-size: clamp(17px, 2.4vw, 21px); font-weight: 600; letter-spacing: -0.015em; }
+.fflow__title { margin: 0 0 4px; font-size: clamp(17px, 2.4cqw, 21px); font-weight: 600; letter-spacing: -0.015em; }
 .fflow__lede { margin: 0 0 18px; font-size: 12.5px; line-height: 1.5; color: rgba(232, 244, 242, 0.45); }
 
 /* ── panes ──────────────────────────────────────────────── */

@@ -219,6 +219,24 @@
                 0 0 70px var(--glow);
         }
 
+        /* Half-width tiles: a 16/9 frame is only 341px tall at this
+           column width, and the components inside declare 430px+ — so
+           the ratio is dropped for a height they can actually live in. */
+        .pg-tile:not(.pg-tile--wide) .pg-frame--live {
+            aspect-ratio: auto;
+            height: 500px;
+        }
+        .pg-tile:not(.pg-tile--wide) .pg-frame--light { max-height: none; }
+
+        /* the caption carries a description and a two-line probe, so it
+           needs to breathe less at half width than it did full-bleed */
+        .pg-tile:not(.pg-tile--wide) .pg-cap-desc { font-size: 0.9rem; }
+
+        /* one column below the point where two would crush the live UI */
+        @media (max-width: 1100px) {
+            .pg-gallery { grid-template-columns: 1fr; }
+        }
+
         /* duo — two clips inside one wide tile */
         .pg-duo {
             display: grid;
@@ -528,7 +546,7 @@
             </figure>
 
             <!-- 02 Fish Bot -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/fish_bot.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
@@ -547,7 +565,7 @@
             </figure>
 
             <!-- 03 Robot modelling -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/comp.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
@@ -566,7 +584,7 @@
             </figure>
 
             <!-- 04 Robot — turntable + FX (wide duo) -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/robot_360.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
@@ -585,7 +603,7 @@
             </figure>
 
             <!-- 05 Robot — FX pass -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/robot_withEffects.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
@@ -604,7 +622,7 @@
             </figure>
 
             <!-- 06 Final Cut — wide feature -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/final.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
@@ -623,7 +641,7 @@
             </figure>
 
             <!-- 07 Helicopter -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/hel.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
@@ -735,7 +753,7 @@
                 </figcaption>
             </figure>
             <!-- 11 Activation Button -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-activation-button></div>
                 </div>
@@ -757,7 +775,7 @@
                 </figcaption>
             </figure>
             <!-- 12 Gooey Menu -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-gooey-menu></div>
                 </div>
@@ -779,7 +797,7 @@
                 </figcaption>
             </figure>
             <!-- 13 Command Bar -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-command-bar></div>
                 </div>
@@ -800,7 +818,7 @@
                 </figcaption>
             </figure>
             <!-- 14 Morph Nav -->
-            <figure class="pg-tile pg-tile--wide reveal">
+            <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-morph-nav></div>
                 </div>

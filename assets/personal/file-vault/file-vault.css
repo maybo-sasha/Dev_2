@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* the placeholder fills whatever box the host page gives it */
-[data-file-vault] { display: block; width: 100%; height: 100%; }
+[data-file-vault] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .fvault {
   --fv-accent: var(--ui-on-fg);
@@ -82,7 +82,7 @@
   --lift: 0px;
   --open-x: 0px;
   position: relative;
-  width: clamp(190px, 17vw, 330px);
+  width: clamp(190px, 17cqw, 330px);
   aspect-ratio: 1 / 0.88;
   perspective: 900px;
 }
@@ -251,7 +251,7 @@
 /* title block on the pocket face */
 .fvault__meta { position: relative; display: grid; gap: 5px; text-align: left; }
 .fvault__title {
-  font-size: clamp(15px, 1.5vw, 21px);
+  font-size: clamp(15px, 1.5cqw, 21px);
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--ui-on-fg);
