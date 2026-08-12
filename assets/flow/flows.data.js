@@ -151,7 +151,84 @@ const management = {
   ],
 };
 
-export const FLOWS = { activation, creation, optimization, management };
+/* ── One flow per agent ──────────────────────────────────────
+   Each of these says the same two things in the agent's own terms:
+   the decision the agent is actually making, and the point where
+   the interface stops keeping up with it. Kept to a single line of
+   travel so four of them can sit on one page without the reader
+   having to re-learn a layout each time. */
+const agentJourney = {
+  title: 'Journey Decisioning: which campaign wins',
+  note: 'The agent ranks campaigns competing for the same customer. It never got a way in, and it never got a way to show its reasoning.',
+  legend: false,
+  nodes: [
+    { id: 'card', x: 0, y: 0.6, kind: 'start', tag: 'On the hub', label: 'Journey Decisioning card' },
+    { id: 'gap', x: 1, y: 0.6, kind: 'gap', tag: 'No screen', label: 'Setup was never designed' },
+    { id: 'many', x: 2, y: 0.6, label: 'One customer qualifies for several campaigns', sub: 'On the same day' },
+    { id: 'rank', x: 3, y: 0.6, kind: 'decision', label: 'Which is worth most?' },
+    { id: 'win', x: 4, y: 0, kind: 'done', tag: 'Goal', label: 'Highest predicted value is sent' },
+    { id: 'sup', x: 4, y: 1.3, kind: 'gap', tag: 'Missing', label: 'The rest are held back', sub: 'Nothing shows which, or why' },
+  ],
+  edges: [['card', 'gap'], ['gap', 'many'], ['many', 'rank'],
+    { from: 'rank', to: 'win', label: 'ranked first' },
+    { from: 'rank', to: 'sup', label: 'ranked lower' }],
+};
+
+const agentOffer = {
+  title: 'Offer Decisioning: which incentive per customer',
+  note: 'Static tests give everyone the winning discount. This agent gives each customer the cheapest offer that still converts, which is a margin argument with no screen to make it.',
+  legend: false,
+  nodes: [
+    { id: 'card', x: 0, y: 0.6, kind: 'start', tag: 'On the hub', label: 'Offer Decisioning card' },
+    { id: 'gap', x: 1, y: 0.6, kind: 'gap', tag: 'No screen', label: 'Setup was never designed' },
+    { id: 'offers', x: 2, y: 0.6, label: 'Several incentives on one campaign', sub: 'Each with a different cost' },
+    { id: 'pick', x: 3, y: 0.6, kind: 'decision', label: 'Which one per customer?' },
+    { id: 'win', x: 4, y: 0, kind: 'done', tag: 'Goal', label: 'Cheapest offer that still converts' },
+    { id: 'margin', x: 4, y: 1.3, kind: 'gap', tag: 'Missing', label: 'Margin saved is never shown', sub: 'The number a marketer has to defend internally' },
+  ],
+  edges: [['card', 'gap'], ['gap', 'offers'], ['offers', 'pick'], ['pick', 'win'],
+    { from: 'pick', to: 'margin', soft: true }],
+};
+
+const agentSendTime = {
+  title: 'Send Time Optimization: when to send',
+  note: 'The only agent with a working setup screen, and the only one whose setup was built somewhere else and never connected back to the hub that advertises it.',
+  legend: false,
+  nodes: [
+    { id: 'card', x: 0, y: 0.6, kind: 'start', tag: 'On the hub', label: 'Send Time Optimization card' },
+    { id: 'gap', x: 1, y: 0.6, kind: 'gap', tag: 'Not wired', label: 'Setup lives on its own page', sub: 'The card points at a route that does not connect' },
+    { id: 'hist', x: 2, y: 0.6, label: 'Engagement history per customer' },
+    { id: 'when', x: 3, y: 0.6, kind: 'decision', label: 'When are they active?' },
+    { id: 'send', x: 4, y: 0, kind: 'done', tag: 'Goal', label: 'Sent inside that window' },
+    { id: 'back', x: 4, y: 1.3, kind: 'gap', tag: 'Missing', label: 'No way back to the hub', sub: 'The two screens never reference each other' },
+  ],
+  edges: [['card', 'gap'], ['gap', 'hist'], ['hist', 'when'], ['when', 'send'],
+    { from: 'gap', to: 'back', soft: true }],
+};
+
+const agentContent = {
+  title: 'Content Decisioning: which words',
+  note: 'The one agent designed end to end. It is also the only one that changes something a marketer wrote, which is why the setup ends in a review and not an Apply button.',
+  legend: false,
+  nodes: [
+    { id: 'card', x: 0, y: 0.6, kind: 'start', tag: 'On the hub', label: 'Content Decisioning card' },
+    { id: 'wiz', x: 1, y: 0.6, tag: 'Designed', label: 'Setup wizard', sub: 'Four questions and a review' },
+    { id: 'live', x: 2, y: 0.6, label: 'Variations go out', sub: 'One arm per variation' },
+    { id: 'test', x: 3, y: 0.6, kind: 'decision', label: 'A clear winner?' },
+    { id: 'win', x: 4, y: 0, kind: 'done', tag: 'Goal', label: 'Winner promoted' },
+    { id: 'after', x: 4, y: 1.3, kind: 'gap', tag: 'Missing', label: 'No controls after activation', sub: 'Six of them, drawn out below' },
+  ],
+  edges: [['card', 'wiz'], ['wiz', 'live'], ['live', 'test'], ['test', 'win'],
+    { from: 'test', to: 'after', soft: true }],
+};
+
+export const FLOWS = {
+  activation, creation, optimization, management,
+  'agent-journey': agentJourney,
+  'agent-offer': agentOffer,
+  'agent-send-time': agentSendTime,
+  'agent-content': agentContent,
+};
 
 document.querySelectorAll('[data-flow]').forEach((host) => {
   if (host.firstElementChild) return;
