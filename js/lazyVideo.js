@@ -43,7 +43,6 @@
                 try { v.pause(); } catch (e) {}
             }
         });
-
         if (!('IntersectionObserver' in window)) return;
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (e) {

@@ -69,8 +69,8 @@
                 <div class="slide-inner">
                     <h2 class="project-title">AI Decisioning Studio<span class="title-fill">AI Decisioning Studio</span></h2>
                     <a class="project-card" href="ai-decisioning-studio.html">
-                        <div class="project-img-wrap is-wide" style="aspect-ratio: 2364 / 1190;">
-                            <video class="project-video" src="./assets/Opimove/Ai%20studio/main.mp4" poster="./assets/img/Frame-1.png" muted loop playsinline preload="metadata"></video>
+                        <div class="project-img-wrap is-wide">
+                            <video class="project-video" src="./assets/Opimove/Ai%20studio/flows/hub.mp4" poster="./assets/img/posters/ads.jpg" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -84,7 +84,7 @@
                     <h2 class="project-title">Optimove AI Dedicated Team<span class="title-fill">Optimove AI Dedicated Team</span></h2>
                     <a class="project-card" href="ai-champion.html">
                         <div class="project-img-wrap is-wide" style="aspect-ratio: 1280 / 720;">
-                            <video class="project-video" src="./assets/ai-champion/ds-skill.mp4" poster="./assets/ai-champion/hero-icon-skill.png" muted loop playsinline preload="metadata"></video>
+                            <video class="project-video" src="./assets/ai-champion/ds-skill.mp4" poster="./assets/ai-champion/ds-skill-poster.jpg" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -98,7 +98,7 @@
                     <h2 class="project-title">Tetris Block Party<span class="title-fill">Tetris Block Party</span></h2>
                     <a class="project-card" href="tetris-block-party.html">
                         <div class="project-img-wrap is-wide">
-                            <video class="project-video" data-crop="bottom" src="./assets/tetrisblockparty/tbp.mp4" muted loop playsinline preload="metadata"></video>
+                            <video class="project-video" data-crop="bottom" poster="./assets/img/posters/tbp.jpg" src="./assets/tetrisblockparty/tbp.mp4" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -112,7 +112,7 @@
                     <h2 class="project-title">Lucky Buddies<span class="title-fill">Lucky Buddies</span></h2>
                     <a class="project-card" href="lucky-buddies.html">
                         <div class="project-img-wrap is-wide">
-                            <video class="project-video" data-crop="bottom" src="./assets/img/lucky_buddies.mp4" muted loop playsinline preload="metadata"></video>
+                            <video class="project-video" data-crop="bottom" poster="./assets/img/posters/lucky-buddies.jpg" src="./assets/img/lucky_buddies.mp4" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -126,7 +126,7 @@
                     <h2 class="project-title">Player Journey<span class="title-fill">Player Journey</span></h2>
                     <a class="project-card" href="player-journey.html">
                         <div class="project-img-wrap is-wide">
-                            <video class="project-video" muted playsinline preload="metadata"
+                            <video class="project-video" poster="./assets/img/posters/player-journey.jpg" muted playsinline preload="metadata"
                                    data-playlist="./assets/playerjoueney/CanvasIntredaction.mp4,./assets/playerjoueney/journeyBuilder.mp4"></video>
                         </div>
                     </a>
@@ -141,7 +141,7 @@
                     <h2 class="project-title">Playground<span class="title-fill">Playground</span></h2>
                     <a class="project-card" href="playground.html">
                         <div class="project-img-wrap is-wide" style="aspect-ratio: 3840 / 1620;">
-                            <video class="project-video" src="./assets/personal/cubickworld_2.mp4" muted loop playsinline preload="metadata"></video>
+                            <video class="project-video" poster="./assets/img/posters/playground.jpg" src="./assets/personal/cubickworld_2.mp4" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -375,6 +375,20 @@
         });
     </script>
 
+    <script>
+        // Side ruler: one labelled tick per project.
+        window.SIDE_RULER_LABEL = 'Projects';
+        window.SIDE_RULER = function () {
+            return Array.from(document.querySelectorAll('.slide')).map(function (s) {
+                const t = s.querySelector('.project-title');
+                // the title carries a duplicate span for the fill effect, so
+                // take the first text node rather than the whole textContent
+                const label = t ? (t.firstChild && t.firstChild.nodeValue || t.textContent).trim() : '';
+                return { el: s, label: label, major: true };
+            });
+        };
+    </script>
+    <script src="./js/sideRuler.js"></script>
     <script src="./js/transitionFade.js"></script>
     <script src="./js/transition.js"></script>
     <script src="./js/workMenu.js"></script>

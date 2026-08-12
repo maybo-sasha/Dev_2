@@ -14,7 +14,7 @@
             --mist:  #f5f4fb;
             --lav:   #ece9fe;
             --ink:   #1d1850;
-            --muted: #615f80;
+            --muted: #4b4869;
             --dim:   #8e8caa;
             --violet:#6b4ef5;
             --violet-deep:#4a37c9;
@@ -94,6 +94,22 @@
         }
         .ads-lede p.big .spark { color: var(--violet); }
         .ads-lede p.sub { font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.7; color: var(--muted); max-width: 64ch; margin: 0 auto; }
+        .ads-lede p.big .sep { color: var(--dim); font-weight: 400; padding: 0 0.15em; }
+
+        /* The claim is centred; the three points under it are not.
+           Ranged left in columns, because a list is read line by line
+           and centred text makes every line start somewhere new. */
+        .ads-lede .ads-new {
+            list-style: none; padding: 0;
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(1.4rem, 3vw, 2.8rem); text-align: left;
+            max-width: 1240px; margin: clamp(3rem, 6vw, 5rem) auto 0;
+        }
+        @media (max-width: 900px) { .ads-lede .ads-new { grid-template-columns: minmax(0, 1fr); max-width: 60ch; } }
+        .ads-lede .ads-new li {
+            border-top: 2px solid var(--violet); padding-top: 1.1rem;
+            font-size: clamp(1.02rem, 1.3vw, 1.14rem); line-height: 1.55; color: var(--ink);
+        }
 
         /* ── section scaffolding ── */
         .ads-sec { padding: clamp(4rem, 8vw, 7rem) 0; counter-increment: adss; }
@@ -105,83 +121,56 @@
             color: color-mix(in srgb, var(--ink) 10%, transparent); margin-bottom: 0.5rem;
         }
         .ads-h2 { font-weight: 800; font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.02; letter-spacing: -0.035em; margin: 0 0 1.2rem; max-width: 18ch; }
-        .ads-body { font-size: clamp(1.02rem, 1.4vw, 1.2rem); line-height: 1.7; color: var(--muted); max-width: 56ch; }
+        .ads-body { font-size: clamp(1.08rem, 1.5vw, 1.3rem); line-height: 1.65; color: var(--muted); max-width: 56ch; }
         .ads-head { max-width: 100ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 
-        /* ── agents grid ── */
-        .ads-agents { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.2rem, 2.2vw, 2rem); }
-        .agent {
-            position: relative; overflow: hidden; background: var(--paper); border-radius: 20px; padding: clamp(1.6rem, 2.6vw, 2.4rem);
-            box-shadow: 0 30px 60px -45px rgba(29,24,80,0.45), 0 0 0 1px var(--line);
-            display: flex; gap: clamp(1.1rem, 2vw, 1.6rem); align-items: flex-start;
-            transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+        /* ── a section opening: its copy beside its screen ─────*/
+        .ads-lead {
+            display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            gap: clamp(2rem, 4vw, 4.5rem); align-items: center;
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
         }
-        .agent::before { content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 5px; background: var(--violet); }
-        @media (hover: hover) { .agent:hover { transform: translateY(-6px); box-shadow: 0 44px 80px -45px rgba(29,24,80,0.5), 0 0 0 1px var(--line); } }
-        .agent-ic { flex: 0 0 auto; width: clamp(64px, 8vw, 88px); height: clamp(64px, 8vw, 88px); border-radius: 18px; background: var(--lav); display: grid; place-items: center; }
-        .agent-ic img { width: 76%; height: 76%; object-fit: contain; }
-        .agent-name { font-size: clamp(1.2rem, 1.8vw, 1.55rem); font-weight: 700; letter-spacing: -0.02em; margin: 0.1rem 0 0.6rem; }
-        .agent-desc { font-size: clamp(0.95rem, 1.2vw, 1.05rem); line-height: 1.6; color: var(--muted); margin: 0; }
-        .agent-stat { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--violet); margin: 0 0 0.7rem; }
-        .agent-stat .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); }
-        @media (max-width: 820px) { .ads-agents { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .ads-lead { grid-template-columns: minmax(0, 1fr); } }
+        .ads-lead:last-child { margin-bottom: 0; }
+        /* the grid gap does the spacing, so the head only keeps a margin
+           when something follows it in the same column */
+        .ads-lead .ads-head { margin-bottom: clamp(1.6rem, 3vw, 2.2rem); }
+        .ads-lead .ads-head:only-child { margin-bottom: 0; }
 
         /* ── product showcase ── */
-        .ads-split { display: grid; grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr); gap: clamp(2rem, 4vw, 4rem); align-items: center; }
         .ads-shot { border-radius: 18px; overflow: hidden; background: var(--paper); box-shadow: 0 50px 90px -45px rgba(29,24,80,0.5), 0 0 0 1px var(--line); }
         .ads-shot img, .ads-shot video { display: block; width: 100%; height: auto; }
-        @media (max-width: 860px) { .ads-split { grid-template-columns: 1fr; } }
-
-        /* ── optimization score callout ── */
-        .ads-score { display: inline-flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.4rem; }
-        .ads-score b { font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 900; letter-spacing: -0.04em; color: var(--violet); line-height: 1; }
-        .ads-score span { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
-
-        /* ── metrics row ── */
-        .ads-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 2.5vw, 2.5rem); }
-        .metric { border-top: 3px solid var(--ink); padding-top: 1.1rem; }
-        .metric b { display: block; font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.95; }
-        .metric b .spark { color: var(--violet); }
-        .metric span { display: block; margin-top: 0.6rem; font-size: 0.9rem; line-height: 1.5; color: var(--muted); }
-        @media (max-width: 760px) { .ads-metrics { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+        /* fills its frame instead of sitting inside it, which crops the
+           dead margin the screen recording carries around the app */
+        .ads-shot--cover { aspect-ratio: 16 / 9; }
+        .ads-shot--cover video { height: 100%; object-fit: cover; }
 
         /* ── principles ── */
         .ads-princ { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.4rem, 3vw, 2.6rem); }
         .princ .n { font-size: 0.8rem; font-weight: 700; color: var(--violet); letter-spacing: 0.1em; }
         .princ h3 { font-size: clamp(1.2rem, 1.8vw, 1.5rem); font-weight: 700; letter-spacing: -0.02em; margin: 0.6rem 0 0.7rem; }
-        .princ p { font-size: 0.98rem; line-height: 1.6; color: var(--muted); margin: 0; }
+        .princ p { font-size: 1.02rem; line-height: 1.62; color: var(--muted); margin: 0; }
         @media (max-width: 760px) { .ads-princ { grid-template-columns: 1fr; } }
 
-        /* ── outro ── */
-        .ads-outro { padding: clamp(5rem, 10vw, 9rem) 0; text-align: center; background: var(--ink); color: #fff; }
-        .ads-outro h2 { font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.035em; margin: 0 0 1.6rem; }
-        .ads-outro h2 .spark { color: var(--lime); }
-        .ads-outro a { display: inline-flex; align-items: center; gap: 0.6rem; color: #fff; text-decoration: none; font-weight: 600; letter-spacing: 0.04em; font-size: 0.95rem; opacity: 0.85; transition: opacity 0.3s ease; }
-        .ads-outro a:hover { opacity: 1; }
-        .ads-outro a .arrow { transition: transform 0.3s var(--ease-out); }
-        .ads-outro a:hover .arrow { transform: translateX(-4px); }
-
-        /* what I owned list */
-        .ads-own { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
-        .ads-own li { position: relative; padding-left: 1.7rem; font-size: clamp(1rem, 1.3vw, 1.15rem); font-weight: 500; line-height: 1.5; color: var(--ink); }
-        .ads-own li::before { content: '✦'; position: absolute; left: 0; top: 0.05em; color: var(--violet); font-size: 0.85em; }
-        .ads-own li strong { color: var(--ink); font-weight: 700; }
-
-        /* summary card */
-        .ads-card { background: var(--paper); border-radius: 20px; padding: clamp(1.8rem, 3.5vw, 3rem); box-shadow: 0 40px 80px -50px rgba(29,24,80,0.45), 0 0 0 1px var(--line); max-width: 1100px; }
-        .ads-card .ads-own { gap: 1.3rem; }
-        .ads-card .ads-own li { color: var(--muted); }
-
-        /* stacked wide shot under a split */
-        .ads-shot--wide { margin-top: clamp(1.4rem, 3vw, 2.4rem); }
-
-        /* two shots side by side */
-        .ads-duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.2rem, 2.5vw, 2rem); align-items: start; }
-        @media (max-width: 860px) { .ads-duo { grid-template-columns: 1fr; } }
-
-        /* centered half-width video */
-        .ads-video-5050 { width: 50vw; margin: 0 auto; }
-        @media (max-width: 860px) { .ads-video-5050 { width: 100%; } }
+        /* ── the agents ────────────────────────────────────────
+           One full-width block each, stacked. They were side by side,
+           which forced the explanation into a narrow column and left
+           no room to explain anything: four agents doing four
+           different jobs need four accounts of themselves. */
+        .agentrow {
+            display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            gap: clamp(2rem, 4vw, 4.5rem); align-items: center;
+            padding-top: clamp(2.5rem, 5vw, 4rem);
+        }
+        @media (max-width: 900px) { .agentrow { grid-template-columns: minmax(0, 1fr); } }
+        .agentrow + .agentrow { border-top: 1px solid var(--line); margin-top: clamp(2.5rem, 5vw, 4rem); }
+        .agentrow-head { display: flex; flex-direction: column; align-items: flex-start; gap: 1.1rem; margin-bottom: 1.1rem; }
+        .agentblk-ic { flex: 0 0 auto; width: clamp(76px, 7vw, 96px); height: clamp(76px, 7vw, 96px); border-radius: 22px; background: var(--lav); display: grid; place-items: center; }
+        .agentblk-ic img { width: 74%; height: 74%; object-fit: contain; }
+        .agentrow h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 700; letter-spacing: -0.025em; margin: 0; }
+        .agentrow p { font-size: clamp(1rem, 1.3vw, 1.1rem); line-height: 1.7; color: var(--muted); margin: 0 0 1rem; }
+        .agentrow p:last-child { margin-bottom: 0; }
+        .agentrow .does { color: var(--ink); font-weight: 500; font-size: clamp(1.05rem, 1.45vw, 1.22rem); }
 
         /* reveal */
         .fade-up { opacity: 0; }
@@ -236,7 +225,7 @@
 
         <!-- HERO -->
         <section class="ads-hero">
-            <video src="./assets/Opimove/Ai%20studio/main.mp4" autoplay loop muted playsinline preload="metadata"></video>
+            <video src="./assets/Opimove/Ai%20studio/flows/hub.mp4" autoplay loop muted playsinline preload="metadata"></video>
             <div class="ads-hero-tag fade-up">
                 <p class="eyebrow"><span class="spark">✦</span> Product design case study</p>
                 <h1>AI Decisioning Studio</h1>
@@ -259,189 +248,149 @@
         <!-- LEDE / OVERVIEW -->
         <section class="ads-lede">
             <div class="ads-wrap">
-                <p class="big fade-up">Making advanced AI decisioning something marketers actually understand, trust and <span class="spark">activate</span>.</p>
-                <p class="sub fade-up">AI Decisioning Studio is a centralized dashboard I designed at Optimove to move marketers away from rigid manual rules and toward predictive intelligence. The machine learning models were powerful, but the tech was hidden behind dense, black-box screens. Marketers simply did not trust what they could not see.</p>
+                <p class="big fade-up">Optimization Power <span class="sep">·</span> AI agents pulling in <span class="spark">one direction</span></p>
+                <p class="sub fade-up">Agents stop working in silos and begin working toward a shared goal, measuring and optimizing results across complete programs.</p>
+                <ul class="ads-new fade-up">
+                    <li>Group campaigns under one Strategy with a shared KPI goal</li>
+                    <li>AI Journey Decisioning, AI Offer Decisioning and Send Time Optimization agents all work together as part of that Strategy (AI Content Decisioning coming soon)</li>
+                    <li>Track KPI impact and AI coverage across the whole Strategy</li>
+                </ul>
             </div>
         </section>
 
-        <!-- 01 THE CHALLENGE -->
+        <!-- 01 THE SHIFT -->
         <section class="ads-sec ads-sec--mist">
             <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">The challenge</p>
-                    <h2 class="ads-h2">Powerful AI, zero adoption</h2>
-                    <p class="ads-body">The optimization models worked perfectly in production, but user adoption was near zero. My mandate was to close the gap between engineering capability and user trust.</p>
+                <div class="ads-lead">
+                    <div>
+                        <div class="ads-head fade-up">
+                            <p class="ads-label">What changed</p>
+                            <h2 class="ads-h2">Give the agents one goal</h2>
+                            <p class="ads-body">A Strategy is a goal and the campaigns that serve it. The marketer picks the KPI, adds the campaigns, and the AI agents all work toward that one number together. Before this, each agent optimized its own corner and reported its own result, so nobody could see whether the whole thing was actually working.</p>
+                        </div>
+                    </div>
+                    <div class="ads-shot fade-up">
+                        <img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Default.png" alt="The strategy lobby, listing each strategy with its optimization score and revenue impact">
+                    </div>
                 </div>
                 <div class="ads-princ">
                     <div class="princ fade-up">
                         <span class="n">01</span>
-                        <h3>The black-box barrier</h3>
-                        <p>Marketers could not visualize what the AI was doing or why. Fearing a loss of control or double-messaging their audience, they left the automation off and kept running campaigns by hand.</p>
+                        <h3>Pick the goal</h3>
+                        <p>The marketer chooses one KPI for the Strategy, deposits or open rate or revenue. Everything inside it is then measured against that single number.</p>
                     </div>
                     <div class="princ fade-up">
                         <span class="n">02</span>
-                        <h3>Fragmented optimization</h3>
-                        <p>Maximizing a campaign meant managing disconnected secondary parameters across multiple platform tools, with no unified sense of how much lift was being left on the table.</p>
+                        <h3>Add the campaigns</h3>
+                        <p>Campaigns that serve the goal get grouped under the Strategy. The agents can then optimize across all of them at once instead of one campaign at a time.</p>
                     </div>
                     <div class="princ fade-up">
                         <span class="n">03</span>
-                        <h3>Human-in-the-loop balance</h3>
-                        <p>To comfortably hand control to an autonomous model, users needed clear system visibility, transparent backend staging, and effortless manual override guardrails.</p>
+                        <h3>See what the AI added</h3>
+                        <p>One score shows how much of the Strategy the agents cover, and the KPI shows what they moved. That is the part marketers never had, and the reason they were willing to switch anything on.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 02 MY ROLE -->
+        <!-- 02 THE HUB -->
         <section class="ads-sec">
             <div class="ads-wrap">
-                <div class="ads-split">
-                    <div class="fade-up">
-                        <p class="ads-label">My role</p>
-                        <h2 class="ads-h2">Owning the experience end to end</h2>
-                        <p class="ads-body">As the Senior Product Designer, I led the product experience end to end: mapping cross-functional data states with engineering, defining the holistic information architecture, and crafting the interaction mechanics for the automated activation flow.</p>
-                        <p class="ads-body" style="margin-top: 1.2rem;">Most of the hard work was conceptual: turning raw model output into something a marketer could reason about. That started with the Optimization Score and carried through the agent system, the flows, the final UI and the patterns I fed back into the design system for the rest of the suite to reuse.</p>
+                <div class="ads-lead">
+                    <div>
+                        <div class="ads-head fade-up">
+                            <p class="ads-label">The strategy page</p>
+                            <h2 class="ads-h2">Inside a Strategy</h2>
+                            <p class="ads-body">Opening a Strategy lands here. The page shows how it is performing against its KPI over time, the Optimization Score, what each of the four agents is contributing, and every campaign inside it. Optimizing a campaign starts from this table.</p>
+                        </div>
                     </div>
-                    <div class="ads-shot fade-up">
-                        <video src="./assets/Opimove/Ai%20studio/main.mp4" muted loop playsinline preload="metadata"></video>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 03 STRATEGY LOBBY -->
-        <section class="ads-sec ads-sec--mist">
-            <div class="ads-wrap">
-                <div class="ads-split">
-                    <div class="fade-up">
-                        <p class="ads-label">Strategy lobby</p>
-                        <h2 class="ads-h2">A command center, not a folder</h2>
-                        <p class="ads-body">The Strategy Lobby is the stable information-architecture roof for a marketer's entire customer lifecycle. Instead of treating campaigns like flat, unorganized lists, the interface clusters them under high-level business strategies.</p>
-                        <p class="ads-body" style="margin-top: 1.2rem;">A master card architecture surfaces the overall Optimization Score and projected financial headroom at a glance, immediately answering "where is my attention worth spending" before asking the user to configure a single setting.</p>
-                    </div>
-                    <div class="ads-shot fade-up">
-                        <img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Default.png" alt="AI Decisioning Studio strategy lobby listing each strategy with its optimization score and revenue impact">
+                    <div class="ads-shot ads-shot--cover fade-up">
+                        <video src="./assets/Opimove/Ai%20studio/flows/hub.mp4" muted loop playsinline preload="metadata"></video>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 04 INNER STRATEGY PAGE -->
-        <section class="ads-sec">
-            <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">Inner strategy page</p>
-                    <h2 class="ads-h2">Taming the densest interface in the product</h2>
-                    <p class="ads-body">Opening a strategy reveals its deep performance metrics over time. The main UX challenge here was managing severe screen data density. I implemented a strict master-detail layout that anchors the viewport on three core elements.</p>
-                </div>
-                <div class="ads-duo">
-                    <div class="ads-shot fade-up">
-                        <img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Active inenr strategy page.png" alt="Inner strategy page showing performance over time, the optimization score donut and the four agents">
-                    </div>
-                    <div class="ads-shot fade-up">
-                        <img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Active inenr strategy page_1.png" alt="The campaign table inside a strategy, each row carrying an AI signal and a setup or review action">
-                    </div>
-                </div>
-
-                <div class="ads-princ" style="margin-top: clamp(3rem, 6vw, 5rem);">
-                    <div class="princ fade-up">
-                        <span class="n">Score</span>
-                        <h3>The Optimization Score</h3>
-                        <p>A high-contrast circular progress ring shows exactly how much available lift a strategy has safely unlocked. For complete transparency, the score is broken down by fully, partially and un-optimized workflows.</p>
-                    </div>
-                    <div class="princ fade-up">
-                        <span class="n">Signal</span>
-                        <h3>Live AI signals</h3>
-                        <p>Every campaign row carries a dynamic percentage tracking remaining uplift potential. This instantly turns a standard table into a prioritized, scannable checklist of where manual intervention is needed most.</p>
-                    </div>
-                    <div class="princ fade-up">
-                        <span class="n">Suggestion</span>
-                        <h3>Actionable suggestions</h3>
-                        <p>Sitting right beside each live signal is a plain-language system recommendation, for example add Send Time Optimization to boost open rates. Insight and action are never separated, and the setup modal is always one click away.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 05 THE DECISIONING AGENTS -->
+        <!-- 03 THE AGENTS -->
         <section class="ads-sec ads-sec--mist">
             <div class="ads-wrap">
                 <div class="ads-head fade-up">
-                    <p class="ads-label">The decisioning agents</p>
-                    <h2 class="ads-h2">Designing an autonomous system</h2>
-                    <p class="ads-body">I designed our four primary AI decisioning engines as a cohesive visual and typographic family, using a standard "an AI agent that..." description pattern. When a user meets a new model, they instantly understand its functional boundaries and core business value.</p>
+                    <p class="ads-label">The optimization modal</p>
+                    <h2 class="ads-h2">Designing the optimization modal</h2>
+                    <p class="ads-body">Turning on an AI agent used to mean leaving the campaign and finding the right screen somewhere else in the product. Most marketers never found it. This modal puts all four agents in one place, opened from the campaign they optimize.</p>
                 </div>
-                <div class="ads-agents">
-                    <article class="agent fade-up">
-                        <div class="agent-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (1).png" alt="Journey Decisioning"></div>
-                        <div>
-                            <span class="agent-stat"><span class="dot"></span> SOJ</span>
-                            <h3 class="agent-name">Journey Decisioning</h3>
-                            <p class="agent-desc">An AI agent that dynamically prioritizes overlapping campaigns based on predicted future value. It replaces manual priority rules, acting as a smart traffic controller when a customer qualifies for multiple workflows on the same day.</p>
-                        </div>
-                    </article>
-                    <article class="agent fade-up">
-                        <div class="agent-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons.png" alt="Offer Decisioning"></div>
-                        <div>
-                            <span class="agent-stat"><span class="dot"></span> SOC</span>
-                            <h3 class="agent-name">Offer Decisioning</h3>
-                            <p class="agent-desc">An AI agent that automatically tests and delivers the optimal offer variation for each customer. It moves past static, winner-takes-all A/B testing by isolating incentives to protect business margins.</p>
-                        </div>
-                    </article>
-                    <article class="agent fade-up">
-                        <div class="agent-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (2).png" alt="Send Time Optimization"></div>
-                        <div>
-                            <span class="agent-stat"><span class="dot"></span> STO</span>
-                            <h3 class="agent-name">Send Time Optimization</h3>
-                            <p class="agent-desc">An AI agent that predicts the ideal delivery window so messages arrive when customers are most active. It analyzes individual engagement histories to maximize opens and clicks.</p>
-                        </div>
-                    </article>
-                    <article class="agent fade-up">
-                        <div class="agent-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (3).png" alt="Content Decisioning"></div>
-                        <div>
-                            <span class="agent-stat"><span class="dot"></span> CVO</span>
-                            <h3 class="agent-name">Content Decisioning</h3>
-                            <p class="agent-desc">An AI agent that optimizes content variations in real time to deliver the ideal message. It eliminates creative chaos by continuously selecting the best layout and tone combinations for every recipient.</p>
-                        </div>
-                    </article>
+                <div class="ads-princ" style="margin-bottom: clamp(1rem, 2vw, 2rem);">
+                    <div class="princ fade-up">
+                        <span class="n">The problem</span>
+                        <h3>Nobody could tell what an agent would do</h3>
+                        <p>The agents were scattered across the product and their names explained nothing. A marketer could not tell what Journey Decisioning would change about their campaign, so they left it switched off rather than risk finding out.</p>
+                    </div>
+                    <div class="princ fade-up">
+                        <span class="n">The solution</span>
+                        <h3>Explain first, then guide step by step</h3>
+                        <p>The modal opens on the campaign and starts by explaining what the AI has found there and what it is worth in real numbers. From there it walks the marketer through setup one step at a time, so the automation is handed over gradually rather than switched on blind.</p>
+                    </div>
+                    <div class="princ fade-up">
+                        <span class="n">The rule</span>
+                        <h3>Automation, never a surprise</h3>
+                        <p>Each step says what it will change before it changes anything, and nothing is applied until the marketer approves it. Full automation once it runs, full control on the way there.</p>
+                    </div>
                 </div>
+                <article class="agentrow fade-up">
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (1).png" alt=""></div>
+                            <h3>Journey Decisioning</h3>
+                        </div>
+                        <p class="does">An AI agent that decides which campaign wins when a customer qualifies for several on the same day.</p>
+                        <p>It replaces the priority rules marketers used to maintain by hand, ranking overlapping journeys on predicted future value. The design problem was orchestration: showing which campaigns competed and why one was chosen, without turning the screen into a rules editor. That screen does not exist yet, and neither does the one that switches the agent on.</p>
+                    </div>
+                    <div class="ads-shot">
+                        <video src="./assets/Opimove/Ai%20studio/flows/journey.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </article>
+                <article class="agentrow fade-up">
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons.png" alt=""></div>
+                            <h3>Offer Decisioning</h3>
+                        </div>
+                        <p class="does">An AI agent that finds the right incentive per customer instead of the one that won on average.</p>
+                        <p>A static test picks a single winner and gives everyone the same discount, which quietly costs margin on every customer who would have converted for less. The interface problem is that the saving is invisible: the agent protects margin, and nothing on screen reports how much, which is exactly the number a marketer is asked to justify.</p>
+                    </div>
+                    <div class="ads-shot">
+                        <video src="./assets/Opimove/Ai%20studio/flows/offer.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </article>
+                <article class="agentrow fade-up">
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (2).png" alt=""></div>
+                            <h3>Send Time Optimization</h3>
+                        </div>
+                        <p class="does">An AI agent that predicts when each customer is most likely to be paying attention.</p>
+                        <p>The simplest of the four to explain and the most awkward to reach. Its setup already existed on a page built before the hub, so the card advertising it points at a route that was never connected. The two screens do not reference each other in either direction. Naming that was most of the contribution here.</p>
+                    </div>
+                    <div class="ads-shot">
+                        <video src="./assets/Opimove/Ai%20studio/flows/send-time.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </article>
+                <article class="agentrow fade-up">
+                    <div class="agentrow-text">
+                        <div class="agentrow-head">
+                            <div class="agentblk-ic"><img loading="lazy" decoding="async" src="./assets/Opimove/Ai studio/Brand Icons (3).png" alt=""></div>
+                            <h3>Content Decisioning</h3>
+                        </div>
+                        <p class="does">An AI agent that writes and tests copy variations, then keeps the one that performs.</p>
+                        <p>The only agent designed end to end, and the one the rest of this page follows. It is also the hardest to hand over, because it changes words a marketer wrote, which is why its setup ends in a review rather than an Apply button. It is the only one of the four with a setup screen, a live state and a result a marketer can point at.</p>
+                    </div>
+                    <div class="ads-shot">
+                        <video src="./assets/Opimove/Ai%20studio/flows/content.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </article>
             </div>
         </section>
 
-        <!-- 06 THE ACTIVATION FLOW -->
-        <section class="ads-sec">
-            <div class="ads-wrap">
-                <div class="ads-head fade-up">
-                    <p class="ads-label">The activation flow</p>
-                    <h2 class="ads-h2">Earning trust at the moment of commitment</h2>
-                    <p class="ads-body">The climax of the experience is the modal activation flow. To bridge the trust gap, the modal walks users through a transparent, two-stage system handover.</p>
-                </div>
-                <div class="ads-shot fade-up">
-                    <video src="./assets/Opimove/Ai%20studio/optimizationmodal.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-                <div class="ads-duo" style="margin-top: clamp(2rem, 4vw, 3rem);">
-                    <div class="princ fade-up">
-                        <span class="n">Stage 1</span>
-                        <h3>The transparent staging list</h3>
-                        <p>Before turning an agent on, the UI abandons vague "Apply" jargon and spells out the exact destructive and constructive backend steps the AI is about to execute, for example pause active campaign, duplicate target group, clone baseline action. Nothing is a surprise, which builds real operational trust.</p>
-                    </div>
-                    <div class="princ fade-up">
-                        <span class="n">Stage 2</span>
-                        <h3>The single-line transition</h3>
-                        <p>On "Apply," the interface renders an inline, half-opacity ghosted-green "Calculating" state instead of a sentence-breaking spinner, and the UI stays fully interactive. Once processing completes, the text scales up to full opacity with a smooth particle pop that celebrates the successful automation.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- WALKTHROUGH -->
-        <section class="ads-sec">
-            <div class="ads-wrap">
-                <div class="ads-shot ads-video-5050 fade-up">
-                    <video src="./assets/Opimove/Ai%20studio/main.mp4" muted loop playsinline preload="metadata"></video>
-                </div>
-            </div>
-        </section>
 
 
     </main>

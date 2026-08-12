@@ -354,6 +354,7 @@
             .pg-tile--wide { grid-column: auto; }
             .pg-foot { margin: 5rem 6vw 0; }
         }
+        .sr { --sr-ink: var(--text); --sr-on: var(--yellow); }
     </style>
 </head>
 <body>
@@ -512,7 +513,7 @@
                     <p class="pg-cap-num">07 · Interface</p>
                     <h2 class="pg-cap-title">Morph Nav</h2>
                     <p class="pg-cap-desc">
-                        Hover a section and the bar grows into the panel. It never opens a second thing.
+                        One shape, never two. The bar stretches down into the panel and the marker slides along with you.
                     </p>
                 </figcaption>
             </figure>
@@ -525,7 +526,7 @@
                     <p class="pg-cap-num">08 · Interface</p>
                     <h2 class="pg-cap-title">Gooey Tabs</h2>
                     <p class="pg-cap-desc">
-                        The tab is stuck to the folder, so switching drags that join across.
+                        A blur and a contrast curve fuse tab and folder into one surface, so switching stretches the join instead of cutting it.
                     </p>
                 </figcaption>
             </figure>
@@ -593,7 +594,7 @@
                     <p class="pg-cap-num">12 · Modelling</p>
                     <h2 class="pg-cap-title">Robot Build</h2>
                     <p class="pg-cap-desc">
-                        Modelling practice that turned into a character.
+                        Hard surface modelling. Panels, seams and tolerances, until the plates read as parts that were machined and bolted together.
                     </p>
                 </figcaption>
             </figure>
@@ -675,6 +676,7 @@
 
         // ── Lenis smooth scroll ───────────────────────────────────────
         const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+        window.lenis = lenis;   // the side ruler scrolls through it
         function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
@@ -775,6 +777,27 @@
             closeOverlay();
         });
     </script>
+    <script>
+        // ── side ruler ────────────────────────────────────────────
+        // Two labelled sections, each followed by a minor tick per tile.
+        window.SIDE_RULER_LABEL = 'Sections';
+        window.SIDE_RULER = function () {
+            const secs = Array.from(document.querySelectorAll('.pg-sec'));
+            const gals = Array.from(document.querySelectorAll('.pg-gallery'));
+            const out = [];
+            secs.forEach(function (sec, i) {
+                const t = sec.querySelector('.pg-sec-title');
+                out.push({ el: sec, label: t ? t.textContent.trim() : 'Section', major: true });
+                if (!gals[i]) return;
+                Array.from(gals[i].querySelectorAll('.pg-tile')).forEach(function (tile) {
+                    const n = tile.querySelector('.pg-cap-title');
+                    out.push({ el: tile, label: n ? n.textContent.trim() : '' });
+                });
+            });
+            return out;
+        };
+    </script>
+    <script src="./js/sideRuler.js"></script>
     <script src="./js/workMenu.js"></script>
     <script src="./js/cursor.js"></script>
     <script src="./js/transitionFade.js"></script>

@@ -178,6 +178,7 @@ html.instant::before { display: none; animation: none; }
 html.instant body { opacity: 1 !important; }
 /* the captured zoom frame backs the hero so its video can decode behind it */
 html.instant .ads-hero,
+html.instant .ac-hero,
 html.instant .pj-hero,
 html.instant .tbp-hero,
 html.instant .lb-hero {
@@ -192,12 +193,13 @@ html.instant .lb-hero {
     to   { transform: scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-    html.instant .ads-hero, html.instant .pj-hero,
+    html.instant .ads-hero, html.instant .ac-hero, html.instant .pj-hero,
     html.instant .tbp-hero, html.instant .lb-hero { animation: none; }
 }
 /* ease the hero gradient in after the zoom instead of popping it in one cut */
 @keyframes heroScrimIn { from { opacity: 0; } to { opacity: 1; } }
 html.instant .ads-hero::after,
+html.instant .ac-hero::after,
 html.instant .pj-hero::after,
 html.instant .tbp-hero::after,
 html.instant .lb-hero::after {
@@ -1173,3 +1175,61 @@ body:has(.about-overlay.is-open) #logo {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ── side ruler ──────────────────────────────────────────────────────────
+   Shared by the playground and the home page; see js/sideRuler.js. Colour is
+   left to the page through --sr-ink / --sr-on so each one can theme it
+   without a second copy of the layout. Hidden on narrow screens, where there
+   is no margin to put it in and the thumb is already doing the scrolling. */
+.sr {
+    position: fixed;
+    right: clamp(10px, 1.6vw, 26px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 45;
+    display: grid;
+    gap: 7px;
+    justify-items: end;
+}
+@media (max-width: 1100px) { .sr { display: none; } }
+
+.sr-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--sr-ink, #fff);
+    -webkit-tap-highlight-color: transparent;
+}
+.sr-mark i {
+    display: block;
+    height: 1px;
+    width: 12px;
+    background: currentColor;
+    opacity: 0.26;
+    transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease, background-color 0.3s ease;
+}
+.sr-major i { width: 26px; opacity: 0.5; }
+
+/* the label sits to the left of its tick, so the ticks stay flush right */
+.sr-mark span {
+    order: -1;
+    font-family: var(--font-mono, ui-monospace, Menlo, Consolas, monospace);
+    font-size: 0.56rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: currentColor;
+    opacity: 0.34;
+    transition: opacity 0.3s ease;
+}
+/* a minor tick keeps its name to itself until you go looking for it */
+.sr-quiet span { opacity: 0; }
+
+.sr-mark:hover i { opacity: 0.9; width: 30px; }
+.sr-mark:hover span,
+.sr-mark:focus-visible span { opacity: 1; }
+.sr-mark.is-on i { opacity: 1; width: 34px; background: var(--sr-on, currentColor); }
+.sr-mark.is-on span { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) { .sr-mark i { transition: none; } }

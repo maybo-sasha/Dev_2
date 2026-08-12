@@ -18,4 +18,10 @@ assets/skills/
 # disk and out of history. Add a line here for each new reference drop.
 assets/personal/selection/*.mp4
 assets/personal/activationBTn/*.mp4
+
+# Raw screen captures for the AI Decisioning Studio case study: 99MB of
+# .mov at 2034x1290. The page serves the compressed mp4s in ../flows/
+# instead, so the masters stay on disk. The flow PNGs beside them are
+# small and are the source of the rebuilt diagrams, so those are kept.
+assets/Opimove/Ai studio/new/*.mov
 assets/personal/uimultiple select/*.mp4
