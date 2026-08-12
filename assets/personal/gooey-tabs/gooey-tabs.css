@@ -1,12 +1,16 @@
 /* ============================================================
-   Gooey Tabs — a folder whose active tab is fused to the panel
-   below it. Moving between tabs drags that fusion along: the tab
-   stretches off the panel edge, necks, and seals shut in its new
-   slot, because both shapes live inside one gooey filter.
+   Gooey Tabs — a folder drawn as one continuous outline, whose
+   active tab is fused to the panel below it. Switching drags that
+   fusion: the tab necks off the panel edge and seals into its new
+   slot, because tab and panel are one shape inside one filter.
 
-   Ported from the gooey tabs panel on ui.unlumen.com — same four
-   slots, same spring on the moving tab, same blurred cross-fade
-   on the list. Skinned with ../_system/system.css.
+   Where this departs from the component that inspired it: that one
+   is a solid slab. This is a stroke. The filter does not stop at
+   the merged silhouette — it erodes a copy and subtracts it, so
+   what survives is the outline of the merged shape. The goo still
+   happens; you just watch it happen to a line. It also stops the
+   folder being the one heavy dark mass on a page of light
+   components, and leaves the interior as paper for the data.
 
    Standalone. Pairs with ./gooey-tabs.js
    ============================================================ */
@@ -14,8 +18,8 @@
 [data-gooey-tabs] { container-type: inline-size; display: block; width: 100%; height: 100%; }
 
 .gt {
-  --gt-tab-h: 48px;
-  --gt-body-h: 300px;
+  --gt-tab-h: 46px;
+  --gt-body-h: 258px;
   --gt-n: 4;
 
   position: relative;
@@ -24,7 +28,7 @@
   min-height: 430px;
   display: grid;
   place-items: center;
-  padding: clamp(16px, 4vh, 40px) clamp(14px, 4cqw, 36px);
+  padding: clamp(14px, 3.5vh, 32px) clamp(12px, 3cqw, 28px);
   overflow: hidden;
   isolation: isolate;
   background: var(--ui-bg);
@@ -38,20 +42,17 @@
 
 .gt__wrap {
   position: relative;
-  width: min(760px, 100%);
-  padding: 4px;
+  width: min(680px, 100%);
+  padding: 3px;
 }
 
-/* ── the filtered layer: the panel and the tab, nothing else ──
-   The moving tab and the panel body are one gooey mass. As the tab
-   travels, the blur keeps it tethered to the panel edge and the
-   alpha pass snaps that tether into a solid neck — so the shape
-   appears to pour from one slot to the next instead of sliding. */
+/* ── the filtered layer: the outline, and nothing else ─────── */
 .gt__goo {
   position: absolute;
   inset: 0;
   pointer-events: none;
   filter: var(--gt-goo);
+  color: var(--ui-fg);
 }
 
 .gt__tabsrow {
@@ -61,30 +62,28 @@
   height: var(--gt-tab-h);
 }
 
-/* one shape, moved between slots — the vanilla stand-in for the
-   original's shared-layout tab */
+/* one shape, moved between slots */
 .gt__pill {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: calc(100% / var(--gt-n));
-  border-radius: var(--ui-r-lg) var(--ui-r-lg) 0 0;
-  background: var(--ui-fg);
+  border-radius: 18px 18px 0 0;
+  background: currentColor;
   transform: translateX(calc(var(--gt-i, 0) * 100%));
-  /* spring(stiffness 320, damping 30) lands just past its mark and
-     settles — this curve carries the same slight overshoot */
+  /* spring(320, 30) lands just past its mark and settles */
   transition: transform 0.5s cubic-bezier(0.22, 1.15, 0.3, 1);
 }
 
 .gt__body {
   width: 100%;
   height: var(--gt-body-h);
-  border-radius: 0 0 var(--ui-r-xl) var(--ui-r-xl);
-  background: var(--ui-fg);
+  border-radius: 0 0 24px 24px;
+  background: currentColor;
 }
 
-/* ── the unfiltered layer: labels and content ─────────────── */
+/* ── the unfiltered layer: labels and data ─────────────────── */
 .gt__top { position: relative; z-index: 1; }
 
 .gt__tabs {
@@ -104,48 +103,95 @@
   font: inherit;
   font-size: var(--ui-fs-sm);
   font-weight: 500;
-  color: var(--ui-fg);
+  font-variant-numeric: tabular-nums;
+  color: var(--ui-mute);
   cursor: pointer;
-  transition: color var(--ui-t) var(--ui-e), transform var(--ui-t-fast) var(--ui-e);
+  transition: color var(--ui-t) var(--ui-e);
 }
-.gt__tab[aria-selected='true'] { color: var(--ui-on-fg); }
-.gt__tab:active { transform: scale(0.98); }
-.gt__tab:focus-visible { outline: 2px solid var(--ui-fg); outline-offset: -4px; }
+.gt__tab:hover { color: var(--ui-text); }
+/* an outline carries no fill, so the active label stays ink rather
+   than inverting to paper the way a filled tab would */
+.gt__tab[aria-selected='true'] { color: var(--ui-fg); font-weight: 600; }
+.gt__tab:focus-visible { outline: 2px solid var(--ui-fg); outline-offset: -6px; border-radius: 14px; }
 
 .gt__panel {
   height: var(--gt-body-h);
-  padding: 26px clamp(22px, 5cqw, 48px);
+  padding: 18px clamp(16px, 4cqw, 30px);
   overflow: hidden;
 }
 
-.gt__list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* ── figures ───────────────────────────────────────────────── */
+.gt__stats {
+  display: flex;
+  gap: clamp(16px, 5cqw, 40px);
+  margin-bottom: 14px;
 }
-.gt__list li {
-  padding: 9px 0;
-  border-bottom: 1px solid rgba(252, 252, 253, 0.14);
-  font-size: var(--ui-fs-md);
-  color: var(--ui-on-fg);
+.gt__stat b {
+  display: block;
+  font-size: clamp(21px, 4.6cqw, 28px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ui-fg);
+  font-variant-numeric: tabular-nums;
 }
-.gt__list li:last-child { border-bottom: 0; }
+.gt__stat span {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--ui-fs-cap);
+  font-weight: 700;
+  letter-spacing: var(--ui-ls-cap);
+  text-transform: uppercase;
+  color: var(--ui-mute);
+}
 
-/* the list leaves upward and arrives from below, both through blur */
-.gt__view { position: relative; }
-.gt__view.is-leaving .gt__list {
+/* ── the chart ─────────────────────────────────────────────── */
+.gt__chart { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* recessive baseline — the data should be the only thing with weight */
+.gt__axis { stroke: var(--ui-line); stroke-width: 1; }
+.gt__tick {
+  fill: var(--ui-mute);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* One series, so one ink. A light-to-dark ramp here would imply a
+   second dimension that does not exist. */
+.gt__bar { fill: var(--ui-fg); transition: fill var(--ui-t-fast) ease; }
+.gt__col:hover .gt__bar { fill: var(--ui-text-2); }
+
+/* the peak is labelled outright; every other value waits for hover,
+   because a number on every bar is noise rather than data */
+.gt__val {
+  fill: var(--ui-fg);
+  font-size: 8px;
+  font-weight: 700;
+  text-anchor: middle;
+  font-variant-numeric: tabular-nums;
   opacity: 0;
-  transform: translateY(-50px);
-  filter: blur(10px);
+  transition: opacity var(--ui-t-fast) ease;
+}
+.gt__col:hover .gt__val { opacity: 1; }
+.gt__val.is-peak { opacity: 1; }
+/* a hit target wider than the mark — the bars are only a few px */
+.gt__hit { fill: transparent; }
+
+.gt__view { position: relative; }
+.gt__view.is-leaving .gt__inner {
+  opacity: 0;
+  transform: translateY(-40px);
+  filter: blur(8px);
   transition: opacity 0.2s ease-out, transform 0.2s ease-out, filter 0.2s ease-out;
 }
-.gt__view.is-entering .gt__list {
+.gt__view.is-entering .gt__inner {
   opacity: 0;
-  transform: translateY(50px);
-  filter: blur(10px);
+  transform: translateY(40px);
+  filter: blur(8px);
   transition: none;
 }
-.gt__list {
+.gt__inner {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
@@ -155,9 +201,9 @@
 .gt__cap {
   position: absolute;
   left: 50%;
-  bottom: 18px;
+  bottom: 14px;
   transform: translateX(-50%);
-  padding: 7px 14px;
+  padding: 6px 13px;
   border-radius: var(--ui-r-full);
   background: var(--ui-fill);
   font-size: var(--ui-fs-xs);
@@ -167,11 +213,11 @@
 }
 .gt__cap b { font-weight: 600; color: var(--ui-fg); }
 
-@media (max-width: 720px) {
-  .gt { --gt-tab-h: 40px; --gt-body-h: 240px; }
-  .gt__list li { font-size: var(--ui-fs-sm); }
+@container (max-width: 560px) {
+  .gt { --gt-tab-h: 40px; --gt-body-h: 232px; }
+  .gt__stat:nth-child(3) { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gt__pill, .gt__list { transition-duration: 0.01ms !important; }
+  .gt__pill, .gt__inner { transition-duration: 0.01ms !important; }
 }
