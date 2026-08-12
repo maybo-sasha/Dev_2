@@ -50,8 +50,25 @@
     const v = document.querySelector('[class*="hero"] video') || document.querySelector('main video');
     if (!v) return;
 
+    // Hold the video back until it is sitting on the right frame. The hero is
+    // already backed by heroPoster, the snapshot taken at the instant we
+    // navigated, so hiding the video shows that same frame rather than a gap.
+    // Without this the hero renders from the top for a beat and then jumps,
+    // which reads as a blink.
+    const wasHidden = v.style.visibility;
+    v.style.visibility = 'hidden';
+    try { v.pause(); } catch (e) {}
+
     let done = false;
     let tries = 0;
+
+    function reveal() {
+        if (done) return;
+        done = true;
+        v.style.visibility = wasHidden || '';
+        const p = v.play();
+        if (p && p.catch) p.catch(function () {});
+    }
 
     function seek() {
         // Bounded: if the seek cannot land (nothing buffered at that offset,
@@ -65,21 +82,23 @@
         if (!isFinite(d) || d <= 0) return;
         tries++;
         const target = t % d;
-        try { v.currentTime = target; } catch (e) { done = true; return; }
-        // Only stop once it actually took. Setting currentTime this early gets
-        // undone by whatever starts the hero playing, so a single assignment
-        // silently loses and the video runs from the top.
-        if (Math.abs(v.currentTime - target) < 0.5) done = true;
+        try { v.currentTime = target; } catch (e) { reveal(); return; }
+        // Only reveal once the seek actually took. Setting currentTime this
+        // early gets undone by whatever starts the hero playing, so a single
+        // assignment silently loses and the video runs from the top.
+        if (Math.abs(v.currentTime - target) < 0.5) reveal();
     }
 
     seek();
-    ['loadedmetadata', 'loadeddata', 'canplay', 'playing'].forEach(function (ev) {
+    ['loadedmetadata', 'loadeddata', 'canplay', 'seeked'].forEach(function (ev) {
         v.addEventListener(ev, seek);
     });
-    // and once more after the page has settled, for the same reason
     setTimeout(seek, 60);
+    // Never leave the hero hidden. If the seek cannot land, show the video
+    // where it is rather than sit on a still frame forever.
+    setTimeout(reveal, 1200);
     setTimeout(function () {
-        ['loadedmetadata', 'loadeddata', 'canplay', 'playing'].forEach(function (ev) {
+        ['loadedmetadata', 'loadeddata', 'canplay', 'seeked'].forEach(function (ev) {
             v.removeEventListener(ev, seek);
         });
     }, 4000);
