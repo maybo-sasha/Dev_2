@@ -1,0 +1,228 @@
+/* ============================================================
+   Flow — user flow diagrams drawn in the same language as the
+   rest of the site rather than pasted in as screenshots.
+
+   State is carried by form, not by colour: a built step is a solid
+   outline, something missing or unspecified is dashed, a decision
+   is a diamond, and only completion gets the one hue the system
+   allows. That is deliberate. A flow whose meaning lives in red
+   and green stops meaning anything in greyscale, in print, or to
+   a reader who cannot separate the two.
+
+   Nodes are HTML so the text wraps and stays selectable and
+   readable to a screen reader. Edges are one SVG layer underneath,
+   drawn from the nodes' measured positions after layout, so the
+   connectors can never drift out of step with the boxes.
+
+   Standalone. Pairs with ./flow.js
+   ============================================================ */
+
+[data-flow] { display: block; width: 100%; }
+
+.fl {
+  --fl-ink: #12141a;
+  --fl-ink-rgb: 18, 20, 26;
+  --fl-paper: #ffffff;
+  --fl-bg: #fcfcfd;
+  --fl-mute: #8d92a3;
+  --fl-line: rgba(18, 20, 26, 0.34);
+  --fl-ok: #3faa5a;
+
+  --fl-col: 190px;   /* column pitch */
+  --fl-row: 96px;    /* row pitch    */
+
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: clamp(18px, 3vw, 34px);
+  border-radius: 20px;
+  background: var(--fl-bg);
+  box-shadow: inset 0 0 0 1px rgba(var(--fl-ink-rgb), 0.1);
+  color: var(--fl-ink);
+  font-family: var(--font-display, 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+.fl__head { margin: 0 0 clamp(14px, 2vw, 22px); max-width: 62ch; }
+.fl__head b {
+  display: block;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.fl__head span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--fl-mute);
+}
+
+/* ── the stage ─────────────────────────────────────────────── */
+/* Sized in JS to exactly cols x rows. It must not be stretched to fill
+   a wider container: the edge layer is one SVG scaled to its viewBox,
+   so any extra width scales and re-centres the connectors while the
+   HTML nodes stay put, and the two drift apart. */
+.fl__stage {
+  position: relative;
+  width: max-content;
+}
+.fl__edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.fl__edge {
+  fill: none;
+  stroke: var(--fl-line);
+  stroke-width: 1.5;
+}
+.fl__edge--soft { stroke-dasharray: 4 4; stroke: rgba(var(--fl-ink-rgb), 0.3); }
+.fl__arrow { fill: var(--fl-line); }
+.fl__elabel {
+  fill: var(--fl-mute);
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+  /* the label sits on top of the line it belongs to, so it carries its
+     own halo rather than relying on finding a clear patch of canvas */
+  stroke: var(--fl-bg);
+  stroke-width: 3.5;
+  paint-order: stroke fill;
+}
+
+/* ── nodes ─────────────────────────────────────────────────── */
+.fl__node {
+  position: absolute;
+  width: var(--fl-col);
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--fl-paper);
+  box-shadow: inset 0 0 0 1.5px rgba(var(--fl-ink-rgb), 0.5);
+  transform: translate(-50%, -50%);
+}
+.fl__node em {
+  display: block;
+  margin-bottom: 3px;
+  font-style: normal;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fl-mute);
+}
+.fl__node b {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+.fl__node span {
+  display: block;
+  margin-top: 3px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--fl-mute);
+}
+
+/* start and end of the path, weighted so the eye finds them */
+.fl__node--start { box-shadow: inset 0 0 0 2px var(--fl-ink); }
+
+/* the one hue: something that reached the end and worked */
+.fl__node--done {
+  box-shadow: inset 0 0 0 2px var(--fl-ok);
+  background: color-mix(in srgb, var(--fl-ok) 7%, var(--fl-paper));
+}
+.fl__node--done em { color: var(--fl-ok); }
+
+/* Not built, not specified, not wired. Dashed, because the gap is
+   the finding and it has to survive being printed in grey. */
+.fl__node--gap {
+  background: transparent;
+  box-shadow: none;
+  border: 1.5px dashed rgba(var(--fl-ink-rgb), 0.45);
+}
+.fl__node--gap b { color: rgba(var(--fl-ink-rgb), 0.62); }
+
+/* another agent reaching into this flow and muddying the result */
+.fl__node--confound {
+  background: transparent;
+  box-shadow: none;
+  border: 1.5px dashed rgba(var(--fl-ink-rgb), 0.3);
+}
+.fl__node--confound b { font-weight: 500; color: rgba(var(--fl-ink-rgb), 0.55); }
+
+/* a decision is a diamond, so it reads as a branch before it is read */
+.fl__node--decision {
+  display: grid;
+  place-items: center;
+  width: 172px;
+  height: 92px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  text-align: center;
+}
+.fl__node--decision > * { grid-area: 1 / 1; }
+.fl__dia {
+  width: 172px;
+  height: 92px;
+  fill: var(--fl-paper);
+  stroke: rgba(var(--fl-ink-rgb), 0.5);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.fl__dia-t { padding: 0 16px; }
+.fl__node--decision b { font-size: 11px; line-height: 1.25; }
+
+/* ── legend ────────────────────────────────────────────────── */
+.fl__key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: clamp(14px, 2vw, 22px);
+  padding-top: 14px;
+  border-top: 1px solid rgba(var(--fl-ink-rgb), 0.08);
+  font-size: 10.5px;
+  color: var(--fl-mute);
+}
+.fl__key span { display: inline-flex; align-items: center; gap: 7px; }
+.fl__key i {
+  width: 15px;
+  height: 11px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1.5px rgba(var(--fl-ink-rgb), 0.5);
+  background: var(--fl-paper);
+}
+.fl__key .k-start { box-shadow: inset 0 0 0 2px var(--fl-ink); }
+.fl__key .k-done { box-shadow: inset 0 0 0 2px var(--fl-ok); background: color-mix(in srgb, var(--fl-ok) 7%, var(--fl-paper)); }
+.fl__key .k-gap { box-shadow: none; border: 1.5px dashed rgba(var(--fl-ink-rgb), 0.45); background: none; }
+/* filled, not outlined: at 12px an outlined diamond is a smudge */
+.fl__key .k-dec {
+  width: 12px;
+  height: 12px;
+  border-radius: 1px;
+  box-shadow: none;
+  background: rgba(var(--fl-ink-rgb), 0.5);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* the diagram is wide by nature, so say so on a narrow screen */
+.fl__scroll {
+  display: none;
+  margin-top: 10px;
+  font-size: 10.5px;
+  color: var(--fl-mute);
+}
+@media (max-width: 900px) { .fl__scroll { display: block; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .fl__node { transition: box-shadow 0.25s ease; }
+}
