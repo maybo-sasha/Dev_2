@@ -375,6 +375,20 @@
         });
     </script>
 
+    <script>
+        // Side ruler: one labelled tick per project.
+        window.SIDE_RULER_LABEL = 'Projects';
+        window.SIDE_RULER = function () {
+            return Array.from(document.querySelectorAll('.slide')).map(function (s) {
+                const t = s.querySelector('.project-title');
+                // the title carries a duplicate span for the fill effect, so
+                // take the first text node rather than the whole textContent
+                const label = t ? (t.firstChild && t.firstChild.nodeValue || t.textContent).trim() : '';
+                return { el: s, label: label, major: true };
+            });
+        };
+    </script>
+    <script src="./js/sideRuler.js"></script>
     <script src="./js/transitionFade.js"></script>
     <script src="./js/transition.js"></script>
     <script src="./js/workMenu.js"></script>
