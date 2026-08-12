@@ -53,6 +53,12 @@
                         c.getContext('2d').drawImage(media, 0, 0);
                         sessionStorage.setItem('heroPoster', c.toDataURL('image/jpeg', 0.72));
                     }
+                    // Hand the playhead over with it. Read at the end of the
+                    // zoom rather than at click, so it matches the frame that
+                    // is actually on screen when we navigate.
+                    if (media.tagName === 'VIDEO' && isFinite(media.currentTime)) {
+                        sessionStorage.setItem('heroTime', String(media.currentTime));
+                    }
                 } catch (e) {}
                 window.location.href = dest;
             }
