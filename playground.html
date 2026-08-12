@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="./assets/personal/activation-button/activation-button.css">
     <link rel="stylesheet" href="./assets/personal/selection/selection.css">
     <link rel="stylesheet" href="./assets/personal/multi-select/multi-select.css">
-    <link rel="stylesheet" href="./assets/personal/lab/lab.css">
     <script>try{if(sessionStorage.getItem("heroZoom")){var d=document.documentElement;d.classList.add("instant");var p=sessionStorage.getItem("heroPoster");if(p)d.style.setProperty("--hero-poster","url("+p+")");sessionStorage.removeItem("heroZoom");sessionStorage.removeItem("heroPoster");}}catch(e){}</script>
     <style>
         :root {
@@ -219,11 +218,6 @@
                 0 0 0 1px rgba(255,255,255,0.22),
                 0 0 70px var(--glow);
         }
-
-        /* the composed screen is a screen, not a specimen — it needs a
-           real height rather than a ratio */
-        .pg-frame--screen { aspect-ratio: auto; height: 840px; max-height: none; }
-        @media (max-width: 1100px) { .pg-frame--screen { height: 1180px; } }
 
         /* Half-width tiles: a 16/9 frame is only 341px tall at this
            column width, and the components inside declare 430px+ — so
@@ -690,36 +684,15 @@
         </section>
 
         <section class="pg-gallery">
-            <!-- 15 Lab -->
-            <figure class="pg-tile pg-tile--wide reveal">
-                <div class="pg-frame pg-frame--live pg-frame--light pg-frame--screen">
-                    <div data-lab></div>
-                </div>
-                <figcaption class="pg-cap">
-                    <p class="pg-cap-num">08 — Interface</p>
-                    <h2 class="pg-cap-title">Lab</h2>
-                    <p class="pg-cap-desc">
-                        One screen assembled entirely from the components below it. Nothing here is drawn twice: the navigation, the title field, the tag picker, the option row, the publish button, the activity panel, the attachments, the floating menu and the palette are all imported from the tiles that follow. The only new code is the layout, and an adaptation layer that strips the specimen framing — the full-bleed minimums, the self-centring, the captions — without reopening a single component.
-                    </p>
-                    <div class="pg-tags">
-                        <span class="pg-tag">Design system</span>
-                        <span class="pg-tag">Composition</span>
-                        <span class="pg-tag">Product UI</span>
-                    </div>
-                    <div class="pg-probe">
-                        <p class="q"><span>Tests</span>Is this a design system, or nine things that merely resemble each other?</p>
-                        <p class="a"><span>Shows</span>A screen built out of them without any being reopened. Composing it found the answer to be no at first — the option row rendered unstyled, because Selection Controls and the Activation Button declared their tokens on their own demo roots, so a primitive used anywhere else inherited nothing. Hoisting those to :root is what made them components rather than exhibits.</p>
-                    </div>
-                </figcaption>
-            </figure>
+            
 
-            <!-- 16 Selection Controls -->
+            <!-- 15 Selection Controls -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-selection></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">09 — Interface</p>
+                    <p class="pg-cap-num">08 — Interface</p>
                     <h2 class="pg-cap-title">Selection Controls</h2>
                     <p class="pg-cap-desc">
                         Checkbox, radio and switch rebuilt as soft bodies. The box squeezes under the press then pops as the tick strokes itself in. The radio's hole shuts to nothing before the old fill drains, and springs back open on the one you picked. The switch knob leads with one edge and lets the other catch up, so it stretches the length of the track and lands round on the far side. Native inputs underneath — full keyboard, no libraries.
@@ -735,13 +708,13 @@
                     </div>
                 </figcaption>
             </figure>
-            <!-- 17 Typing Input -->
+            <!-- 16 Typing Input -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-typing-input></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">10 — Interface</p>
+                    <p class="pg-cap-num">09 — Interface</p>
                     <h2 class="pg-cap-title">Typing Input</h2>
                     <p class="pg-cap-desc">
                         Characters arrive with weight — each one drops in through a blur and settles, and only genuinely new ones move, so pasting into the middle of a word does not re-land everything after it. The caret is a single body pinned by both edges: select a range and it stretches into the selection rather than being replaced by a highlight, inverting the glyphs it covers. A real input sits on top with its own caret hidden, so pointer selection, IME and screen readers all behave natively.
@@ -758,14 +731,13 @@
                 </figcaption>
             </figure>
 
-
-            <!-- 18 Multi Select -->
+            <!-- 17 Multi Select -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-multi-select></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">11 — Interface</p>
+                    <p class="pg-cap-num">10 — Interface</p>
                     <h2 class="pg-cap-title">Multi Select</h2>
                     <p class="pg-cap-desc">
                         A multi-select where the choice physically moves. Press a row and the ink floods out from exactly where you pressed, squeezes down to a dot, flies up into the field and unfolds into a chip — the slot widening under it as it travels. Picked tools leave the list; clear a chip and it folds back into its original slot. Full keyboard flow, vanilla JS and CSS.
@@ -781,13 +753,13 @@
                     </div>
                 </figcaption>
             </figure>
-            <!-- 19 Activation Button -->
+            <!-- 18 Activation Button -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-activation-button></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">12 — Interface</p>
+                    <p class="pg-cap-num">11 — Interface</p>
                     <h2 class="pg-cap-title">Activation Button</h2>
                     <p class="pg-cap-desc">
                         One pill carrying a whole job without ever leaving its spot. Hover and the arrow flips into a tick; press and the badge collapses into a spinner while the label rolls from <em>Activate</em> to <em>Waiting</em> and the pill resizes to fit it. When the work lands the ring closes, the disc pops back and the button morphs to green — then the face rolls over like a split-flap to reset itself.
@@ -803,13 +775,13 @@
                     </div>
                 </figcaption>
             </figure>
-            <!-- 20 Gooey Menu -->
+            <!-- 19 Gooey Menu -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-gooey-menu></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">13 — Interface</p>
+                    <p class="pg-cap-num">12 — Interface</p>
                     <h2 class="pg-cap-title">Gooey Menu</h2>
                     <p class="pg-cap-desc">
                         Six actions folded inside one button. Press it and they swing out on rotating arms — the arm turns while the disc travels, so each one sweeps rather than slides, and the icon spins a full extra turn to land upright. The shapes stretch off the core and pinch free through an SVG gooey filter: a Gaussian blur lets neighbours bleed together, then a colour matrix cranks the alpha contrast to snap that bleed back into one solid edge. Icons ride in an unfiltered layer above, so they stay sharp.
@@ -825,13 +797,13 @@
                     </div>
                 </figcaption>
             </figure>
-            <!-- 21 Command Bar -->
+            <!-- 20 Command Bar -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-command-bar></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">14 — Interface</p>
+                    <p class="pg-cap-num">13 — Interface</p>
                     <h2 class="pg-cap-title">Command Bar</h2>
                     <p class="pg-cap-desc">
                         A ⌘K palette with real keyboard flow — type to filter, arrows to move, Enter to run. Group headers fold away as the list narrows.
@@ -846,13 +818,13 @@
                     </div>
                 </figcaption>
             </figure>
-            <!-- 22 Morph Nav -->
+            <!-- 21 Morph Nav -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-morph-nav></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">15 — Interface</p>
+                    <p class="pg-cap-num">14 — Interface</p>
                     <h2 class="pg-cap-title">Morph Nav</h2>
                     <p class="pg-cap-desc">
                         A navigation bar that does not open a panel — it becomes one. Hovering a section grows the same body downward while a single marker travels to the new slot, and the content enters from the side you were heading. Sweep across the bar and it never shuts and reopens: the body stays open and simply changes shape under you. Leave it and it returns to exactly the shape it started in.
@@ -868,13 +840,13 @@
                     </div>
                 </figcaption>
             </figure>
-            <!-- 23 Gooey Tabs -->
+            <!-- 22 Gooey Tabs -->
             <figure class="pg-tile reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-gooey-tabs></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">16 — Interface</p>
+                    <p class="pg-cap-num">15 — Interface</p>
                     <h2 class="pg-cap-title">Gooey Tabs</h2>
                     <p class="pg-cap-desc">
                         A folder whose active tab is fused to the panel below it, dressed like the nav next door — paper surface, soft shadow, hairline stroke — which takes two filtered layers over identical geometry, one filled and one eroded to leave the outline. Each year answers a different question, so each carries a different form: bars for volume, a line for how it accumulated, a lollipop for ranked kinds, and a single number where that is the whole answer.</p>
@@ -889,7 +861,7 @@
                     </div>
                 </figcaption>
             </figure>
-            <!-- 24 File Vault -->
+            <!-- 23 File Vault -->
             <figure class="pg-tile pg-tile--wide reveal">
                 <div class="pg-frame pg-frame--live pg-frame--light">
                     <div data-file-vault
@@ -897,7 +869,7 @@
                          data-unit="Files"></div>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">17 — Interface</p>
+                    <p class="pg-cap-num">16 — Interface</p>
                     <h2 class="pg-cap-title">File Vault</h2>
                     <p class="pg-cap-desc">
                         Not a render — a live interface you can use. Click the folder to open the vault, search to filter the files, and pick a row to pull its card out of the stack. Built as vanilla JS and CSS, no libraries.
@@ -954,7 +926,6 @@
     <script type="module" src="./assets/personal/activation-button/activation-button.js"></script>
     <script type="module" src="./assets/personal/selection/selection.js"></script>
     <script type="module" src="./assets/personal/multi-select/multi-select.js"></script>
-    <script type="module" src="./assets/personal/lab/lab.js"></script>
 
     <script>
         // Force-show body in case anything below fails to run
