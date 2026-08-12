@@ -91,7 +91,25 @@
    Each component's host wrapper carries container-type too. An element
    cannot query itself, so without that the root's own padding would
    still fall back to the viewport — only its descendants would scale. */
+/* Every component inherits border-box. Roots are width:100% with
+   padding, so under content-box they compute to container + padding and
+   overflow by exactly twice their padding — invisible while a tile is
+   full-bleed, a clipped edge the moment one sits in a column. Multi
+   Select declared this for itself and was the only one that fitted. */
+.ui,
+.ui *,
+.ui *::before,
+.ui *::after { box-sizing: border-box; }
+
+/* Component roots centre their content with display:grid. The track has
+   to be stated explicitly, because in an auto track a child sized
+   width: min(Xpx, 100%) makes that percentage cyclic — the browser
+   resolves it by falling back to the max-content contribution, Xpx, so
+   the track becomes Xpx and the child overflows any container narrower
+   than X. It is invisible full-bleed and breaks the moment a component
+   sits in a column. minmax(0, 1fr) makes the track definite. */
 .ui {
+  grid-template-columns: minmax(0, 1fr);
   container-type: inline-size;
   position: relative;
   width: 100%;
