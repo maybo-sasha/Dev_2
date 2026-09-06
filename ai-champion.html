@@ -1382,25 +1382,25 @@
                     <p class="skill-num fade-up">Skill 01</p>
                     <h2 class="skill-name fade-up"><span class="dot"></span>generate-ds-ui</h2>
                     <p class="skill-one fade-up">Screens built only from components that actually exist.</p>
-                    <p class="ac-body fade-up" style="margin-top:1.2rem">A design system is only worth what people actually build with it — and a library of a few hundred components is genuinely hard to reach. Designers know it best and still lose time checking which variant is current before starting a screen. Everyone else is further away again. The distance between <em>"we have a design system"</em> and <em>"this screen uses it"</em> is exactly where consistency leaks, quietly, one file at a time.</p>
-                    <p class="ac-body fade-up">This skill closes that distance by making the system <strong>reachable instead of memorable</strong>. It fetches the live inventory itself and refuses to output anything it cannot trace back to a real component — so a designer gets a consistent, on-system starting point without auditing it by hand, and someone in product can produce something genuinely buildable without knowing the library at all.</p>
-                    <p class="ac-body fade-up">It has two output modes. <strong>Code</strong> produces a live prototype from the token file — good for feeling an interaction. <strong>Figma</strong> places real component instances in a real file, where fidelity is guaranteed by construction: an instance of a real component physically cannot have the wrong padding. Same brief, same pipeline, two deliverables depending on whether you need to click it or review it.</p>
+                    <p class="ac-body fade-up" style="margin-top:1.2rem">A design system is only worth what people build with it, and a few hundred components is hard to reach. Even designers lose time checking which variant is current. That gap is where consistency quietly leaks.</p>
+                    <p class="ac-body fade-up">This skill makes the system <strong>reachable instead of memorable</strong>. It fetches the live inventory and refuses to output anything it cannot trace back to a real component.</p>
+                    <p class="ac-body fade-up">Two output modes. <strong>Code</strong> gives a live prototype you can click. <strong>Figma</strong> places real component instances, where an instance of a real component physically cannot have the wrong padding.</p>
 
                     <div class="grow fade-up" style="margin-top:2.4rem">
                         <div class="grow-card">
                             <p class="gk">Product Design</p>
                             <p class="gh">Consistency by default</p>
-                            <p class="gp">The main use. Start from a screen that is already on-system, so review is about the idea rather than about which button variant this is and whether the spacing is ours.</p>
+                            <p class="gp">Start from a screen that is already on-system, so review is about the idea, not the button variant.</p>
                         </div>
                         <div class="grow-card">
                             <p class="gk">Product</p>
                             <p class="gh">A real starting point</p>
-                            <p class="gp">A PM can put a concrete, buildable screen into a conversation instead of a wireframe that has to be redrawn — without learning the component inventory first.</p>
+                            <p class="gp">A PM can put a buildable screen into a conversation instead of a wireframe that gets redrawn.</p>
                         </div>
                         <div class="grow-card">
                             <p class="gk">Engineering</p>
                             <p class="gh">Nothing to translate</p>
-                            <p class="gp">What arrives is composed of components that already exist, with real tokens — so the handoff conversation is about behaviour, not about what half of it should have been.</p>
+                            <p class="gp">Composed of components that already exist, so handoff is about behaviour.</p>
                         </div>
                     </div>
                 </div>
@@ -1408,15 +1408,15 @@
                 <div class="pns fade-up">
                     <div class="pns-card">
                         <p class="pns-k">Problem</p>
-                        <p class="pns-t">Ask any AI for a settings page and you get one — with invented components, hardcoded spacing and a button variant we never shipped. It looks plausible in a screenshot and falls apart the moment a developer opens it. Meanwhile the real system sits there, correct and underused.</p>
+                        <p class="pns-t">Ask any AI for a settings page and you get invented components, hardcoded spacing and a button variant we never shipped. Plausible in a screenshot, broken the moment a developer opens it.</p>
                     </div>
                     <div class="pns-card">
                         <p class="pns-k">The need</p>
-                        <p class="pns-t">Anyone shaping a screen — designer, PM or developer — should land on something <em>already</em> design-system-correct: consistent for the design team by default, and reachable for everyone else without knowing the inventory.</p>
+                        <p class="pns-t">Anyone shaping a screen should land on something <em>already</em> design-system-correct, without knowing the inventory first.</p>
                     </div>
                     <div class="pns-card is-solution">
                         <p class="pns-k">Solution</p>
-                        <p class="pns-t">Sync the live component inventory before every run, compose only real components with measured tokens, then verify the output against that same data — and fail the run if anything was invented.</p>
+                        <p class="pns-t">Sync the live inventory every run, compose only real components, verify against that same data, and fail the run if anything was invented.</p>
                     </div>
                 </div>
 
@@ -1472,22 +1472,22 @@
                         <li class="iso-item" data-l="3">
                             <span class="in">04</span>
                             <span><p class="ih">Verified screen <em>· delivered</em></p>
-                            <p class="ip">What gets handed over — and only after every component and value has been traced back to something real.</p></span>
+                            <p class="ip">Handed over only after every component and value traces back to something real.</p></span>
                         </li>
                         <li class="iso-item" data-l="2">
                             <span class="in">03</span>
                             <span><p class="ih">Layout blueprint</p>
-                            <p class="ip">The page structure it selected, named out loud so it can be corrected rather than silently assumed.</p></span>
+                            <p class="ip">The page structure it chose, named out loud so it can be corrected.</p></span>
                         </li>
                         <li class="iso-item" data-l="1">
                             <span class="in">02</span>
                             <span><p class="ih">Real components</p>
-                            <p class="ip">Instances pulled from the inventory synced this run — never a component drawn from memory.</p></span>
+                            <p class="ip">Instances from the inventory synced this run, never drawn from memory.</p></span>
                         </li>
                         <li class="iso-item" data-l="0">
                             <span class="in">01</span>
                             <span><p class="ih">Design tokens <em>· the base</em></p>
-                            <p class="ip">Colour, spacing, radius and type as measured values — the layer everything above is built out of.</p></span>
+                            <p class="ip">Colour, spacing, radius and type as measured values.</p></span>
                         </li>
                         <li class="iso-cap">Every layer is fetched, never remembered. Remove one and the screen stops being buildable.</li>
                     </ol>
@@ -1515,28 +1515,28 @@
                 <div class="ac-shot fade-up" style="margin-top:0">
                     <video src="./assets/ai-champion/generate-ds-ui.mp4" muted loop playsinline preload="none"></video>
                 </div>
-                <p class="ac-cap fade-up">The skill running end to end — study the real set, draw, render, compare, refine.</p>
+                <p class="ac-cap fade-up">The skill end to end: study the real set, draw, render, compare, refine.</p>
 
                 <div class="skill-head" style="margin-top:2.4rem">
                     <p class="skill-num fade-up">Skill 02</p>
                     <h2 class="skill-name fade-up"><span class="dot"></span>generate-misc-icon</h2>
                     <p class="skill-one fade-up">New brand icons that read as siblings, not cousins.</p>
-                    <p class="ac-body fade-up" style="margin-top:1.2rem">Our spot icons are a real graphical language: indigo outlines with round joins, white and lavender fills, exactly one lime focal, and a recurring four-point sparkle whenever something is AI-driven. Those rules are easy to state and surprisingly hard to hit. A generic AI gets close enough to be tempting and wrong enough to be unusable — the stroke is a third of a pixel heavy, the lime lands in two places, the ink is a hex nobody uses.</p>
-                    <p class="ac-body fade-up">The fix was to stop describing the style and start measuring it. Every run re-imports the real icon folder and derives the palette, stroke weight and canvas from the actual files, so the skill is always calibrated to the set as it exists today — not as it looked when the instructions were written. Then it proves the result: rendered at the sizes it ships at, placed beside a real icon, and refined until the differences are gone.</p>
+                    <p class="ac-body fade-up" style="margin-top:1.2rem">Our spot icons are a real graphical language: indigo outlines, white and lavender fills, exactly one lime focal, and a four-point sparkle whenever something is AI-driven. Easy to state, hard to hit. A generic AI gets close enough to be tempting and wrong enough to be unusable.</p>
+                    <p class="ac-body fade-up">So the skill stops describing the style and measures it. Every run re-imports the real icon folder and derives palette, stroke weight and canvas from the actual files, so it matches the set as it exists today. Then it proves the result at ship sizes, beside a real icon.</p>
                 </div>
 
                 <div class="pns fade-up">
                     <div class="pns-card">
                         <p class="pns-k">Problem</p>
-                        <p class="pns-t">Every new spot icon drifts. Drawn from memory it misses the stroke weight, the exact ink, the lavender-and-one-lime rule, the sparkle convention — and then blurs into mush at the size it actually ships at.</p>
+                        <p class="pns-t">Drawn from memory, a new icon misses the stroke weight, the exact ink and the sparkle convention, then blurs into mush at the size it ships at.</p>
                     </div>
                     <div class="pns-card">
                         <p class="pns-k">The need</p>
-                        <p class="pns-t">Icons that belong to the existing set on first delivery, proven legible at the two real header sizes — 48px and 38px — before anyone opens Figma.</p>
+                        <p class="pns-t">Icons that belong to the set on first delivery, proven legible at 48px and 38px before anyone opens Figma.</p>
                     </div>
                     <div class="pns-card is-solution">
                         <p class="pns-k">Solution</p>
-                        <p class="pns-t">Learn from the <em>real</em> icon set every single run, draw to canonical tokens, then render at ship sizes and compare side by side with a real icon — looping until the deltas are gone.</p>
+                        <p class="pns-t">Learn from the real set every run, draw to canonical tokens, then render at ship sizes and compare against a real icon until the deltas are gone.</p>
                     </div>
                 </div>
 
@@ -1637,7 +1637,7 @@
                         <figcaption>No Filter Distribution</figcaption>
                     </figure>
                 </div>
-                <p class="ac-cap fade-up">The real Optimove set the skill calibrates against every run — stroke weight, palette and the single lime focal are measured from these, never described from memory.</p>
+                <p class="ac-cap fade-up">The real Optimove set it calibrates against. Stroke weight, palette and the single lime focal are measured from these, never described from memory.</p>
                     </article>
 
                     <!-- ══════════ SKILL 03 — ux-test-analysis ══════════ -->
@@ -1646,8 +1646,8 @@
                     <p class="skill-num fade-up">Skill 03</p>
                     <h2 class="skill-name fade-up"><span class="dot"></span>ux-test-analysis</h2>
                     <p class="skill-one fade-up">Research that compounds instead of evaporating.</p>
-                    <p class="ac-body fade-up" style="margin-top:1.2rem">Running the session is the fun part. What comes after it is the part that quietly destroys a designer's month — and it is the reason so much research is never actually analysed.</p>
-                    <p class="ac-body fade-up">Done properly by hand, one round of testing is days of work: re-watching every recording, timestamping the moments that mattered, tagging each task as completed, helped, partial or failed, pulling and attributing quotes, clustering fifty scattered observations into a handful of real issues, arguing about severity, checking whether each one already appeared in an earlier test, writing recommendations, prioritising them, and finally rebuilding it all into a deck. Multiply that by five participants and every feature the team ships, and analysis becomes the thing that gets postponed — until the insight is stale and someone asks <em>"didn't we already test this?"</em> and nobody can answer.</p>
+                    <p class="ac-body fade-up" style="margin-top:1.2rem">Running the session is the fun part. What comes after is what quietly destroys a designer’s month, and why so much research is never analysed.</p>
+                    <p class="ac-body fade-up">By hand, one round is days of work: re-watching recordings, timestamping, tagging every task, attributing quotes, clustering scattered observations into real issues, arguing severity, then rebuilding it all into a deck. Multiply that by five participants and every feature, and analysis becomes the thing that gets postponed.</p>
 
                     <div class="manual fade-up">
                         <div class="manual-col is-old">
@@ -1664,7 +1664,7 @@
                                 <li>Rebuild the whole thing as a deck</li>
                                 <li>Share it once. Never query it again.</li>
                             </ol>
-                            <p class="manual-foot">And the output is a static document. Nothing about it makes the <em>next</em> test cheaper.</p>
+                            <p class="manual-foot">And the output is static. Nothing about it makes the next test cheaper.</p>
                         </div>
                         <div class="manual-col is-new">
                             <p class="manual-k">With the skill <span class="cost">~15 min</span></p>
@@ -1673,7 +1673,7 @@
                                 <li>Confirm the feature name it suggests</li>
                                 <li>Read the result and correct anything it got wrong</li>
                             </ol>
-                            <p class="manual-foot">The output is a live workspace — structured, searchable, and comparable with every test that came before it. The next round starts ahead, not from zero.</p>
+                            <p class="manual-foot">A live workspace instead: structured, searchable, and comparable with every test before it.</p>
                         </div>
                     </div>
                 </div>
@@ -1681,52 +1681,52 @@
                 <div class="pns fade-up">
                     <div class="pns-card">
                         <p class="pns-k">Problem</p>
-                        <p class="pns-t">Usability tests end as a transcript and a deck. Findings live in whoever ran the session; nothing is queryable, nothing accumulates, and the same issue gets rediscovered a quarter later.</p>
+                        <p class="pns-t">Tests end as a transcript and a deck. Findings live in whoever ran the session, nothing accumulates, and the same issue is rediscovered a quarter later.</p>
                     </div>
                     <div class="pns-card">
                         <p class="pns-k">The need</p>
-                        <p class="pns-t">Evidence you can search, scores you can compare across tests, and a way to check a design assumption against what the team already learned — before building on it.</p>
+                        <p class="pns-t">Evidence you can search and scores you can compare, so an assumption can be checked before anyone builds on it.</p>
                     </div>
                     <div class="pns-card is-solution">
                         <p class="pns-k">Solution</p>
-                        <p class="pns-t">Turn a raw transcript into a structured Notion workspace — sessions, issues, recommendations, participants, quotes — with a computed UX Health Score, an analysis page, and dated notes pinned onto the Figma designs.</p>
+                        <p class="pns-t">Turn a raw transcript into a structured Notion workspace with a computed UX Health Score and dated notes pinned onto the Figma designs.</p>
                     </div>
                 </div>
 
                 <h3 class="ac-h2 fade-up" style="font-size:clamp(1.25rem,2.3vw,1.8rem);margin-top:3.2rem;margin-bottom:0.6rem">"Any LLM can summarise a transcript"</h3>
-                <p class="ac-body fade-up">True — and that is exactly the trap. Paste a transcript into any chat and you will get a confident, readable summary in seconds. It feels like the job is done. It is not, and the difference only shows up months later when you need the research again.</p>
-                <p class="ac-body fade-up">A summary is <strong>prose about one session</strong>. It lives in a chat window, it is shaped slightly differently every time you ask, it will happily invent a difficulty rating that was never given, and it cannot be filtered, counted or compared. This skill produces something else entirely:</p>
+                <p class="ac-body fade-up">True, and that is the trap. Paste a transcript into any chat and you get a confident summary in seconds. It feels done. The difference shows up months later, when you need the research again.</p>
+                <p class="ac-body fade-up">A summary is prose about one session. It sits in a chat window, comes out differently shaped every time you ask, will happily invent a rating nobody gave, and cannot be filtered, counted or compared. This produces something else entirely:</p>
 
                 <div class="grow fade-up" style="margin-top:1.8rem">
                     <div class="grow-card">
                         <p class="gk">Data, not prose</p>
                         <p class="gh">Rows you can query</p>
-                        <p class="gp">Six linked databases instead of paragraphs — issues, sessions, quotes, recommendations, participants. You can filter by severity, count recurrences, and sort by impact. A summary cannot be sorted.</p>
+                        <p class="gp">Six linked databases instead of paragraphs. Filter by severity, count recurrences, sort by impact. A summary cannot be sorted.</p>
                     </div>
                     <div class="grow-card">
                         <p class="gk">Same shape, every time</p>
                         <p class="gh">Comparable by construction</p>
-                        <p class="gp">Identical schema, identical severity logic, identical scoring formula on run one and run fifty. An ad-hoc prompt gives a differently-shaped answer each time, which is why chat summaries can never be compared to each other.</p>
+                        <p class="gp">Identical schema, severity logic and scoring formula on run one and run fifty. An ad-hoc prompt answers differently each time, which is why chat summaries can never be compared with each other.</p>
                     </div>
                     <div class="grow-card">
                         <p class="gk">It accumulates</p>
                         <p class="gh">Recurring issues gain weight</p>
-                        <p class="gp">An issue seen before does not become a second document — it gains new evidence on the existing record, and its severity rises as it keeps happening. That is a pattern you can act on, not five separate reports saying the same thing.</p>
+                        <p class="gp">A repeat issue gains evidence on the existing record and its severity rises, rather than becoming a second report saying the same thing.</p>
                     </div>
                     <div class="grow-card">
                         <p class="gk">It refuses to fill gaps</p>
                         <p class="gh">Missing stays missing</p>
-                        <p class="gp">If a rating was never collected, it is marked not captured — never estimated into something plausible. Invented research is worse than none, because it is indistinguishable from the real thing later.</p>
+                        <p class="gp">A rating never collected is marked not captured, never estimated. Invented research is worse than none.</p>
                     </div>
                     <div class="grow-card">
                         <p class="gk">Safe to keep</p>
                         <p class="gh">Anonymised by rule</p>
-                        <p class="gp">Nothing identifying is stored — not the client, not the participants. Findings are indexed by feature, product area and date instead, so the whole archive can be shared across the team without a privacy review each time.</p>
+                        <p class="gp">Nothing identifying is stored. Findings are indexed by feature and date, so the archive can be shared without a privacy review each time.</p>
                     </div>
                     <div class="grow-card">
                         <p class="gk">It answers back</p>
                         <p class="gh">Evidence Check</p>
-                        <p class="gp">State an assumption — "users understand the CSV export" — and it searches every test ever run, then answers supports, contradicts, mixed or insufficient evidence, with sources. A chat summary cannot be interrogated a year later.</p>
+                        <p class="gp">State an assumption and it searches every test ever run, answering supports, contradicts, mixed or insufficient, with sources.</p>
                     </div>
                 </div>
 
@@ -1737,7 +1737,7 @@
                 </div>
 
                 <h3 class="ac-h2 fade-up" style="font-size:clamp(1.25rem,2.3vw,1.8rem);margin-top:3.4rem;margin-bottom:0.6rem">What it builds</h3>
-                <p class="ac-body fade-up">Every run produces a Test Analysis page in one continuous view — no tabs. The top answers <em>"is this feature usable?"</em>, the middle answers <em>"where did people struggle?"</em>, and the bottom answers <em>"what do we fix first?"</em></p>
+                <p class="ac-body fade-up">Every run produces a Test Analysis page in one continuous view, no tabs. The top answers is this feature usable, the middle where people struggled, the bottom what to fix first.</p>
 
                 <div class="dash fade-up">
                     <div class="dash-top">
@@ -1849,12 +1849,12 @@
                     </div>
                 </div>
                 <h3 class="ac-h2 fade-up" style="font-size:clamp(1.25rem,2.3vw,1.8rem);margin-top:3.4rem;margin-bottom:0.6rem">Why the quotes matter most</h3>
-                <p class="ac-body fade-up">A success rate tells you <em>that</em> something went wrong. It cannot tell you what the person was thinking when it did — and that is the only part a team can actually design against. "Export scored 41%" starts an argument. <em>"I don't know if I'm getting what I filtered or everything"</em> ends it, because everyone in the room instantly understands the confusion and can picture the fix.</p>
-                <p class="ac-body fade-up">So quotes are treated as first-class evidence, not decoration: captured verbatim, linked to the issue and the mission they came from, and deliberately kept in both directions — the friction <strong>and</strong> the moments something clearly worked. A report with only complaints is as misleading as one with none.</p>
-                <p class="ac-body fade-up">The part that changed how we work is what happens when the same sentence comes back. One person saying it is an anecdote. The same confusion, from a different person, at a different company, months later, is a finding — and it is exactly the pattern a human reading four separate decks would never spot. Because every quote is stored as data against a feature, the skill matches recurrences across the whole archive and marks them: <strong>↻ heard in 4 of 4 tests</strong>. That badge is what turns a nagging suspicion into a prioritised ticket.</p>
+                <p class="ac-body fade-up">A success rate tells you something went wrong. It cannot tell you what the person was thinking, which is the only part a team can design against. "Export scored 41%" starts an argument. "I don’t know if I’m getting what I filtered or everything" ends it.</p>
+                <p class="ac-body fade-up">So quotes are evidence, not decoration: captured verbatim, linked to the issue they came from, and kept in both directions. A report with only complaints misleads as much as one with none.</p>
+                <p class="ac-body fade-up">What changed how we work is the repeat. One person saying it is an anecdote. The same confusion from someone else, months later, is a finding, and it is exactly what a human reading four separate decks would miss. Every quote is stored against a feature, so recurrences get marked: ↻ heard in 4 of 4 tests.</p>
 
                 <h3 class="ac-h2 fade-up" style="font-size:clamp(1.25rem,2.3vw,1.8rem);margin-top:3.4rem;margin-bottom:0.6rem">Two dashboards, not one</h3>
-                <p class="ac-body fade-up">Each test gets its own analysis page — the one above. But a single test is a snapshot, and features are not judged on snapshots. So every test also rolls up into a feature-level dashboard that watches all of them together, recalculating from the raw data each time rather than averaging the averages.</p>
+                <p class="ac-body fade-up">A single test is a snapshot, and features are not judged on snapshots. So every test also rolls up into a feature dashboard, recalculated from raw data each time rather than averaging the averages.</p>
 
                 <div class="lvl fade-up">
                     <div class="lvl-card">
@@ -1914,8 +1914,8 @@
 
                 <h3 class="ac-h2 fade-up" style="font-size:clamp(1.25rem,2.3vw,1.8rem);margin-top:3.4rem;margin-bottom:0.6rem">The score became the release gate</h3>
                 <p class="ac-body fade-up">The searchable archive is the obvious win. The unexpected one was the score.</p>
-                <p class="ac-body fade-up">Because it is computed the same way on every test — half task success, a quarter self-rated difficulty, a quarter issue severity — one round is directly comparable to the last. That turned a subjective conversation into a shared one. <em>"I feel like people struggled with export"</em> became <em>"task success on export was 41% with two criticals open, and the feature scores 72."</em> A designer, a PM and a developer can all act on the second sentence.</p>
-                <p class="ac-body fade-up">So it quietly became our answer to the hardest question in the process — <strong>is this ready to hand to development?</strong> Not a rule anyone imposed; a number everyone started asking for, because it is the same number every time and the calculation is always shown, so it can be argued with. An unauditable score is just an opinion with a number attached.</p>
+                <p class="ac-body fade-up">Computed the same way every test, half task success, a quarter self-rated difficulty, a quarter issue severity, so one round is directly comparable to the last. "I feel like people struggled with export" became "task success was 41% with two criticals open, and the feature scores 72."</p>
+                <p class="ac-body fade-up">It became our answer to the hardest question in the process: is this ready to hand to development. Not a rule anyone imposed, a number people started asking for, because the calculation is always shown and can be argued with.</p>
 
                 <div class="gate fade-up">
                     <div class="gate-card g-ok">
@@ -1942,7 +1942,7 @@
 
                 <p class="ac-body fade-up" style="margin-top:2rem">One honest caveat the skill enforces itself: research confidence is tracked separately from the score. Five participants on one prototype is not the same evidence as four rounds across real customers, and the report says so out loud rather than letting a clean number imply certainty it has not earned.</p>
 
-                <p class="ac-body fade-up" style="margin-top:2.4rem">Nothing identifying goes in. Not the client, not the participants, not a single email address — the workspace holds behaviour and evidence, never people or accounts. Research stays findable through the feature, the product area and the date, which is how anyone actually searches for it later anyway.</p>
+                <p class="ac-body fade-up" style="margin-top:2.4rem">Nothing identifying goes in. Not the client, not the participants, not a single email address. The workspace holds behaviour and evidence, findable through the feature, the product area and the date.</p>
                 <div class="pill-row fade-up">
                     <span class="pill">No client names</span>
                     <span class="pill">Participants → P1, P2</span>
