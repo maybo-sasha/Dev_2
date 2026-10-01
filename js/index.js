@@ -293,4 +293,45 @@ if (railFill) {
     updateRail();
 }
 
-window.scrollTo(0, 0);
+// ── Where the deck starts ──────────────────────────────────────────────────
+// At the top, unless we are coming back from a project (the head script in
+// index.html leaves its name in __returnTo), in which case on that project's
+// slide. This is the one place the starting position is decided, and it runs
+// before the scripts below measure anything, so they all see the deck where
+// it will actually be. The browser's own restore is switched off for the same
+// reason: it arrives after load and would move the page a second time.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+{
+    const back  = window.__returnTo;
+    const card  = back && document.querySelector('.project-card[href="' + back.href + '"]');
+    const slide = card && card.closest('.slide');
+    const y     = slide ? Math.round(slide.getBoundingClientRect().top + window.scrollY) : 0;
+
+    // The card on this slide is about to have its picture shrink into it, so
+    // it has to be sitting in its final place rather than easing in.
+    if (slide && back.zoom) slide.dataset.animated = '1';
+
+    const land = () => {
+        const lenis = window.lenisInstance;
+        window.scrollTo(0, y);
+        if (!lenis) return;
+        lenis.resize();   // its limit may have been measured while the document could not scroll
+        lenis.scrollTo(y, { immediate: true, force: true });
+    };
+
+    // Under the first-visit loader <html> is overflow:hidden. That makes
+    // <body> the scroller (it carries overflow-x:hidden), the document has
+    // nothing to scroll, and a jump made now is thrown away. So wait for the
+    // loader to let go; it is still covering the screen at that moment.
+    const root = document.documentElement;
+    if (y > 0 && root.classList.contains('loading')) {
+        const mo = new MutationObserver(() => {
+            if (root.classList.contains('loading')) return;
+            mo.disconnect();
+            land();
+        });
+        mo.observe(root, { attributes: true, attributeFilter: ['class'] });
+    } else {
+        land();
+    }
+}

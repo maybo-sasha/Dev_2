@@ -1,11 +1,19 @@
 // WebGL hover effect — fullscreen canvas, one plane per image card.
 // Uses globals: THREE, gsap (loaded via CDN)
+//
+// The planes stay flat rectangles, square to the camera: nothing bends, skews
+// or tilts them. What moves is the picture inside. It streaks along the
+// direction of travel while the page is scrolling (motion blur), and it goes
+// soft and dim as its slide leaves the centre of the screen, coming back to
+// sharp as the slide arrives (a blur in and out).
 
 function initHoverEffects() {
     if (typeof THREE === 'undefined') return;
 
     const cards = document.querySelectorAll('.project-card');
     if (!cards.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ── Renderer ────────────────────────────────────────────────────────
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
@@ -70,6 +78,12 @@ function initHoverEffects() {
         })
     ));
 
+    // The plane samples the whole video, so a CSS crop on the element has to
+    // be repeated here. This is the same window `[data-crop="bottom"]` cuts in
+    // style.css, scale(1.1) translateY(-3.6%), as a UV offset + scale.
+    const CROP_NONE   = new THREE.Vector4(0, 0, 1, 1);
+    const CROP_BOTTOM = new THREE.Vector4(0.5 - 0.5 / 1.1, 0.5 - 0.5 / 1.1 - 0.036, 1 / 1.1, 1 / 1.1);
+
     // ── Per-card image planes ───────────────────────────────────────────
     // Each uses a ShaderMaterial with uReveal for the bottom-to-top mask animation.
     const items = [];
@@ -88,43 +102,85 @@ function initHoverEffects() {
                 tMap:         { value: null },
                 uReveal:      { value: 0.0 }, // 0 = hidden, 1 = fully revealed
                 uDir:         { value: 1.0 }, // 1 = bottom-to-top, -1 = top-to-bottom
-                uScrollVelo:  { value: 0.0 }, // signed, smoothed scroll velocity
+                uStreak:      { value: 0.0 }, // motion blur length, as a fraction of the card's height (signed)
+                uAspect:      { value: 1.0 }, // card height / width, so the focus blur stays round
+                uFocus:       { value: 1.0 }, // 1 = slide centred in the viewport, 0 = a slide away
+                uHover:       { value: 0.0 }, // 0..1, eased on pointer enter/leave (a slight push-in)
+                uCrop:        { value: mediaEl.dataset.crop === 'bottom' ? CROP_BOTTOM : CROP_NONE },
             },
             transparent: true,
             vertexShader: `
-                uniform float uScrollVelo;
                 varying vec2 vUv;
-                const float PI = 3.14159265;
 
                 void main() {
                     vUv = uv;
-                    vec3 pos = position;
-                    // sin peaks at vertical centre, zero at top/bottom corners
-                    // → left and right borders bow gently, corners stay pinned
-                    float bend = sin(uv.y * PI) * uScrollVelo * 0.002;
-                    pos.x += bend;
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                 }
             `,
             fragmentShader: `
                 uniform sampler2D tMap;
                 uniform float uReveal;
                 uniform float uDir;
+                uniform float uStreak;
+                uniform float uAspect;
+                uniform float uFocus;
+                uniform float uHover;
+                uniform vec4 uCrop;
                 varying vec2 vUv;
 
+                const int TAPS = 24;
+
                 void main() {
-                    vec4 color = texture2D(tMap, vUv);
+                    // Push-in: the picture sits a little zoomed while its slide
+                    // is out of frame and settles to full frame as it arrives;
+                    // hovering nudges it in again.
+                    float zoom = 1.0 + (1.0 - uFocus) * 0.1 + uHover * 0.03;
+                    vec2 uv = (vUv - 0.5) / zoom + 0.5;
+
+                    // Two blurs, one set of taps:
+                    //   soft   a disc that widens as the slide leaves the centre
+                    //          of the frame, so a project blurs out and blurs in
+                    //   streak a line along the direction of travel, as long as
+                    //          the page is fast: motion blur
+                    float soft = (1.0 - uFocus) * 0.011;
+
+                    vec3 rgb;
+                    if (soft + abs(uStreak) < 0.0008) {
+                        rgb = texture2D(tMap, uCrop.xy + uv * uCrop.zw).rgb;   // at rest: the picture, untouched
+                    } else {
+                        // The tap pattern is shifted by a different amount at every
+                        // pixel, so its repeats read as fine grain, not ghost copies.
+                        float jit = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
+                        vec3 acc = vec3(0.0);
+                        for (int i = 0; i < TAPS; i++) {
+                            float f = (float(i) + 0.5) / float(TAPS);
+                            float ang = float(i) * 2.39996323 + jit * 6.2831853;   // golden angle: an even spread over the disc
+                            vec2 off = vec2(cos(ang) * uAspect, sin(ang)) * sqrt(f) * soft;
+                            off.y += ((float(i) + jit) / float(TAPS) - 0.5) * uStreak;
+                            // kept just inside the frame: a video's outermost rows
+                            // are encoder padding, and smear in as a coloured line
+                            vec2 p = clamp(uv + off, 0.004, 0.996);
+                            acc += texture2D(tMap, uCrop.xy + p * uCrop.zw).rgb;
+                        }
+                        rgb = acc / float(TAPS);
+                    }
+
+                    // Focus pull: slides out of frame sit darker and a little drained
+                    float luma = dot(rgb, vec3(0.299, 0.587, 0.114));
+                    rgb = mix(vec3(luma), rgb, mix(0.55, 1.0, uFocus));
+                    rgb *= mix(0.42, 1.0, uFocus);
+
                     float rev = clamp(uReveal, 0.0, 1.0);
                     // uDir = 1: bottom-to-top (scroll down), vUv.y=0 is bottom
                     // uDir =-1: top-to-bottom (scroll up),   flip the UV
                     float uvY = uDir > 0.0 ? vUv.y : 1.0 - vUv.y;
                     float mask = step(uvY, rev);
-                    gl_FragColor = vec4(color.rgb, color.a * mask);
+                    gl_FragColor = vec4(rgb, mask);
                 }
             `,
         });
 
-        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 32, 32), mat);
+        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
         scene.add(mesh);
 
         const item = { wrap, mediaEl, mesh, mat, loaded: false, pendingReveal: false, isVideo };
@@ -158,6 +214,20 @@ function initHoverEffects() {
             });
         }
 
+        // Hover: the picture pushes in a touch. Flat: the plane itself does not move.
+        if (!reduceMotion) {
+            const setHover = on => {
+                gsap.to(mat.uniforms.uHover, {
+                    value: on ? 1 : 0,
+                    duration: on ? 0.6 : 0.45,
+                    ease: 'power3.out',
+                    overwrite: true,
+                });
+            };
+            card.addEventListener('mouseenter', () => setHover(true));
+            card.addEventListener('mouseleave', () => setHover(false));
+        }
+
         // Re-trigger on every scroll into view; direction from entry position
         const io = new IntersectionObserver(entries => {
             const entry = entries[0];
@@ -179,6 +249,13 @@ function initHoverEffects() {
 
     function playReveal(item) {
         item.pendingReveal = false;
+        // A card that a returning picture is shrinking into (transition.js sets
+        // data-instant on its wrap) has to be whole the moment that picture is
+        // handed over, so it skips the wipe and is simply there.
+        if (item.wrap.dataset.instant) {
+            item.mat.uniforms.uReveal.value = 1;
+            return;
+        }
         gsap.to(item.mat.uniforms.uReveal, {
             value: 1,
             duration: 0.9,
@@ -198,40 +275,65 @@ function initHoverEffects() {
     }
     setTimeout(triggerFirstReveal, 400);
 
-    // ── Position meshes to match wrap bounds ────────────────────────────
-    function updateMeshes() {
-        const vFOV = camera.fov * Math.PI / 180;
-        const visH = 2 * Math.tan(vFOV / 2) * camDist;
-        const visW = visH * camera.aspect;
-
-        items.forEach(({ wrap, mesh }) => {
-            const rect = wrap.getBoundingClientRect();
-            const W = rect.width, H = rect.height;
-            mesh.scale.set(
-                (W / window.innerWidth)  * visW,
-                (H / window.innerHeight) * visH,
-                1
-            );
-            mesh.position.x = (( rect.left + W / 2) / window.innerWidth  - 0.5) * visW;
-            mesh.position.y = (0.5 - (rect.top  + H / 2) / window.innerHeight) * visH;
-        });
-    }
-
-    // ── Scroll velocity tracking ────────────────────────────────────────
-    let prevScrollY    = window.scrollY;
-    let rawScrollVelo  = 0;
-    let smoothScrollVelo = 0;
-
     // ── Mouse / speed tracking ──────────────────────────────────────────
     const mouse       = new THREE.Vector2(-10, -10);
     const followMouse = new THREE.Vector2(-10, -10);
     const prevMouse   = new THREE.Vector2(-10, -10);
     let   targetSpeed = 0;
+    let   mouseSeen   = false;   // the vectors above start off-screen as placeholders
 
     window.addEventListener('mousemove', e => {
         mouse.x =       e.clientX / window.innerWidth;
         mouse.y = 1.0 - e.clientY / window.innerHeight;
+        if (!mouseSeen) {
+            // First sighting: start the followers here rather than easing in
+            // from the off-screen placeholder, which reads as a lurch.
+            mouseSeen = true;
+            followMouse.copy(mouse);
+            prevMouse.copy(mouse);
+        }
     });
+
+    // ── Scroll velocity tracking ────────────────────────────────────────
+    let prevScrollY = window.scrollY;
+    let scrollVelo  = 0;   // px per 60 Hz frame, lightly smoothed
+
+    // ── Position meshes to match wrap bounds ────────────────────────────
+    const smoothstep = (a, b, x) => {
+        const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+        return t * t * (3 - 2 * t);
+    };
+
+    // `frames` is the time since the last render in 60 Hz frames, so the easing
+    // below runs at the same speed on a 144 Hz display as on a 60 Hz one.
+    const ease = (rate, frames) => 1 - Math.pow(1 - rate, frames);
+
+    function updateMeshes() {
+        const vFOV = camera.fov * Math.PI / 180;
+        const visH = 2 * Math.tan(vFOV / 2) * camDist;
+        const visW = visH * camera.aspect;
+        const vw = window.innerWidth, vh = window.innerHeight;
+
+        items.forEach(item => {
+            const { wrap, mesh, mat } = item;
+            const rect = wrap.getBoundingClientRect();
+            const W = rect.width, H = rect.height;
+            const cx = (rect.left + W / 2) / vw;   // card centre, 0..1 across the viewport
+            const cy = (rect.top  + H / 2) / vh;
+            mesh.scale.set((W / vw) * visW, (H / vh) * visH, 1);
+            mesh.position.x = (cx - 0.5) * visW;
+            mesh.position.y = (0.5 - cy) * visH;
+
+            if (reduceMotion) return;
+            // how close this slide is to the centre of the frame
+            mat.uniforms.uFocus.value  = 1 - smoothstep(0.1, 0.8, Math.abs(cy - 0.5));
+            mat.uniforms.uAspect.value = W > 0 ? H / W : 1;
+            // The streak is the distance the card travels in a frame and a bit,
+            // which is what a camera shutter would smear, measured against the
+            // card's own height. Capped so a fling stays a blur and not a wash.
+            mat.uniforms.uStreak.value = H > 0 ? Math.max(-0.09, Math.min(0.09, scrollVelo * 1.4 / H)) : 0;
+        });
+    }
 
     // ── Resize ──────────────────────────────────────────────────────────
     window.addEventListener('resize', () => {
@@ -244,29 +346,35 @@ function initHoverEffects() {
     });
 
     // ── Render loop ─────────────────────────────────────────────────────
-    function render() {
-        updateMeshes(); // sync with Lenis CSS transform every frame
+    let lastTime = performance.now();
+
+    function render(now) {
+        const frames = Math.max(0.25, Math.min(4, (now - lastTime) / (1000 / 60)));
+        lastTime = now;
 
         const speed = Math.sqrt(
             Math.pow(prevMouse.x - mouse.x, 2) +
             Math.pow(prevMouse.y - mouse.y, 2)
-        );
-        targetSpeed -= 0.1 * (targetSpeed - speed);
-        followMouse.x -= 0.1 * (followMouse.x - mouse.x);
-        followMouse.y -= 0.1 * (followMouse.y - mouse.y);
+        ) / frames;
+        const follow = ease(0.1, frames);
+        targetSpeed -= follow * (targetSpeed - speed);
+        followMouse.x -= follow * (followMouse.x - mouse.x);
+        followMouse.y -= follow * (followMouse.y - mouse.y);
         prevMouse.copy(mouse);
 
         postUniforms.uMouse.value.copy(followMouse);
         postUniforms.uVelo.value = Math.min(targetSpeed, 0.05);
-        targetSpeed *= 0.999;
+        targetSpeed *= Math.pow(0.999, frames);
 
-        // Scroll velocity → paper bend
+        // Scroll velocity → motion blur. Smoothed only enough to hide frame
+        // jitter: it has to follow the real speed closely, so the streak is
+        // there while the card moves and gone the moment it stops.
         const curScrollY = window.scrollY;
-        rawScrollVelo = curScrollY - prevScrollY;
-        prevScrollY   = curScrollY;
-        smoothScrollVelo += (rawScrollVelo - smoothScrollVelo) * 0.008;
-        smoothScrollVelo *= 0.985; // dampen to zero when scroll stops
-        items.forEach(({ mat: m }) => { m.uniforms.uScrollVelo.value = smoothScrollVelo; });
+        scrollVelo += ((curScrollY - prevScrollY) / frames - scrollVelo) * ease(0.35, frames);
+        prevScrollY = curScrollY;
+        if (Math.abs(scrollVelo) < 0.05) scrollVelo = 0;
+
+        updateMeshes(); // sync with Lenis CSS transform every frame
 
         renderer.setRenderTarget(rt);
         renderer.render(scene, camera);
