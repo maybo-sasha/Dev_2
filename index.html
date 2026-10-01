@@ -6,8 +6,17 @@
     <title>Sasha Mayboroda · Selected Projects</title>
     <link rel="stylesheet" href="./style/style.css">
     <script src="./js/loader.js"></script>
+    <!-- Coming back from a project: hold that project's picture full-screen from
+         the very first paint, so js/transition.js can shrink it back into its
+         card. Each project page leaves its name in returnSlide, and when it is
+         left through a link, the frame to open on in returnFrame (transitionFade.js). -->
+    <script>try{var S=sessionStorage,r=S.getItem("returnSlide");if(r){var fr=S.getItem("returnFrame"),tm=parseFloat(S.getItem("returnTime"))||0;S.removeItem("returnSlide");S.removeItem("returnFrame");S.removeItem("returnTime");var c=JSON.parse(S.getItem("homeCards")||"{}")[r];window.__returnTo={href:r,zoom:false,image:fr,time:fr?tm:0};if(c&&c.zoom&&c.poster&&S.getItem("siteLoaded")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var d=document.documentElement;d.classList.add("returning");if(c.crop)d.classList.add("returning-crop");d.style.setProperty("--return-poster",'url("'+(fr||c.poster)+'")');window.__returnTo.zoom=true;}}}catch(e){}</script>
 </head>
 <body>
+
+    <!-- Ambient light: a soft glow in the brand colour of the project in
+         frame. Two layers, so one colour can fade into the next. js/cinema.js -->
+    <div class="ambient" aria-hidden="true"><canvas></canvas><canvas></canvas></div>
 
     <!-- WebGL particle canvas (background) -->
     <canvas id="gl-canvas"></canvas>
@@ -62,10 +71,13 @@
     <div id="wrapper" data-barba="wrapper">
 
         <!-- Home page container (Barba.js namespace) -->
+        <!-- data-ambient on a slide is the project's brand colour, taken from the
+             accent its own page declares; it tints the glow behind the card.
+             Leave it off and js/cinema.js reads a colour from the poster instead. -->
         <main data-barba="container" data-barba-namespace="home">
 
             <!-- Slide 1 -->
-            <section class="slide">
+            <section class="slide" data-ambient="#6b4ef5">
                 <div class="slide-inner">
                     <h2 class="project-title">AI Decisioning Studio<span class="title-fill">AI Decisioning Studio</span></h2>
                     <a class="project-card" href="ai-decisioning-studio.html">
@@ -79,7 +91,7 @@
             </section>
 
             <!-- Optimove AI Dedicated Team -->
-            <section class="slide">
+            <section class="slide" data-ambient="#6b4ef5">
                 <div class="slide-inner">
                     <h2 class="project-title">Optimove AI Dedicated Team<span class="title-fill">Optimove AI Dedicated Team</span></h2>
                     <a class="project-card" href="ai-champion.html">
@@ -93,7 +105,7 @@
             </section>
 
             <!-- Slide 2 -->
-            <section class="slide">
+            <section class="slide" data-ambient="#2aa6ff">
                 <div class="slide-inner">
                     <h2 class="project-title">Tetris Block Party<span class="title-fill">Tetris Block Party</span></h2>
                     <a class="project-card" href="tetris-block-party.html">
@@ -107,7 +119,7 @@
             </section>
 
             <!-- Slide 3 -->
-            <section class="slide">
+            <section class="slide" data-ambient="#ff7a4a">
                 <div class="slide-inner">
                     <h2 class="project-title">Lucky Buddies<span class="title-fill">Lucky Buddies</span></h2>
                     <a class="project-card" href="lucky-buddies.html">
@@ -121,7 +133,7 @@
             </section>
 
             <!-- Slide 4 -->
-            <section class="slide">
+            <section class="slide" data-ambient="#2f6bff">
                 <div class="slide-inner">
                     <h2 class="project-title">Player Journey<span class="title-fill">Player Journey</span></h2>
                     <a class="project-card" href="player-journey.html">
@@ -136,7 +148,7 @@
             </section>
 
             <!-- Slide 5 — Playground showreel (auto-cut crossfade) -->
-            <section class="slide">
+            <section class="slide" data-ambient="#8b6cff">
                 <div class="slide-inner">
                     <h2 class="project-title">Playground<span class="title-fill">Playground</span></h2>
                     <a class="project-card" href="playground.html">
@@ -230,6 +242,7 @@
     <script src="./js/appearOnScroll.js"></script>
     <script src="./js/hoverEffect.js"></script>
     <script src="./js/index.js"></script>
+    <script src="./js/cinema.js"></script>
 
     <!-- Video playlists — cycle through data-playlist sources -->
     <script>

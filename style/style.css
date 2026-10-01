@@ -540,9 +540,9 @@ body:has(.about-overlay.is-open) #logo {
 /* Project name — centered */
 .project-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 6rem);
+    font-size: clamp(2rem, 4.8vw, 6.5rem);
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
     line-height: 1.05;
     color: transparent;
     -webkit-text-stroke: 1px rgba(255,255,255,0.25);
@@ -657,6 +657,46 @@ body:has(.about-overlay.is-open) #logo {
     transition: height 0.12s linear;
 }
 @media (max-width: 700px) { .scroll-rail { display: none; } }
+
+/* ── Home: ambient project light ────────────────────────────
+   The page stays black; the project in frame lends it one soft glow in its
+   own brand colour. js/cinema.js draws that glow (colour from the slide's
+   data-ambient) onto whichever of the two canvases is idle, then fades it in
+   over the other, so one project's light melts into the next. The canvases
+   are small and stretched: the light is all falloff, with no detail to lose. */
+.ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+.ambient > canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.6s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: opacity;
+}
+.ambient > canvas.is-on { opacity: 1; }
+
+/* ── Home: coming back from a project ───────────────────────
+   The arrival curtain is swapped for the project's own picture, held
+   full-screen from the first paint (index.html sets it up in the head).
+   js/transition.js then shrinks that picture back into its card: the zoom
+   that opened the project, played backwards. */
+html.returning::before {
+    background: #000 var(--return-poster, none) center / cover no-repeat;
+    /* never strand the page behind the cover if the script does not arrive */
+    animation: return-failsafe 0.4s ease 3.5s forwards;
+}
+html.returning-crop::before { transform: scale(1.1) translateY(-3.6%); }   /* as [data-crop="bottom"] */
+html.landed::before { display: none; }
+/* held still while the picture shrinks into its card (js/transition.js) */
+html.deck-held body { pointer-events: none; touch-action: none; }
+@keyframes return-failsafe {
+    to { opacity: 0; visibility: hidden; }
+}
 
 /* ── Inner-page hero scroll indicator ──────────────────────── */
 .scroll-cue {
