@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playground · Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap">
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./assets/personal/_system/system.css">
     <link rel="stylesheet" href="./assets/personal/file-vault/file-vault.css">
@@ -156,7 +159,9 @@
                 0 0 0 1px rgba(255,255,255,0.06) inset;
             transition: box-shadow 0.5s ease;
         }
-        .pg-frame video {
+        a.pg-frame { display: block; }
+        .pg-frame video,
+        .pg-frame img {
             width: 100%; height: 100%;
             object-fit: cover; display: block;
             transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -167,7 +172,8 @@
                 0 0 0 1px rgba(255,255,255,0.12) inset,
                 0 0 70px var(--glow);
         }
-        .pg-tile:hover .pg-frame video { transform: scale(1.04); }
+        .pg-tile:hover .pg-frame video,
+        .pg-tile:hover .pg-frame img { transform: scale(1.04); }
 
         /* live component tile — needs real height once the layout narrows,
            where a 16/9 frame gets too short for the panel */
@@ -355,6 +361,35 @@
             .pg-foot { margin: 5rem 6vw 0; }
         }
         .sr { --sr-ink: var(--text); --sr-on: var(--yellow); }
+
+        /* ── the way into the design system ─────────────────── */
+        .pg-system { margin-top: 2.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; }
+        .pg-system .arrow-r { display: inline-block; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .pg-system .pg-foot-cta:hover .arrow-r { transform: translateX(4px); }
+        .pg-system-note {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+        .pg-cap-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-top: 0.9rem;
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+        .pg-cap-link span { display: inline-block; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .pg-cap-link:hover { color: var(--yellow); }
+        .pg-cap-link:hover span { transform: translateX(4px); }
     </style>
 </head>
 <body>
@@ -420,6 +455,10 @@
             <p class="pg-thesis-lead">
                 How alive can the smallest parts of an interface feel? The <em>primitives</em>: buttons, inputs, toggles. Motion and shape change together, in sync, so each behaves like one living thing rather than parts swapping out. <em>Press them.</em>
             </p>
+            <div class="pg-system">
+                <a class="pg-foot-cta" href="design-system.html">Open the design system <span class="arrow-r">→</span></a>
+                <span class="pg-system-note">Fifteen components · live</span>
+            </div>
         </section>
 
         <section class="pg-gallery">
@@ -436,6 +475,7 @@
                     <p class="pg-cap-desc">
                         Checkbox, radio and switch built as soft bodies. The switch stretches across instead of jumping.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/selection">How it works <span>→</span></a>
                 </figcaption>
             </figure>
             <!-- 02 Input -->
@@ -449,6 +489,7 @@
                     <p class="pg-cap-desc">
                         Letters land with a bit of weight, and the caret stretches into your selection.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/input">How it works <span>→</span></a>
                 </figcaption>
             </figure>
 
@@ -463,6 +504,7 @@
                     <p class="pg-cap-desc">
                         Pick a row and it travels up into the field, then unfolds into a chip.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/multi-select">How it works <span>→</span></a>
                 </figcaption>
             </figure>
             <!-- 04 Activation Button -->
@@ -476,6 +518,7 @@
                     <p class="pg-cap-desc">
                         One pill runs the whole job, from idle to working to done, without ever moving.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/activation-button">How it works <span>→</span></a>
                 </figcaption>
             </figure>
             <!-- 05 Gooey Menu -->
@@ -489,6 +532,7 @@
                     <p class="pg-cap-desc">
                         Six actions peel out of one button like liquid, and seal back into it.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/gooey-menu">How it works <span>→</span></a>
                 </figcaption>
             </figure>
             <!-- 06 Command Bar -->
@@ -502,6 +546,7 @@
                     <p class="pg-cap-desc">
                         ⌘K. The pill widens into the palette rather than being replaced by one.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/command-bar">How it works <span>→</span></a>
                 </figcaption>
             </figure>
             <!-- 07 Morph Nav -->
@@ -515,6 +560,7 @@
                     <p class="pg-cap-desc">
                         One shape, never two. The bar stretches down into the panel and the marker slides along with you.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/morph-nav">How it works <span>→</span></a>
                 </figcaption>
             </figure>
             <!-- 08 Gooey Tabs -->
@@ -528,6 +574,7 @@
                     <p class="pg-cap-desc">
                         A blur and a contrast curve fuse tab and folder into one surface, so switching stretches the join instead of cutting it.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/gooey-tabs">How it works <span>→</span></a>
                 </figcaption>
             </figure>
             <!-- 09 File Vault -->
@@ -543,6 +590,7 @@
                     <p class="pg-cap-desc">
                         A folder that opens. The drawer slides out with the files inside.
                     </p>
+                    <a class="pg-cap-link" href="design-system.html#/components/file-vault">How it works <span>→</span></a>
                 </figcaption>
             </figure></section>
 
@@ -557,13 +605,28 @@
 
         <section class="pg-gallery">
 
-            <!-- 10 Cubick World_2 — wide feature -->
+            <!-- 10 28 Days of Retaliation: a memorial you walk through -->
+            <figure class="pg-tile pg-tile--wide reveal">
+                <a class="pg-frame" href="28-days.html" aria-label="Open 28 Days of Retaliation">
+                    <video src="./assets/personal/28-days/img/tile.mp4" poster="./assets/personal/28-days/img/poster.jpg" muted loop playsinline preload="metadata" aria-label="A short film of 28 Days of Retaliation"></video>
+                </a>
+                <figcaption class="pg-cap">
+                    <p class="pg-cap-num">10 · WebGL</p>
+                    <h2 class="pg-cap-title">28 Days of Retaliation</h2>
+                    <p class="pg-cap-desc">
+                        A memorial to the Warsaw Ghetto Uprising, built as a street you walk through.
+                    </p>
+                    <a class="pg-cap-link" href="28-days.html">Walk it <span>→</span></a>
+                </figcaption>
+            </figure>
+
+            <!-- 11 Cubick World_2 — wide feature -->
             <figure class="pg-tile pg-tile--wide reveal">
                 <div class="pg-frame">
                     <video src="./assets/personal/cubickworld_2.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">10 · Environment</p>
+                    <p class="pg-cap-num">11 · Environment</p>
                     <h2 class="pg-cap-title">Cubick World</h2>
                     <p class="pg-cap-desc">
                         A whole world built out of cubes, to see how far one shape could go.
@@ -577,7 +640,7 @@
                     <video src="./assets/personal/fish_bot.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">11 · Creature design</p>
+                    <p class="pg-cap-num">12 · Creature design</p>
                     <h2 class="pg-cap-title">Fish Bot</h2>
                     <p class="pg-cap-desc">
                         A mechanical sea creature. Hard surfaces trying to swim.
@@ -591,7 +654,7 @@
                     <video src="./assets/personal/comp.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">12 · Modelling</p>
+                    <p class="pg-cap-num">13 · Modelling</p>
                     <h2 class="pg-cap-title">Robot Build</h2>
                     <p class="pg-cap-desc">
                         Hard surface modelling. Panels, seams and tolerances, until the plates read as parts that were machined and bolted together.
@@ -605,7 +668,7 @@
                     <video src="./assets/personal/robot_360.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">13 · Modelling</p>
+                    <p class="pg-cap-num">14 · Modelling</p>
                     <h2 class="pg-cap-title">Expedition Robot</h2>
                     <p class="pg-cap-desc">
                         Hard surface modelling. Every panel drawn and placed by hand.
@@ -619,7 +682,7 @@
                     <video src="./assets/personal/robot_withEffects.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">14 · Rigging &amp; Animation</p>
+                    <p class="pg-cap-num">15 · Rigging &amp; Animation</p>
                     <h2 class="pg-cap-title">Expedition Robot</h2>
                     <p class="pg-cap-desc">
                         Then rigged and animated, to give him some life.
@@ -633,7 +696,7 @@
                     <video src="./assets/personal/final.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">15 · Game Asset</p>
+                    <p class="pg-cap-num">16 · Game Asset</p>
                     <h2 class="pg-cap-title">War Robot</h2>
                     <p class="pg-cap-desc">
                         Heavier armour, rougher lighting.
@@ -647,7 +710,7 @@
                     <video src="./assets/personal/hel.mp4" muted loop playsinline preload="metadata"></video>
                 </div>
                 <figcaption class="pg-cap">
-                    <p class="pg-cap-num">16 · Game Asset</p>
+                    <p class="pg-cap-num">17 · Game Asset</p>
                     <h2 class="pg-cap-title">Helicopter</h2>
                     <p class="pg-cap-desc">
                         A game-ready asset, built to a real budget for once.

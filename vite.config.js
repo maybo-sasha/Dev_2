@@ -31,6 +31,7 @@ function copyStaticToDist(...paths) {
 
 export default defineConfig({
   base,
+  resolve: { dedupe: ['three'] },
   plugins: [copyStaticToDist('js', 'assets', 'homePage')],
   build: {
     rollupOptions: {
@@ -42,6 +43,8 @@ export default defineConfig({
         'lucky-buddies': resolve(__dirname, 'lucky-buddies.html'),
         'player-journey': resolve(__dirname, 'player-journey.html'),
         playground: resolve(__dirname, 'playground.html'),
+        'design-system': resolve(__dirname, 'design-system.html'),
+        '28-days': resolve(__dirname, '28-days.html'),
         project: resolve(__dirname, 'project.html'),
         'tetris-block-party': resolve(__dirname, 'tetris-block-party.html'),
       },
