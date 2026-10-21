@@ -3,12 +3,9 @@
 // on any page that has a .nav-links-inline nav and it wires itself up.
 (function () {
     const PROJECTS = [
-        { name: 'AI Decisioning Studio', cat: 'Optimove · Current', href: 'ai-decisioning-studio.html', type: 'video', media: './assets/Opimove/Ai studio/main.mp4' },
-        { name: 'Optimove AI Dedicated Team',  cat: 'Optimove · AI Skills', href: 'ai-champion.html', type: 'video', media: './assets/ai-champion/ds-skill.mp4' },
-        { name: 'Tetris Block Party',    cat: 'PLAYSTUDIOS · 2024', href: 'tetris-block-party.html', type: 'video', media: './assets/tetrisblockparty/tbp.mp4', crop: 'bottom' },
-        { name: 'Lucky Buddies',         cat: 'Everybuddy · 2023',  href: 'lucky-buddies.html', type: 'video', media: './assets/img/lucky_buddies.mp4', crop: 'bottom' },
-        { name: 'Player Journey',        cat: 'Playtech · 2019', href: 'player-journey.html', type: 'video', media: './assets/playerjoueney/CanvasIntredaction.mp4' },
-        { name: 'Playground',            cat: 'Motion · 3D', href: 'playground.html',    type: 'video', media: './assets/personal/cubickworld_2.mp4' },
+        { name: 'AI Decisioning Studio', cat: 'Optimove · Current', href: 'ai-decisioning-studio.html', type: 'video', media: './assets/ai-decisioning-studio/hub.mp4?v=3008' },
+        { name: 'Streams', cat: 'Optimove · Journey orchestration', href: 'streams.html', type: 'video', media: './assets/streams/streams-hero.mp4?v=35956b769e55' },
+        { name: 'AI skills for product design', cat: 'Optimove · AI Skills', href: 'ai-champion.html', type: 'video', media: './assets/ai-champion/generate-ds-ui-1440.mp4' },
     ];
 
     function init() {

@@ -31,7 +31,9 @@ function initHoverEffects() {
     camera.position.z = camDist;
 
     // ── Render target for post-processing pass ──────────────────────────
-    const rt = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+    // Sized in device pixels, like the canvas: at CSS size a 125% or 150%
+    // display gets the cards stretched up from a smaller picture, and soft.
+    const rt = new THREE.WebGLRenderTarget(window.innerWidth * renderer.getPixelRatio(), window.innerHeight * renderer.getPixelRatio());
 
     // ── Post-process: chromatic aberration effect ───────────────────────
     const postUniforms = {
@@ -320,7 +322,10 @@ function initHoverEffects() {
             const W = rect.width, H = rect.height;
             const cx = (rect.left + W / 2) / vw;   // card centre, 0..1 across the viewport
             const cy = (rect.top  + H / 2) / vh;
-            mesh.scale.set((W / vw) * visW, (H / vh) * visH, 1);
+            // A slide on its way in sits at 95% and grows to full size as it reaches the
+            // centre; the scroll is already eased, so the size follows it smoothly.
+            const grow = reduceMotion ? 1 : 1 - 0.05 * smoothstep(0.02, 0.6, Math.abs(cy - 0.5));
+            mesh.scale.set((W / vw) * visW * grow, (H / vh) * visH * grow, 1);
             mesh.position.x = (cx - 0.5) * visW;
             mesh.position.y = (0.5 - cy) * visH;
 
@@ -339,7 +344,7 @@ function initHoverEffects() {
     window.addEventListener('resize', () => {
         const w = window.innerWidth, h = window.innerHeight;
         renderer.setSize(w, h);
-        rt.setSize(w, h);
+        rt.setSize(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         postUniforms.resolution.value.set(1, h / w);

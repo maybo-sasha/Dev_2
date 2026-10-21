@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72" fill="none" stroke="#241C8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <title>Review the result</title>
+  <desc>A results card with a lime rising arrow.</desc>
+  <g id="body">
+    <rect x="8.5" y="11.5" width="55" height="49" rx="4.5" fill="#FFFFFF"/>
+  </g>
+  <g id="content">
+    <path d="M16.5 19.5H32.5M15.5 27.5V53.5H56.5" stroke-width="1.25"/>
+  </g>
+  <g id="accent">
+    <path d="M18.5 44.5L29.5 37L39 39L48 26.5H43.5L55 18L56 32L52 28.5L40.5 44.5L31 42.5L20.5 49.5Z" fill="#CBEF17"/>
+  </g>
+</svg>

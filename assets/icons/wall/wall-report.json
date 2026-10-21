@@ -1,0 +1,894 @@
+{
+ "agent-channeldecisioning": {
+  "name": "Channel Decisioning",
+  "stroke_factor": 1.515,
+  "scale": 0.99,
+  "shift_px": [
+   -0.4,
+   0.0
+  ],
+  "edges_on_grid": 62,
+  "radii": [
+   "inner",
+   "inner",
+   "inner"
+  ],
+  "strokes": [
+   [
+    0.88,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "agent-contentdecisioning": {
+  "name": "Content Decisioning",
+  "stroke_factor": 1.628,
+  "scale": 0.974,
+  "shift_px": [
+   0.0,
+   0.25
+  ],
+  "edges_on_grid": 60,
+  "radii": [
+   "outer",
+   "inner",
+   "chip",
+   "inner"
+  ],
+  "strokes": [
+   [
+    0.66,
+    "detail"
+   ],
+   [
+    0.97,
+    "outline"
+   ],
+   [
+    1.01,
+    "outline"
+   ],
+   [
+    1.21,
+    "outline"
+   ],
+   [
+    2.29,
+    "kept"
+   ]
+  ]
+ },
+ "agent-journeydecisioning": {
+  "name": "Journey Decisioning",
+  "stroke_factor": 1.556,
+  "scale": 0.982,
+  "shift_px": [
+   0.1,
+   -0.42
+  ],
+  "edges_on_grid": 49,
+  "radii": [],
+  "strokes": [
+   [
+    0.43,
+    "detail"
+   ],
+   [
+    0.86,
+    "outline"
+   ],
+   [
+    0.88,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.05,
+    "outline"
+   ],
+   [
+    1.26,
+    "outline"
+   ],
+   [
+    1.31,
+    "outline"
+   ],
+   [
+    1.58,
+    "outline"
+   ],
+   [
+    1.94,
+    "kept"
+   ]
+  ]
+ },
+ "agent-offerdecisioning": {
+  "name": "Offer Decisioning",
+  "stroke_factor": 2.271,
+  "scale": 0.974,
+  "shift_px": [
+   0.0,
+   -0.42
+  ],
+  "edges_on_grid": 74,
+  "radii": [
+   "chip",
+   "chip",
+   "chip",
+   "chip",
+   "inner",
+   "chip"
+  ],
+  "strokes": [
+   [
+    0.76,
+    "detail"
+   ],
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.1,
+    "outline"
+   ],
+   [
+    1.29,
+    "outline"
+   ],
+   [
+    1.45,
+    "outline"
+   ],
+   [
+    1.61,
+    "outline"
+   ]
+  ]
+ },
+ "agent-promotiondecisioning": {
+  "name": "Promotion Decisioning",
+  "stroke_factor": 1.495,
+  "scale": 0.984,
+  "shift_px": [
+   -0.47,
+   0.4
+  ],
+  "edges_on_grid": 83,
+  "radii": [],
+  "strokes": [
+   [
+    0.88,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "agent-sendtimeoptimization": {
+  "name": "Send Time Optimization",
+  "stroke_factor": 1.05,
+  "scale": 0.99,
+  "shift_px": [
+   0.03,
+   0.43
+  ],
+  "edges_on_grid": 100,
+  "radii": [],
+  "strokes": [
+   [
+    0.77,
+    "detail"
+   ],
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.01,
+    "outline"
+   ],
+   [
+    2.31,
+    "kept"
+   ]
+  ]
+ },
+ "genie-gauge": {
+  "name": "Optimization score",
+  "stroke_factor": 1.044,
+  "scale": 1.0,
+  "shift_px": [
+   0.0,
+   0.25
+  ],
+  "edges_on_grid": null,
+  "radii": [],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.88,
+    "outline"
+   ]
+  ]
+ },
+ "genie-lightbulb": {
+  "name": "Recommendation",
+  "stroke_factor": 1.133,
+  "scale": 0.96,
+  "shift_px": [
+   -0.4,
+   -0.4
+  ],
+  "edges_on_grid": null,
+  "radii": [
+   "pill",
+   "pill"
+  ],
+  "strokes": [
+   [
+    0.75,
+    "detail"
+   ],
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.62,
+    "outline"
+   ],
+   [
+    4.57,
+    "kept"
+   ]
+  ]
+ },
+ "genie-arrows": {
+  "name": "Switch or move",
+  "stroke_factor": 1.135,
+  "scale": 0.96,
+  "shift_px": [
+   -0.5,
+   -0.4
+  ],
+  "edges_on_grid": null,
+  "radii": [],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "genie-scroll": {
+  "name": "Decision log",
+  "stroke_factor": 1.155,
+  "scale": 0.986,
+  "shift_px": [
+   0.47,
+   -0.45
+  ],
+  "edges_on_grid": 50,
+  "radii": [
+   "pill",
+   "pill",
+   "pill",
+   "pill"
+  ],
+  "strokes": [
+   [
+    0.75,
+    "detail"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "genie-trending-down": {
+  "name": "KPI drop",
+  "stroke_factor": 1.063,
+  "scale": 0.964,
+  "shift_px": [
+   0.4,
+   -0.5
+  ],
+  "edges_on_grid": null,
+  "radii": [
+   "outer"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    2.22,
+    "outline"
+   ]
+  ]
+ },
+ "genie-users": {
+  "name": "Audience",
+  "stroke_factor": 1.091,
+  "scale": 0.992,
+  "shift_px": [
+   -0.3,
+   0.15
+  ],
+  "edges_on_grid": null,
+  "radii": [],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "genie-folder-plus": {
+  "name": "New strategy",
+  "stroke_factor": 1.17,
+  "scale": 0.986,
+  "shift_px": [
+   0.45,
+   0.2
+  ],
+  "edges_on_grid": null,
+  "radii": [],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.26,
+    "outline"
+   ]
+  ]
+ },
+ "audience-segmentation": {
+  "name": "Audience Segmentation",
+  "stroke_factor": 1.703,
+  "scale": 0.978,
+  "shift_px": [
+   0.03,
+   -0.22
+  ],
+  "edges_on_grid": 55,
+  "radii": [],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "no-filter-distribution": {
+  "name": "No-filter Distribution",
+  "stroke_factor": 2.578,
+  "scale": 0.988,
+  "shift_px": [
+   0.05,
+   0.47
+  ],
+  "edges_on_grid": 77,
+  "radii": [
+   "pill",
+   "pill"
+  ],
+  "strokes": [
+   [
+    0.79,
+    "detail"
+   ],
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.64,
+    "kept"
+   ]
+  ]
+ },
+ "application-center-portfolio": {
+  "name": "Application Center",
+  "stroke_factor": 1.048,
+  "scale": 1.0,
+  "shift_px": [
+   0.0,
+   0.0
+  ],
+  "edges_on_grid": 92,
+  "radii": [
+   "outer",
+   "inner",
+   "inner",
+   "inner"
+  ],
+  "strokes": [
+   [
+    0.88,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "flow-goal": {
+  "name": "Goal",
+  "stroke_factor": 1.009,
+  "scale": 1.0,
+  "shift_px": [
+   -0.42,
+   -0.47
+  ],
+  "edges_on_grid": 52,
+  "radii": [],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "flow-audience": {
+  "name": "Customers",
+  "stroke_factor": 1.026,
+  "scale": 1.0,
+  "shift_px": [
+   -0.03,
+   0.35
+  ],
+  "edges_on_grid": 69,
+  "radii": [
+   "outer",
+   "outer",
+   "outer",
+   "pill"
+  ],
+  "strokes": [
+   [
+    0.83,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "flow-metrics": {
+  "name": "Metrics",
+  "stroke_factor": 0.986,
+  "scale": 0.988,
+  "shift_px": [
+   0.47,
+   -0.47
+  ],
+  "edges_on_grid": 70,
+  "radii": [
+   "outer",
+   "chip",
+   "chip",
+   "chip"
+  ],
+  "strokes": [
+   [
+    0.83,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "flow-overview": {
+  "name": "Strategy",
+  "stroke_factor": 1.199,
+  "scale": 0.992,
+  "shift_px": [
+   0.0,
+   -0.03
+  ],
+  "edges_on_grid": 61,
+  "radii": [
+   "inner",
+   "inner",
+   "inner",
+   "inner",
+   "chip",
+   "chip",
+   "chip",
+   "pill"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.2,
+    "outline"
+   ]
+  ]
+ },
+ "flow-campaign": {
+  "name": "Campaign",
+  "stroke_factor": 1.086,
+  "scale": 0.96,
+  "shift_px": [
+   0.32,
+   -0.25
+  ],
+  "edges_on_grid": 49,
+  "radii": [
+   "chip",
+   "pill"
+  ],
+  "strokes": [
+   [
+    0.83,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "flow-options": {
+  "name": "AI options",
+  "stroke_factor": 1.071,
+  "scale": 0.974,
+  "shift_px": [
+   0.12,
+   0.03
+  ],
+  "edges_on_grid": 67,
+  "radii": [
+   "outer",
+   "chip",
+   "chip",
+   "chip"
+  ],
+  "strokes": [
+   [
+    0.83,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "flow-review": {
+  "name": "Review",
+  "stroke_factor": 0.991,
+  "scale": 1.0,
+  "shift_px": [
+   -0.5,
+   0.0
+  ],
+  "edges_on_grid": 50,
+  "radii": [
+   "outer",
+   "outer"
+  ],
+  "strokes": [
+   [
+    0.83,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "flow-learn": {
+  "name": "Results",
+  "stroke_factor": 0.977,
+  "scale": 0.962,
+  "shift_px": [
+   -0.5,
+   0.43
+  ],
+  "edges_on_grid": 72,
+  "radii": [
+   "outer"
+  ],
+  "strokes": [
+   [
+    0.83,
+    "outline"
+   ],
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "experiment": {
+  "name": "Experiment",
+  "stroke_factor": 0.782,
+  "scale": 0.962,
+  "shift_px": [
+   -0.25,
+   -0.5
+  ],
+  "edges_on_grid": 71,
+  "radii": [
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "puzzle": {
+  "name": "Puzzle",
+  "stroke_factor": 1.103,
+  "scale": 1.0,
+  "shift_px": [
+   0.0,
+   0.0
+  ],
+  "edges_on_grid": null,
+  "radii": [],
+  "strokes": []
+ },
+ "dolly-brief": {
+  "name": "Brief",
+  "stroke_factor": 1.935,
+  "scale": 0.998,
+  "shift_px": [
+   0.07,
+   -0.22
+  ],
+  "edges_on_grid": 51,
+  "radii": [
+   "outer",
+   "outer",
+   "chip",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-archive": {
+  "name": "Find context",
+  "stroke_factor": 2.086,
+  "scale": 0.972,
+  "shift_px": [
+   -0.1,
+   0.45
+  ],
+  "edges_on_grid": 48,
+  "radii": [
+   "inner",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    3.64,
+    "outline"
+   ],
+   [
+    6.36,
+    "kept"
+   ]
+  ]
+ },
+ "dolly-criteria": {
+  "name": "Weigh",
+  "stroke_factor": 2.106,
+  "scale": 0.974,
+  "shift_px": [
+   -0.03,
+   0.47
+  ],
+  "edges_on_grid": 57,
+  "radii": [
+   "outer"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.36,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-recommend": {
+  "name": "Recommend",
+  "stroke_factor": 2.084,
+  "scale": 0.962,
+  "shift_px": [
+   -0.47,
+   -0.1
+  ],
+  "edges_on_grid": 42,
+  "radii": [
+   "outer",
+   "chip",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.36,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-resolve": {
+  "name": "Resolve",
+  "stroke_factor": 2.084,
+  "scale": 0.962,
+  "shift_px": [
+   -0.47,
+   -0.1
+  ],
+  "edges_on_grid": 42,
+  "radii": [
+   "outer",
+   "chip",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ],
+   [
+    1.36,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-judgment": {
+  "name": "Judgment",
+  "stroke_factor": 2.297,
+  "scale": 0.96,
+  "shift_px": [
+   0.03,
+   -0.2
+  ],
+  "edges_on_grid": 63,
+  "radii": [
+   "inner",
+   "inner",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-feedback": {
+  "name": "Correction",
+  "stroke_factor": 1.92,
+  "scale": 0.996,
+  "shift_px": [
+   0.05,
+   0.05
+  ],
+  "edges_on_grid": 46,
+  "radii": [
+   "outer",
+   "outer",
+   "chip",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-save": {
+  "name": "Save lesson",
+  "stroke_factor": 1.915,
+  "scale": 0.974,
+  "shift_px": [
+   0.0,
+   0.0
+  ],
+  "edges_on_grid": 44,
+  "radii": [
+   "outer",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-match": {
+  "name": "Retrieve",
+  "stroke_factor": 2.241,
+  "scale": 0.988,
+  "shift_px": [
+   -0.47,
+   -0.5
+  ],
+  "edges_on_grid": 52,
+  "radii": [
+   "inner",
+   "chip",
+   "inner",
+   "inner"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ },
+ "dolly-apply": {
+  "name": "Apply rule",
+  "stroke_factor": 2.234,
+  "scale": 0.96,
+  "shift_px": [
+   0.45,
+   0.03
+  ],
+  "edges_on_grid": 52,
+  "radii": [
+   "inner",
+   "chip",
+   "chip",
+   "inner",
+   "chip"
+  ],
+  "strokes": [
+   [
+    1.0,
+    "outline"
+   ]
+  ]
+ }
+}

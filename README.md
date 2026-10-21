@@ -12,7 +12,7 @@
   <a href="https://maybo-sasha.github.io/Dev_2/">
     <img src="https://img.shields.io/badge/🌐_Live_Site-maybo--sasha.github.io%2FDev_2%2F-111111?style=for-the-badge" alt="Live site" />
   </a>
-  <a href="https://www.linkedin.com/in/sasha-mayboroda/">
+  <a href="https://www.linkedin.com/in/sasha-mayboroda-177b17bb/">
     <img src="https://img.shields.io/badge/LinkedIn-Sasha_Mayboroda-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   <a href="mailto:maybosasha@gmail.com">
@@ -31,10 +31,10 @@ An interactive portfolio built with smooth page transitions, WebGL particle back
 | # | Project | Client | Year |
 |---|---------|--------|------|
 | 01 | [AI Decisioning Studio](https://maybo-sasha.github.io/Dev_2/ai-decisioning-studio.html) | Optimove | Current |
-| 02 | [Tetris Block Party](https://maybo-sasha.github.io/Dev_2/tetris-block-party.html) | PLAYSTUDIOS | 2024 |
-| 03 | [Lucky Buddies](https://maybo-sasha.github.io/Dev_2/lucky-buddies.html) | Everybuddy | 2023 |
-| 04 | [Player Journey](https://maybo-sasha.github.io/Dev_2/player-journey.html) | Playtech | 2019 |
-| 05 | [Playground](https://maybo-sasha.github.io/Dev_2/playground.html) | Motion · 3D · Experiments | — |
+| 02 | [Streams](https://maybo-sasha.github.io/Dev_2/streams.html) | Optimove | Current |
+| 03 | [AI skills for product design](https://maybo-sasha.github.io/Dev_2/ai-champion.html) | Optimove | Current |
+
+Other projects are temporarily hidden. Their pages and assets remain in the repository, while the homepage, navigation and production build include only the three projects above. See [restoration instructions](./archive/README.md).
 
 ## Tech stack
 

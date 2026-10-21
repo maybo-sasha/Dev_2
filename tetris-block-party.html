@@ -313,7 +313,7 @@
                 <div class="about-block">
                     <p class="about-block-label">Social</p>
                     <div class="about-social">
-                        <a href="https://www.linkedin.com/in/sasha-mayboroda/" target="_blank" rel="noopener">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda-177b17bb/" target="_blank" rel="noopener">LinkedIn</a>
                     </div>
                 </div>
                 <div class="about-block">
@@ -514,16 +514,8 @@
 
         document.querySelectorAll('.tbp-meta, .tbp-intro, .tbp-section, .tbp-outro')
             .forEach(group => io.observe(group));
+        // Visible video playback is managed by js/lazyVideo.js.
 
-        // Auto-play looping clips when on screen (not the manual trailer)
-        const vio = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                const v = e.target;
-                if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); }
-                else v.pause();
-            });
-        }, { threshold: 0.3 });
-        document.querySelectorAll('.tbp-phone video').forEach(v => vio.observe(v));
 
         const cursorEl = document.querySelector('.cursor');
         if (cursorEl) {

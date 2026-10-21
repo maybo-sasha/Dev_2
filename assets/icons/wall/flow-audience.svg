@@ -1,0 +1,19 @@
+<svg width="96" height="96" xmlns="http://www.w3.org/2000/svg" viewBox="-1.404 -1.192 73.846 73.846" fill="none" stroke="#241C8C" stroke-width="1.538" stroke-linecap="round" stroke-linejoin="round">
+  
+  
+  <g id="flow-audience-body">
+    <rect rx="4.06" x="19.5" y="6.5" width="46" height="37" fill="#EAE9F3"/>
+    <path d="M26.5 13.5H58.5" stroke-width="1.538"/>
+    <rect rx="4.06" x="12.5" y="16.5" width="46" height="37" fill="#D9D6FE"/>
+    <path d="M19.5 23.5H51.5" stroke-width="1.538"/>
+    <rect rx="4.06" x="5.5" y="26.5" width="47" height="39" fill="#FFFFFF"/>
+  </g>
+  <g id="flow-audience-content">
+    <circle cx="18.5" cy="38.5" r="4" fill="#D9D6FE"/>
+    <path d="M11.5 56.5V52.5C11.5 48.6 14.6 45.5 18.5 45.5S25.5 48.6 25.5 52.5V56.5Z" fill="#D9D6FE"/>
+    <path d="M30.5 37.5H46.5M30.5 43.5H41.5" stroke-width="1.538"/>
+  </g>
+  <g id="flow-audience-accent">
+    <rect rx="3.00" x="30.5" y="50.5" width="16" height="6" fill="#CBEF17"/>
+  </g>
+</svg>

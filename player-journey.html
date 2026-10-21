@@ -324,7 +324,7 @@
                 <div class="about-block">
                     <p class="about-block-label">Social</p>
                     <div class="about-social">
-                        <a href="https://www.linkedin.com/in/sasha-mayboroda/" target="_blank" rel="noopener">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda-177b17bb/" target="_blank" rel="noopener">LinkedIn</a>
                     </div>
                 </div>
                 <div class="about-block">
@@ -532,16 +532,8 @@
         }, { threshold: 0.15 });
         // observe each top-level section + standalone fade-ups
         document.querySelectorAll('.pj-hero, .pj-metabar, .pj-stage, .pj-lede, .pj-section, .ds-showcase').forEach(s => io.observe(s));
+        // Visible video playback is managed by js/lazyVideo.js.
 
-        // Play/pause videos when in view
-        const vio = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                const v = e.target;
-                if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); }
-                else v.pause();
-            });
-        }, { threshold: 0.25 });
-        document.querySelectorAll('.pj-shot video').forEach(v => vio.observe(v));
 
         // About overlay
         const overlay  = document.querySelector('.about-overlay');

@@ -1,9 +1,17 @@
 import { defineConfig } from 'vite';
 import { resolve, join } from 'path';
-import { cpSync, existsSync } from 'fs';
+import { cpSync, existsSync, readFileSync } from 'fs';
+import { publishedPages, runtimeAssets } from './portfolio.config.mjs';
 
 // GitHub Pages project sites live under /Dev_2/; local dev stays at /
 const base = process.env.GITHUB_PAGES === 'true' ? '/Dev_2/' : '/';
+
+// Discover the classic scripts actually used by published pages. Module scripts
+// are bundled by Vite; archived pages do not add scripts or assets to the build.
+const runtimeScripts = [...new Set(publishedPages.flatMap(page =>
+  [...readFileSync(resolve(__dirname, page), 'utf8').matchAll(/<script\s+src=["']\.\/(js\/[^"']+)["']/g)]
+    .map(match => match[1])
+))];
 
 // Vite bundles CSS and module scripts but leaves classic <script src="./js/...">
 // tags and runtime asset paths (inline scripts, workMenu.js) untouched — copy them into dist.
@@ -32,22 +40,10 @@ function copyStaticToDist(...paths) {
 export default defineConfig({
   base,
   resolve: { dedupe: ['three'] },
-  plugins: [copyStaticToDist('js', 'assets', 'homePage')],
+  plugins: [copyStaticToDist(...runtimeScripts, ...runtimeAssets)],
   build: {
     rollupOptions: {
-      input: {
-        index: resolve(__dirname, 'index.html'),
-        about: resolve(__dirname, 'about.html'),
-        'ai-champion': resolve(__dirname, 'ai-champion.html'),
-        'ai-decisioning-studio': resolve(__dirname, 'ai-decisioning-studio.html'),
-        'lucky-buddies': resolve(__dirname, 'lucky-buddies.html'),
-        'player-journey': resolve(__dirname, 'player-journey.html'),
-        playground: resolve(__dirname, 'playground.html'),
-        'design-system': resolve(__dirname, 'design-system.html'),
-        '28-days': resolve(__dirname, '28-days.html'),
-        project: resolve(__dirname, 'project.html'),
-        'tetris-block-party': resolve(__dirname, 'tetris-block-party.html'),
-      },
+      input: Object.fromEntries(publishedPages.map(page => [page.replace(/\.html$/, ''), resolve(__dirname, page)])),
     },
   },
 });

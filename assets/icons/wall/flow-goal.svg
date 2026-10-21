@@ -1,0 +1,16 @@
+<svg width="96" height="96" xmlns="http://www.w3.org/2000/svg" viewBox="1.014 -0.948 72.615 72.615" fill="none" stroke="#241C8C" stroke-width="1.513" stroke-linecap="round" stroke-linejoin="round">
+  
+  
+  <g id="flow-goal-body">
+    <circle cx="31.5" cy="40.5" r="24" fill="#D9D6FE"/>
+    <circle cx="31.5" cy="40.5" r="16" fill="#FFFFFF"/>
+    <circle cx="31.5" cy="40.5" r="9" fill="#EAE9F3"/>
+  </g>
+  <g id="flow-goal-accent">
+    <circle cx="31.5" cy="40.5" r="4" fill="#CBEF17"/>
+  </g>
+  <g id="flow-goal-content">
+    <path d="M49.5 22.5V14.5L58.5 5.5V14.5H66.5L58.5 22.5Z" fill="#D9D6FE"/>
+    <path d="M31.5 40.5L58.5 13.5"/>
+  </g>
+</svg>

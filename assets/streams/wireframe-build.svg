@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="720" viewBox="0 0 1040 720" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+<defs><clipPath id="win"><rect x="0.5" y="0.5" width="1039" height="719" rx="14"/></clipPath></defs>
+<rect x="0.5" y="0.5" width="1039" height="719" rx="14" fill="#ffffff" stroke="#dadadf"/>
+<g clip-path="url(#win)">
+<rect x="0" y="0" width="1040" height="44" fill="#f7f7f8"/><path d="M0 44.5L1040 44.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<circle cx="22" cy="22" r="4.5" fill="#cfcfd5"/><circle cx="38" cy="22" r="4.5" fill="#cfcfd5"/><circle cx="54" cy="22" r="4.5" fill="#cfcfd5"/>
+<text x="76" y="27" font-size="13.5" font-weight="600" fill="#1b1b1e">New Stream · draft</text>
+<defs><pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#cfcfd5"/></pattern></defs>
+<text x="28" y="86" font-size="15" font-weight="400" fill="#6d6d75">←</text>
+<text x="52" y="86" font-size="17" font-weight="700" fill="#1b1b1e">At risk · frequency falling against their own baseline</text>
+<text x="52" y="106" font-size="11.5" font-weight="400" fill="#6d6d75">Draft · not started</text>
+<rect x="706" y="66" width="96" height="30" rx="7" fill="#ffffff" stroke="#dadadf" stroke-width="1"/><text x="754.0" y="85.5" font-size="12.5" font-weight="600" fill="#1b1b1e" text-anchor="middle">Save Stream</text>
+<rect x="810" y="66" width="214" height="30" rx="7" fill="#1b1b1e" stroke="#1b1b1e" stroke-width="1"/><text x="917.0" y="85.5" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="middle">Approve &amp; proceed to dry run</text>
+<path d="M0 124.5L1040 124.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<rect x="296" y="125" width="444" height="595" rx="0" fill="url(#dots)"/>
+<rect x="16" y="136" width="268" height="572" rx="10" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="28" y="148" width="244" height="134" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="40" y="170" font-size="12" font-weight="700" fill="#1b1b1e">Stream brief</text>
+<rect x="166" y="157" width="94" height="18" rx="9.0" fill="#f1f1f3" stroke="#d2d2d8" stroke-width="1"/><text x="213.0" y="169.24" font-size="9" font-weight="400" fill="#1b1b1e" text-anchor="middle">Needs approval</text>
+<circle cx="44" cy="192" r="4" fill="#ffffff" stroke="#d2d2d8"/>
+<text x="54" y="196" font-size="10.5" font-weight="600" fill="#1b1b1e">Objective</text>
+<rect x="140" y="189" width="118" height="6" rx="3.0" fill="#ebebee"/>
+<circle cx="44" cy="214" r="4" fill="#ffffff" stroke="#d2d2d8"/>
+<text x="54" y="218" font-size="10.5" font-weight="600" fill="#1b1b1e">Audience</text>
+<rect x="140" y="211" width="104" height="6" rx="3.0" fill="#ebebee"/>
+<circle cx="44" cy="236" r="4" fill="#ffffff" stroke="#d2d2d8"/>
+<text x="54" y="240" font-size="10.5" font-weight="600" fill="#1b1b1e">Key message</text>
+<rect x="140" y="233" width="112" height="6" rx="3.0" fill="#ebebee"/>
+<circle cx="44" cy="258" r="4" fill="#ffffff" stroke="#d2d2d8"/>
+<text x="54" y="262" font-size="10.5" font-weight="600" fill="#1b1b1e">Recurrence</text>
+<rect x="140" y="255" width="90" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="24" y="302" width="252" height="324" rx="12" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="2"/>
+<circle cx="26" cy="304" r="14" fill="#1b1b1e" stroke="#ffffff" stroke-width="2"/><text x="26" y="309" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1</text><rect x="48" y="290" width="244.5" height="24" rx="12" fill="#1b1b1e"/><text x="170.25" y="306.5" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">One optional suggestion at a time</text>
+<rect x="36" y="318" width="228" height="298" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="48" y="340" font-size="12" font-weight="700" fill="#1b1b1e">Build suggestions</text>
+<text x="48" y="360" font-size="8.5" font-weight="700" fill="#6d6d75">SEND TIME OPTIMIZATION</text>
+<rect x="48" y="368" width="180" height="8" rx="4.0" fill="#1b1b1e"/>
+<rect x="150" y="384" width="104" height="50" rx="4" fill="none" stroke="#6d6d75" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="52" y="428" width="9" height="4" rx="2" fill="#b4b4bb"/>
+<rect x="66" y="426" width="9" height="6" rx="2" fill="#b4b4bb"/>
+<rect x="80" y="423" width="9" height="9" rx="2" fill="#b4b4bb"/>
+<rect x="94" y="418" width="9" height="14" rx="2" fill="#b4b4bb"/>
+<rect x="108" y="412" width="9" height="20" rx="2" fill="#b4b4bb"/>
+<rect x="122" y="420" width="9" height="12" rx="2" fill="#b4b4bb"/>
+<rect x="136" y="424" width="9" height="8" rx="2" fill="#b4b4bb"/>
+<rect x="150" y="416" width="9" height="16" rx="2" fill="#1b1b1e"/>
+<rect x="164" y="408" width="9" height="24" rx="2" fill="#1b1b1e"/>
+<rect x="178" y="402" width="9" height="30" rx="2" fill="#1b1b1e"/>
+<rect x="192" y="410" width="9" height="22" rx="2" fill="#1b1b1e"/>
+<rect x="206" y="398" width="9" height="34" rx="2" fill="#1b1b1e"/>
+<rect x="220" y="392" width="9" height="40" rx="2" fill="#1b1b1e"/>
+<rect x="234" y="404" width="9" height="28" rx="2" fill="#1b1b1e"/>
+<rect x="48" y="446" width="94" height="60" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="56" y="464" font-size="9" font-weight="400" fill="#6d6d75">One hour for all</text>
+<text x="56" y="492" font-size="16" font-weight="700" fill="#1b1b1e">9%</text>
+<text x="150" y="482" font-size="13" font-weight="600" fill="#6d6d75" text-anchor="middle">→</text>
+<rect x="158" y="446" width="96" height="60" rx="6" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="1.2"/>
+<text x="166" y="464" font-size="9" font-weight="600" fill="#1b1b1e">Best hour each</text>
+<text x="166" y="492" font-size="16" font-weight="700" fill="#1b1b1e">41%</text>
+<rect x="48" y="518" width="206" height="28" rx="7" fill="#1b1b1e" stroke="#1b1b1e" stroke-width="1"/><text x="151.0" y="536.5" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="middle">Turn it on for all 3</text>
+<rect x="48" y="554" width="206" height="28" rx="7" fill="#ffffff" stroke="#dadadf" stroke-width="1"/><text x="151.0" y="572.5" font-size="12.5" font-weight="600" fill="#1b1b1e" text-anchor="middle">Keep one fixed hour</text>
+<text x="151" y="602" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">Show me</text>
+<rect x="28" y="640" width="244" height="56" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<text x="40" y="662" font-size="10.5" font-weight="400" fill="#6d6d75">Ask a question or request a change</text>
+<rect x="40" y="672" width="76" height="18" rx="9.0" fill="#ffffff" stroke="#dadadf" stroke-width="1"/><text x="78.0" y="684.42" font-size="9.5" font-weight="400" fill="#1b1b1e" text-anchor="middle">Supervised</text>
+<rect x="408" y="144" width="73.2" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="419" y="157" font-size="9" font-weight="700" fill="#6d6d75">AUDIENCE</text>
+<rect x="408" y="162" width="220" height="70" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="420" y="176" width="130" height="9" rx="4.5" fill="#1b1b1e"/>
+<rect x="420" y="194" width="196" height="28" rx="6" fill="#f1f1f3" stroke="#d2d2d8" stroke-width="1"/>
+<circle cx="434" cy="208" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="446" y="204" width="100" height="7" rx="3.5" fill="#cfcfd5"/>
+<path d="M518 232 L518 270" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<circle cx="518" cy="251" r="8" fill="#ffffff" stroke="#d2d2d8"/><text x="518" y="255" font-size="11" font-weight="600" fill="#6d6d75" text-anchor="middle">+</text>
+<rect x="408" y="270" width="66.80000000000001" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="419" y="283" font-size="9" font-weight="700" fill="#6d6d75">TRIGGER</text>
+<rect x="408" y="288" width="220" height="40" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="420" y="303" width="150" height="9" rx="4.5" fill="#1b1b1e"/>
+<path d="M518 328 L518 362" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<circle cx="518" cy="345" r="8" fill="#ffffff" stroke="#d2d2d8"/><text x="518" y="349" font-size="11" font-weight="600" fill="#6d6d75" text-anchor="middle">+</text>
+<rect x="408" y="362" width="54.0" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="419" y="375" font-size="9" font-weight="700" fill="#6d6d75">SPLIT</text>
+<rect x="408" y="380" width="220" height="62" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="420" y="394" width="130" height="9" rx="4.5" fill="#1b1b1e"/>
+<path d="M408 412.5L628 412.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<path d="M518.5 412L518.5 442" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<text x="463" y="432" font-size="10" font-weight="400" fill="#1b1b1e" text-anchor="middle">At risk</text>
+<text x="573" y="432" font-size="10" font-weight="400" fill="#1b1b1e" text-anchor="middle">Control</text>
+<path d="M463 442 L463 458 L420 458 L420 486" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M573 442 L573 458 L640 458 L640 486" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="320" y="486" width="54.0" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="331" y="499" font-size="9" font-weight="700" fill="#6d6d75">EMAIL</text>
+<rect x="320" y="504" width="200" height="168" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="332" y="516" width="52" height="36" rx="4" fill="#ebebee"/>
+<rect x="392" y="522" width="104" height="8" rx="4.0" fill="#1b1b1e"/>
+<rect x="392" y="536" width="70" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="332" y="564" width="176" height="62" rx="6" fill="#f1f1f3" stroke="#d2d2d8" stroke-width="1"/>
+<text x="342" y="580" font-size="9.5" font-weight="600" fill="#6d6d75">AI decisioning</text>
+<circle cx="348" cy="596" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="360" y="592" width="96" height="7" rx="3.5" fill="#1b1b1e"/>
+<circle cx="348" cy="616" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="360" y="612" width="82" height="7" rx="3.5" fill="#1b1b1e"/>
+<text x="332" y="646" font-size="8.5" font-weight="400" fill="#6d6d75">Delivered</text>
+<text x="332" y="662" font-size="10" font-weight="600" fill="#6d6d75">--</text>
+<text x="378" y="646" font-size="8.5" font-weight="400" fill="#6d6d75">Clicked</text>
+<text x="378" y="662" font-size="10" font-weight="600" fill="#6d6d75">--</text>
+<text x="424" y="646" font-size="8.5" font-weight="400" fill="#6d6d75">Sent</text>
+<text x="424" y="662" font-size="10" font-weight="600" fill="#6d6d75">--</text>
+<text x="470" y="646" font-size="8.5" font-weight="400" fill="#6d6d75">Failed</text>
+<text x="470" y="662" font-size="10" font-weight="600" fill="#6d6d75">--</text>
+<rect x="560" y="486" width="66.80000000000001" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="571" y="499" font-size="9" font-weight="700" fill="#6d6d75">CONTROL</text>
+<rect x="560" y="504" width="160" height="40" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<text x="572" y="528" font-size="10.5" font-weight="400" fill="#1b1b1e">Control · no messages</text>
+<rect x="752" y="136" width="272" height="324" rx="10" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="766" y="158" font-size="8.5" font-weight="700" fill="#6d6d75">STREAM SETUP</text>
+<text x="766" y="178" font-size="13" font-weight="700" fill="#1b1b1e">Stream settings</text>
+<text x="766" y="204" font-size="10.5" font-weight="600" fill="#1b1b1e">Objective KPI</text>
+<rect x="766" y="212" width="244" height="26" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="776" y="222" width="170" height="6" rx="3.0" fill="#cfcfd5"/>
+<text x="996" y="230" font-size="11" font-weight="400" fill="#6d6d75" text-anchor="middle">⌄</text>
+<text x="766" y="264" font-size="10.5" font-weight="600" fill="#1b1b1e">Recurrence</text>
+<rect x="978" y="252" width="32" height="18" rx="9" fill="#1b1b1e"/>
+<circle cx="1001" cy="261" r="6" fill="#ffffff"/>
+<text x="766" y="292" font-size="10" font-weight="400" fill="#6d6d75">Repeat every</text>
+<rect x="852" y="280" width="64" height="20" rx="10.0" fill="#ffffff" stroke="#dadadf" stroke-width="1"/><text x="884.0" y="293.6" font-size="10" font-weight="400" fill="#1b1b1e" text-anchor="middle">1</text>
+<rect x="924" y="280" width="64" height="20" rx="10.0" fill="#ffffff" stroke="#dadadf" stroke-width="1"/><text x="956.0" y="293.6" font-size="10" font-weight="400" fill="#1b1b1e" text-anchor="middle">Day</text>
+<text x="766" y="326" font-size="10.5" font-weight="600" fill="#1b1b1e">Entry cap</text>
+<rect x="978" y="314" width="32" height="18" rx="9" fill="#ebebee"/>
+<circle cx="987" cy="323" r="6" fill="#ffffff"/>
+<text x="766" y="362" font-size="10.5" font-weight="600" fill="#1b1b1e">Start date</text>
+<circle cx="772" cy="382" r="5" fill="#ffffff" stroke="#1b1b1e"/>
+<circle cx="772" cy="382" r="2.5" fill="#1b1b1e"/>
+<text x="784" y="386" font-size="10.5" font-weight="400" fill="#1b1b1e">Immediately after dry-run approval</text>
+<circle cx="772" cy="406" r="5" fill="#ffffff" stroke="#d2d2d8"/>
+<text x="784" y="410" font-size="10.5" font-weight="400" fill="#6d6d75">On a date</text>
+<text x="766" y="440" font-size="10" font-weight="400" fill="#6d6d75">Starts as soon as the dry run passes</text>
+</g></svg>

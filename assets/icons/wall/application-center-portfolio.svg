@@ -1,0 +1,10 @@
+<svg width="96" height="96" viewBox="11.000 15.000 160.000 160.000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Portfolio-only simplification of Application Center: a board of apps, and a lime add button in the fourth cell.
+       The Design System file (application-center-md.svg) is unchanged. -->
+  <rect rx="8.79" x="26" y="30" width="130" height="130" fill="#FFFFFF" stroke="#241C8C" stroke-width="3.333" stroke-linejoin="round"/>
+  <rect rx="4.56" x="42" y="46" width="42" height="42" fill="#D9D6FE" stroke="#241C8C" stroke-width="3.333" stroke-linejoin="round"/>
+  <rect rx="4.56" x="98" y="46" width="42" height="42" fill="#EAE9F3" stroke="#241C8C" stroke-width="3.333" stroke-linejoin="round"/>
+  <rect rx="4.56" x="42" y="102" width="42" height="42" fill="#EAE9F3" stroke="#241C8C" stroke-width="3.333" stroke-linejoin="round"/>
+  <circle cx="119" cy="123" r="21" fill="#CBEF17" stroke="#241C8C" stroke-width="3.333"/>
+  <path d="M119 113 V133 M109 123 H129" stroke="#241C8C" stroke-width="3.333" stroke-linecap="round"/>
+</svg>
