@@ -1,4 +1,5 @@
 node_modules/
+.tool-cache/
 .cache/
 dist/
 *.log
@@ -25,3 +26,7 @@ assets/personal/activationBTn/*.mp4
 # small and are the source of the rebuilt diagrams, so those are kept.
 assets/Opimove/Ai studio/new/*.mov
 assets/personal/uimultiple select/*.mp4
+
+# The 28 Days design references (concept sheets, the master spec, raw models). Kept on disk
+# for whoever builds the memorial, never served by a page, so they stay out of history.
+assets/28-days/
