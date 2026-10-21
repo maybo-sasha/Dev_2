@@ -1,64 +1,46 @@
-/* ============================================================
-   Playground UI — the shared design language.
-
-   Every component in assets/personal/ maps its own tokens onto
-   these, so a change here moves all of them together. The language
-   is the one the Gooey Menu is built in: a near-white canvas, ink
-   shapes, no colour at all. Form and motion carry the meaning that
-   an accent would normally carry, which is what lets six very
-   different components sit on one page without competing.
-
-   Rules of the system
-     · Monochrome — ink on paper plus alpha — with exactly one
-       exception, --ui-ok, reserved for completion. See its note.
-     · State reads as fill, not colour: resting = outline on paper,
-       active = solid ink with paper-coloured content on top.
-     · One ease for travel — the 0.22/1/0.36/1 curve. Springs are
-       reserved for things that should feel physical.
-     · Radii step 10 / 14 / 20 / 28 / full. Circles for anything
-       that is pressed, rounded rectangles for anything that holds.
-
-   Loaded once, before the component stylesheets.
-   ============================================================ */
-
+/* Form: shared component tokens. Precise frames, tactile controls, pale paper. */
 :root {
+  --ui-accent: #ad4330;
+  --ui-on-accent: #ffffff;
+  --ui-focus: #ad4330;
+  --ui-r-action: var(--ui-r-sm) var(--ui-r-lg) var(--ui-r-sm) var(--ui-r-sm);
   /* ── surface ─────────────────────────────────────────────── */
-  --ui-bg: #fcfcfd;                       /* the canvas a component sits on */
-  --ui-bg-sunk: #f4f4f6;                  /* wells, tracks, inset areas */
+  --ui-bg: #f5f5f0;                       /* the canvas a component sits on */
+  --ui-bg-sunk: #e8ebe5;                  /* wells, tracks, inset areas */
   --ui-surface: #ffffff;                  /* raised cards above the canvas */
 
   /* ── ink ─────────────────────────────────────────────────── */
-  --ui-fg: #12141a;                       /* primary ink + filled shapes */
-  --ui-fg-rgb: 18, 20, 26;
-  --ui-on-fg: #fcfcfd;                    /* content sitting ON filled ink */
-  --ui-on-fg-rgb: 252, 252, 253;          /* …at any alpha */
-  --ui-text: #23262f;                     /* body copy */
-  --ui-text-2: #5b6070;                   /* secondary copy */
-  --ui-mute: #8d92a3;                     /* labels, placeholders, hints */
+  --ui-fg: #202a27;                       /* primary ink + filled shapes */
+  --ui-fg-rgb: 32, 42, 39;
+  --ui-on-fg: #f5f5f0;                    /* content sitting ON filled ink */
+  --ui-on-fg-rgb: 245, 245, 240;          /* …at any alpha */
+  --ui-text: #2b3530;                     /* body copy */
+  --ui-text-2: #5a6860;                   /* secondary copy */
+  --ui-mute: #68756d;                     /* labels, placeholders, hints */
 
-  /* The single hue in the system, and only for completion. Every other
+  /* Semantic green is reserved for completion. Every other
      state is recoverable from form alone, but a tick reads the same
      whether it means "done" or "confirm" — so success gets a colour
-     and nothing else does. */
+     while vermilion identifies the primary action. */
   --ui-ok: #3faa5a;
   --ui-ok-rgb: 63, 170, 90;
 
   /* ── lines and fills, all alpha so they ride any surface ─── */
-  --ui-line: rgba(18, 20, 26, 0.13);      /* visible border */
-  --ui-line-soft: rgba(18, 20, 26, 0.07); /* divider */
-  --ui-fill: rgba(18, 20, 26, 0.05);      /* chip / hover wash */
-  --ui-fill-strong: rgba(18, 20, 26, 0.09);
+  --ui-line: rgba(32, 42, 39, 0.13);      /* visible border */
+  --ui-line-soft: rgba(32, 42, 39, 0.07); /* divider */
+  --ui-fill: rgba(32, 42, 39, 0.05);      /* chip / hover wash */
+  --ui-fill-strong: rgba(32, 42, 39, 0.09);
 
   /* ── elevation. Ink shadows, never black ─────────────────── */
-  --ui-shadow-sm: 0 1px 2px rgba(18, 20, 26, 0.06);
-  --ui-shadow-md: 0 6px 16px -8px rgba(18, 20, 26, 0.28);
-  --ui-shadow-lg: 0 24px 48px -24px rgba(18, 20, 26, 0.34);
+  --ui-shadow-sm: 0 1px 2px rgba(32, 34, 30, 0.06);
+  --ui-shadow-md: 0 6px 16px -8px rgba(32, 34, 30, 0.28);
+  --ui-shadow-lg: 0 24px 48px -24px rgba(32, 34, 30, 0.34);
 
   /* ── radii ───────────────────────────────────────────────── */
-  --ui-r-sm: 10px;
-  --ui-r-md: 14px;
-  --ui-r-lg: 20px;
-  --ui-r-xl: 28px;
+  --ui-r-sm: 4px;
+  --ui-r-md: 8px;
+  --ui-r-lg: 12px;
+  --ui-r-xl: 18px;
   --ui-r-full: 999px;
 
   /* ── motion. One curve for travel; springs stay deliberate ─ */
@@ -70,12 +52,12 @@
   --ui-t-slow: 0.72s;
 
   /* ── type ────────────────────────────────────────────────── */
-  --ui-font: var(--font-display, 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif);
-  --ui-fs-cap: 9.5px;                     /* uppercase eyebrows */
-  --ui-fs-xs: 11px;
+  --ui-font: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ui-fs-cap: 11px;                     /* uppercase eyebrows */
+  --ui-fs-xs: 12px;
   --ui-fs-sm: 13px;
   --ui-fs-md: 15px;
-  --ui-ls-cap: 0.19em;
+  --ui-ls-cap: 0.12em;
 }
 
 /* Shared shell. Every component's root gets this class so the
@@ -217,7 +199,7 @@
    marked data-cursor="dark"; this is what that class means. It lived
    in radial-toolkit.css until that component was removed, which is
    how it went missing. */
-.cursor.on-light { --cursor-ring: rgba(18, 20, 26, 0.85); }
+.cursor.on-light { --cursor-ring: rgba(32, 34, 30, 0.85); }
 .cursor.on-light .cursor-text { color: var(--ui-fg); }
 
 /* icons are one family: 24-box, 2px stroke, round caps */
