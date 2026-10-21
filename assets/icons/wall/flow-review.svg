@@ -1,0 +1,15 @@
+<svg width="96" height="96" xmlns="http://www.w3.org/2000/svg" viewBox="1.179 0.808 71.385 71.385" fill="none" stroke="#241C8C" stroke-width="1.487" stroke-linecap="round" stroke-linejoin="round">
+  
+  
+  <g id="flow-review-body">
+    <rect rx="3.92" x="20.5" y="7.5" width="43" height="50" fill="#D9D6FE"/>
+    <rect rx="3.92" x="9.5" y="15.5" width="43" height="50" fill="#FFFFFF"/>
+  </g>
+  <g id="flow-review-content">
+    <path d="M17.5 53.5H45.5M17.5 58.5H38.5" stroke-width="1.487"/>
+  </g>
+  <g id="flow-review-accent">
+    <circle cx="31.5" cy="35.5" r="10" fill="#CBEF17"/>
+    <path d="M26.5 35.5L30 39L37 32"/>
+  </g>
+</svg>

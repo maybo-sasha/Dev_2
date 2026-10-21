@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap">
     <link rel="stylesheet" href="./style/style.css">
 </head>
 <body>
@@ -55,14 +58,14 @@
 
             <section class="about-page">
                 <!-- Full-bleed background video -->
-                <video class="about-video" src="./homePage/aboutVideo.mp4"
+                <video class="about-video" src="./homePage/aboutVideo-framed.mp4"
                        autoplay loop muted playsinline></video>
 
                 <!-- Gradient scrim -->
                 <div class="about-scrim"></div>
 
                 <!-- Two-column layout -->
-                <div class="about-content">
+                <div class="about-content" data-lenis-prevent>
                     <!-- Left: Giant hello -->
                     <div class="about-hello">
                         <h1>Hello</h1>
@@ -72,20 +75,26 @@
                     <div class="about-info">
                         <div class="about-block">
                             <p class="about-block-label">About</p>
-                            <p class="about-block-text">I am Sasha Mayboroda, a Senior Product Designer who lives and breathes design. With years of experience building design systems and cohesive graphical languages across web, mobile and game platforms, I turn complex products into clear, considered experiences that scale.</p>
+                            <p class="about-block-text">I'm a product designer with 10+ years across B2B and B2C products, spanning hands-on interface design, design leadership and product management. I lead projects end to end, from research and concept to final UI, build design systems that scale, and design AI decisioning, agentic and conversational experiences that stay explainable and keep people in the loop.</p>
                         </div>
 
-                        <div class="about-block">
+                        <div class="about-block about-cv">
+                    <p class="about-block-label">CV</p>
+                    <div class="about-cv-actions">
+                        <a href="./assets/documents/Sasha-Maiboroda-CV.pdf" download="Sasha-Maiboroda-CV.pdf" data-no-transition>Download CV <span aria-hidden="true">↓</span></a>
+                    </div>
+                </div>
+                <div class="about-block">
                             <p class="about-block-label">Social</p>
                             <div class="about-social">
-                                <a href="https://www.linkedin.com/in/sasha-mayboroda-177b17bb/" target="_blank" rel="noopener">LinkedIn</a>
+                                <a href="https://www.linkedin.com/in/sasha-mayboroda-177b17bb/" target="_blank" rel="noopener">LinkedIn<span class="sr-only-new"> (opens in a new tab)</span></a>
                             </div>
                         </div>
 
                         <div class="about-block">
                             <p class="about-block-label">Contact</p>
                             <p class="about-block-text">
-                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maybosasha@gmail.com" target="_blank" rel="noopener">maybosasha@gmail.com</a>
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maybosasha@gmail.com" target="_blank" rel="noopener">maybosasha@gmail.com<span class="sr-only-new"> (opens in a new tab)</span></a>
                             </p>
                         </div>
                     </div>

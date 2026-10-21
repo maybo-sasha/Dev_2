@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="720" viewBox="0 0 1040 720" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+<defs><clipPath id="win"><rect x="0.5" y="0.5" width="1039" height="719" rx="14"/></clipPath></defs>
+<rect x="0.5" y="0.5" width="1039" height="719" rx="14" fill="#ffffff" stroke="#dadadf"/>
+<g clip-path="url(#win)">
+<rect x="0" y="0" width="1040" height="44" fill="#f7f7f8"/><path d="M0 44.5L1040 44.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<circle cx="22" cy="22" r="4.5" fill="#cfcfd5"/><circle cx="38" cy="22" r="4.5" fill="#cfcfd5"/><circle cx="54" cy="22" r="4.5" fill="#cfcfd5"/>
+<text x="76" y="27" font-size="13.5" font-weight="600" fill="#1b1b1e">Campaign workspace</text>
+<text x="28" y="84" font-size="13" font-weight="700" fill="#1b1b1e">Campaign details</text>
+<text x="28" y="104" font-size="11.5" font-weight="400" fill="#6d6d75">Target group</text>
+<rect x="28" y="112" width="130" height="8" rx="4.0" fill="#bdbdc4"/>
+<rect x="24" y="132" width="182" height="196" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="34" y="142" width="18" height="18" rx="4" fill="#1b1b1e"/>
+<text x="43" y="155" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">A</text>
+<rect x="60" y="147" width="110" height="8" rx="4.0" fill="#cfcfd5"/>
+<rect x="34" y="168" width="162" height="24" rx="6" fill="#f1f1f3" stroke="#d2d2d8" stroke-width="1"/>
+<rect x="42" y="177" width="120" height="6" rx="3.0" fill="#bdbdc4"/>
+<text x="34" y="210" font-size="11" font-weight="400" fill="#6d6d75">Channel</text>
+<rect x="34" y="216" width="70" height="7" rx="3.5" fill="#cfcfd5"/>
+<text x="34" y="240" font-size="11" font-weight="400" fill="#6d6d75">Promos</text>
+<rect x="34" y="246" width="150" height="7" rx="3.5" fill="#cfcfd5"/>
+<rect x="34" y="258" width="96" height="7" rx="3.5" fill="#cfcfd5"/>
+<text x="34" y="282" font-size="11" font-weight="400" fill="#6d6d75">Templates</text>
+<rect x="34" y="288" width="34" height="26" rx="4" fill="#ebebee"/>
+<rect x="76" y="294" width="104" height="7" rx="3.5" fill="#cfcfd5"/>
+<rect x="76" y="305" width="70" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="24" y="338" width="182" height="34" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="34" y="346" width="18" height="18" rx="4" fill="#8d8d95"/>
+<text x="43" y="359" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">B</text>
+<rect x="60" y="351" width="96" height="8" rx="4.0" fill="#cfcfd5"/>
+<text x="192" y="360" font-size="12" font-weight="400" fill="#6d6d75" text-anchor="middle">⌄</text>
+<path d="M214.5 45L214.5 720" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<circle cx="252" cy="92" r="19" fill="none" stroke="#1b1b1e" stroke-width="3.5"/>
+<text x="252" y="96" font-size="10" font-weight="700" fill="#1b1b1e" text-anchor="middle">100%</text>
+<text x="282" y="88" font-size="13" font-weight="700" fill="#1b1b1e">Optimization Score</text>
+<rect x="282" y="97" width="150" height="7" rx="3.5" fill="#ebebee"/>
+<path d="M452 70L452 114" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<rect x="468" y="76" width="64" height="13" rx="6.5" fill="#3a3a40"/>
+<text x="468" y="106" font-size="11.5" font-weight="400" fill="#6d6d75">Increase in the strategy KPI</text>
+<path d="M630 70L630 114" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<rect x="646" y="76" width="44" height="13" rx="6.5" fill="#1b1b1e"/>
+<text x="646" y="106" font-size="11.5" font-weight="400" fill="#6d6d75">of the strategy</text>
+<path d="M215 126.5L750 126.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<text x="232" y="152" font-size="14" font-weight="700" fill="#1b1b1e">AI Decisioning</text>
+<rect x="232" y="162" width="164" height="92" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<path d="M240 162.5H388" stroke="#3a3a40" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="252" cy="184" r="9" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="344" y="174" width="44" height="18" rx="9.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="366.0" y="186.6" font-size="10" font-weight="600" fill="#3a3a40" text-anchor="middle">Active</text>
+<text x="244" y="209" font-size="12" font-weight="600" fill="#1b1b1e">Promotion</text>
+<rect x="244" y="216" width="40" height="7" rx="3.5" fill="#3a3a40"/>
+<text x="244" y="241" font-size="11" font-weight="600" fill="#1b1b1e">View decisions ›</text>
+<rect x="342" y="227" width="44" height="20" rx="6" fill="#ffffff" stroke="#1b1b1e" stroke-width="1"/>
+<text x="364" y="241" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">Edit</text>
+<rect x="405" y="162" width="164" height="92" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<path d="M413 162.5H561" stroke="#3a3a40" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="425" cy="184" r="9" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="517" y="174" width="44" height="18" rx="9.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="539.0" y="186.6" font-size="10" font-weight="600" fill="#3a3a40" text-anchor="middle">Active</text>
+<text x="417" y="209" font-size="12" font-weight="600" fill="#1b1b1e">Channel</text>
+<rect x="417" y="216" width="40" height="7" rx="3.5" fill="#3a3a40"/>
+<text x="417" y="241" font-size="11" font-weight="600" fill="#1b1b1e">View decisions ›</text>
+<rect x="515" y="227" width="44" height="20" rx="6" fill="#ffffff" stroke="#1b1b1e" stroke-width="1"/>
+<text x="537" y="241" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">Edit</text>
+<rect x="578" y="162" width="164" height="92" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<path d="M586 162.5H734" stroke="#3a3a40" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="598" cy="184" r="9" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="690" y="174" width="44" height="18" rx="9.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="712.0" y="186.6" font-size="10" font-weight="600" fill="#3a3a40" text-anchor="middle">Active</text>
+<text x="590" y="209" font-size="12" font-weight="600" fill="#1b1b1e">Journey Decisioning</text>
+<rect x="590" y="216" width="40" height="7" rx="3.5" fill="#3a3a40"/>
+<text x="590" y="241" font-size="11" font-weight="600" fill="#1b1b1e">View decisions ›</text>
+<rect x="688" y="227" width="44" height="20" rx="6" fill="#ffffff" stroke="#1b1b1e" stroke-width="1"/>
+<text x="710" y="241" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">Edit</text>
+<rect x="232" y="262" width="164" height="92" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<path d="M240 262.5H388" stroke="#3a3a40" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="252" cy="284" r="9" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="344" y="274" width="44" height="18" rx="9.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="366.0" y="286.6" font-size="10" font-weight="600" fill="#3a3a40" text-anchor="middle">Active</text>
+<text x="244" y="309" font-size="12" font-weight="600" fill="#1b1b1e">Offer Decisioning</text>
+<rect x="244" y="316" width="40" height="7" rx="3.5" fill="#3a3a40"/>
+<text x="244" y="341" font-size="11" font-weight="600" fill="#1b1b1e">View decisions ›</text>
+<rect x="342" y="327" width="44" height="20" rx="6" fill="#ffffff" stroke="#1b1b1e" stroke-width="1"/>
+<text x="364" y="341" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">Edit</text>
+<rect x="405" y="262" width="164" height="92" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<path d="M413 262.5H561" stroke="#3a3a40" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="425" cy="284" r="9" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="517" y="274" width="44" height="18" rx="9.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="539.0" y="286.6" font-size="10" font-weight="600" fill="#3a3a40" text-anchor="middle">Active</text>
+<text x="417" y="309" font-size="12" font-weight="600" fill="#1b1b1e">Content Decisioning</text>
+<rect x="417" y="316" width="40" height="7" rx="3.5" fill="#3a3a40"/>
+<text x="417" y="341" font-size="11" font-weight="600" fill="#1b1b1e">View decisions ›</text>
+<rect x="515" y="327" width="44" height="20" rx="6" fill="#ffffff" stroke="#1b1b1e" stroke-width="1"/>
+<text x="537" y="341" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">Edit</text>
+<rect x="578" y="262" width="164" height="92" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<path d="M586 262.5H734" stroke="#3a3a40" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="598" cy="284" r="9" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="690" y="274" width="44" height="18" rx="9.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="712.0" y="286.6" font-size="10" font-weight="600" fill="#3a3a40" text-anchor="middle">Active</text>
+<text x="590" y="309" font-size="12" font-weight="600" fill="#1b1b1e">Send Time Optimization</text>
+<rect x="590" y="316" width="40" height="7" rx="3.5" fill="#3a3a40"/>
+<text x="590" y="341" font-size="11" font-weight="600" fill="#1b1b1e">View decisions ›</text>
+<rect x="688" y="327" width="44" height="20" rx="6" fill="#ffffff" stroke="#1b1b1e" stroke-width="1"/>
+<text x="710" y="341" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">Edit</text>
+<rect x="224" y="380" width="526" height="320" rx="12" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="2"/>
+<circle cx="226" cy="382" r="14" fill="#1b1b1e" stroke="#ffffff" stroke-width="2"/><text x="226" y="387" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">4</text><rect x="248" y="368" width="394.0" height="24" rx="12" fill="#1b1b1e"/><text x="445.0" y="384.5" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Result, comparison and the recorded choice, side by side</text>
+<text x="240" y="408" font-size="14" font-weight="700" fill="#1b1b1e">Explainability</text>
+<rect x="240" y="420" width="158" height="30" rx="7" fill="none"/>
+<circle cx="254" cy="435" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<text x="266" y="439" font-size="11" font-weight="400" fill="#1b1b1e">Promotion and Channel</text>
+<rect x="240" y="456" width="158" height="30" rx="7" fill="none"/>
+<circle cx="254" cy="471" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<text x="266" y="475" font-size="11" font-weight="400" fill="#1b1b1e">Journey Decisioning</text>
+<rect x="240" y="492" width="158" height="30" rx="7" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.5"/>
+<circle cx="254" cy="507" r="6" fill="#1b1b1e" stroke="#d2d2d8"/>
+<text x="266" y="511" font-size="11" font-weight="600" fill="#1b1b1e">Offer Decisioning</text>
+<rect x="240" y="528" width="158" height="30" rx="7" fill="none"/>
+<circle cx="254" cy="543" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<text x="266" y="547" font-size="11" font-weight="400" fill="#1b1b1e">Content Decisioning</text>
+<rect x="240" y="564" width="158" height="30" rx="7" fill="none"/>
+<circle cx="254" cy="579" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<text x="266" y="583" font-size="11" font-weight="400" fill="#1b1b1e">Send Time Optimization</text>
+<rect x="408" y="420" width="172" height="264" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="420" y="442" font-size="11.5" font-weight="400" fill="#6d6d75">Optimization benefit</text>
+<rect x="420" y="450" width="62" height="14" rx="7.0" fill="#3a3a40"/>
+<circle cx="424" cy="482" r="3.5" fill="#1b1b1e"/>
+<text x="432" y="486" font-size="10.5" font-weight="400" fill="#1b1b1e">with Offer Decisioning</text>
+<circle cx="424" cy="500" r="3.5" fill="#cfcfd5"/>
+<text x="432" y="504" font-size="10.5" font-weight="400" fill="#6d6d75">with one action for all</text>
+<rect x="422" y="594" width="14" height="26" rx="3" fill="#b4b4bb"/>
+<rect x="443" y="586" width="14" height="34" rx="3" fill="#b4b4bb"/>
+<rect x="464" y="582" width="14" height="38" rx="3" fill="#b4b4bb"/>
+<rect x="485" y="574" width="14" height="46" rx="3" fill="#b4b4bb"/>
+<rect x="506" y="562" width="14" height="58" rx="3" fill="#b4b4bb"/>
+<rect x="527" y="550" width="14" height="70" rx="3" fill="#b4b4bb"/>
+<rect x="548" y="536" width="14" height="84" rx="3" fill="#1b1b1e"/>
+<path d="M420 620.5L568 620.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<text x="420" y="640" font-size="10.5" font-weight="400" fill="#6d6d75">What it added each day</text>
+<rect x="420" y="654" width="140" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="420" y="666" width="100" height="6" rx="3.0" fill="#ebebee"/>
+<text x="592" y="438" font-size="11.5" font-weight="700" fill="#1b1b1e">Why these decisions</text>
+<rect x="592" y="448" width="146" height="74" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<path d="M593.5 454L593.5 516" stroke="#1b1b1e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<rect x="604" y="462" width="122" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="604" y="476" width="110" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="604" y="490" width="122" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="604" y="504" width="76" height="6" rx="3.0" fill="#ebebee"/>
+<text x="592" y="548" font-size="11.5" font-weight="700" fill="#1b1b1e">Latest recorded decision</text>
+<rect x="592" y="558" width="120" height="7" rx="3.5" fill="#cfcfd5"/>
+<text x="592" y="584" font-size="11" font-weight="600" fill="#6d6d75">Data used</text>
+<rect x="592" y="592" width="136" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="592" y="603" width="96" height="6" rx="3.0" fill="#ebebee"/>
+<text x="592" y="620" font-size="11" font-weight="600" fill="#6d6d75">Expected</text>
+<rect x="592" y="628" width="116" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="592" y="639" width="80" height="6" rx="3.0" fill="#ebebee"/>
+<text x="592" y="656" font-size="11" font-weight="600" fill="#6d6d75">Actual</text>
+<rect x="592" y="664" width="96" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="762" y="60" width="250" height="640" rx="12" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="778" y="86" font-size="14" font-weight="700" fill="#1b1b1e">OptiGenie</text>
+<text x="778" y="104" font-size="11.5" font-weight="400" fill="#6d6d75">About this campaign</text>
+<rect x="774" y="118" width="226" height="100" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<circle cx="792" cy="140" r="9" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="1"/>
+<text x="808" y="138" font-size="11" font-weight="400" fill="#6d6d75">Why these decisions</text>
+<rect x="808" y="148" width="150" height="8" rx="4.0" fill="#cfcfd5"/>
+<rect x="786" y="168" width="196" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="786" y="180" width="160" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="922" y="190" width="66" height="20" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="955" y="204" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">View</text>
+<rect x="774" y="230" width="226" height="100" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<circle cx="792" cy="252" r="9" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="1"/>
+<text x="808" y="250" font-size="11" font-weight="400" fill="#6d6d75">Why these decisions</text>
+<rect x="808" y="260" width="150" height="8" rx="4.0" fill="#cfcfd5"/>
+<rect x="786" y="280" width="196" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="786" y="292" width="160" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="922" y="302" width="66" height="20" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="955" y="316" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">View</text>
+<rect x="774" y="342" width="226" height="100" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<circle cx="792" cy="364" r="9" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="1"/>
+<text x="808" y="362" font-size="11" font-weight="400" fill="#6d6d75">Why these decisions</text>
+<rect x="808" y="372" width="150" height="8" rx="4.0" fill="#cfcfd5"/>
+<rect x="786" y="392" width="196" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="786" y="404" width="160" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="922" y="414" width="66" height="20" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="955" y="428" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">View</text>
+<rect x="774" y="454" width="226" height="100" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<circle cx="792" cy="476" r="9" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="1"/>
+<text x="808" y="474" font-size="11" font-weight="400" fill="#6d6d75">Decision log</text>
+<rect x="808" y="484" width="150" height="8" rx="4.0" fill="#cfcfd5"/>
+<rect x="786" y="504" width="196" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="786" y="516" width="160" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="922" y="526" width="66" height="20" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="955" y="540" font-size="11" font-weight="600" fill="#1b1b1e" text-anchor="middle">View</text>
+<rect x="774" y="634" width="226" height="54" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.5"/>
+<text x="786" y="656" font-size="11.5" font-weight="400" fill="#6d6d75">Ask about this campaign</text>
+<rect x="970" y="660" width="22" height="20" rx="5" fill="#f7f7f8" stroke="#dadadf" stroke-width="1"/>
+<text x="981" y="674" font-size="11" font-weight="600" fill="#6d6d75" text-anchor="middle">→</text>
+</g></svg>

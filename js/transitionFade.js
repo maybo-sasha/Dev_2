@@ -131,7 +131,7 @@
     document.addEventListener('click', e => {
         if (e.defaultPrevented) return;                 // handled by another script
         const a = e.target.closest('a[href]');
-        if (!a || a.target === '_blank' || a.hasAttribute('data-no-transition')) return;
+        if (!a || a.target === '_blank' || a.hasAttribute('download') || a.hasAttribute('data-no-transition')) return;
         const href = a.getAttribute('href');
         if (!href || href.charAt(0) === '#' || /^(https?:|mailto:|tel:)/i.test(href)) return;
         e.preventDefault();

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72" fill="none" stroke="#241C8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <title>Define success</title>
+  <desc>A measurement card with three bars, the tallest one lime.</desc>
+  <g id="body">
+    <rect x="7.5" y="8.5" width="57" height="57" rx="4.5" fill="#FFFFFF"/>
+  </g>
+  <g id="content">
+    <path d="M16.5 18.5H31.5M13.5 28.5V59.5H57.5" stroke-width="1.25"/>
+    <rect x="16.5" y="43.5" width="9" height="12" rx="1.5" fill="#D9D6FE"/>
+    <rect x="30.5" y="34.5" width="9" height="21" rx="1.5" fill="#C3C3F7"/>
+  </g>
+  <g id="accent">
+    <rect x="44.5" y="24.5" width="9" height="31" rx="1.5" fill="#CBEF17"/>
+  </g>
+</svg>

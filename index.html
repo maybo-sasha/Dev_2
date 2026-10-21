@@ -4,13 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sasha Mayboroda · Selected Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap">
     <link rel="stylesheet" href="./style/style.css">
     <script src="./js/loader.js"></script>
     <!-- Coming back from a project: hold that project's picture full-screen from
          the very first paint, so js/transition.js can shrink it back into its
          card. Each project page leaves its name in returnSlide, and when it is
          left through a link, the frame to open on in returnFrame (transitionFade.js). -->
-    <script>try{var S=sessionStorage,r=S.getItem("returnSlide");if(r){var fr=S.getItem("returnFrame"),tm=parseFloat(S.getItem("returnTime"))||0;S.removeItem("returnSlide");S.removeItem("returnFrame");S.removeItem("returnTime");var c=JSON.parse(S.getItem("homeCards")||"{}")[r];window.__returnTo={href:r,zoom:false,image:fr,time:fr?tm:0};if(c&&c.zoom&&c.poster&&S.getItem("siteLoaded")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var d=document.documentElement;d.classList.add("returning");if(c.crop)d.classList.add("returning-crop");d.style.setProperty("--return-poster",'url("'+(fr||c.poster)+'")');window.__returnTo.zoom=true;}}}catch(e){}</script>
+    <script>
+        try {
+            const storage = sessionStorage;
+            const project = storage.getItem('returnSlide');
+            if (project) {
+                const frame = storage.getItem('returnFrame');
+                const time = parseFloat(storage.getItem('returnTime')) || 0;
+                ['returnSlide', 'returnFrame', 'returnTime'].forEach(key => storage.removeItem(key));
+                const active = ['ai-decisioning-studio.html', 'streams.html', 'ai-champion.html'];
+                if (active.includes(project)) {
+                    const card = JSON.parse(storage.getItem('homeCards') || '{}')[project];
+                    window.__returnTo = { href: project, zoom: false, image: frame, time: frame ? time : 0 };
+                    if (card && card.zoom && card.poster && storage.getItem('siteLoaded') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        const root = document.documentElement;
+                        root.classList.add('returning');
+                        if (card.crop) root.classList.add('returning-crop');
+                        root.style.setProperty('--return-poster', 'url("' + (frame || card.poster) + '")');
+                        window.__returnTo.zoom = true;
+                    }
+                }
+            }
+        } catch (error) {}
+    </script>
 </head>
 <body>
 
@@ -28,25 +53,32 @@
 
     <!-- About overlay — circle-mask reveal -->
     <div class="about-overlay" aria-hidden="true">
-        <video class="about-video" src="./homePage/aboutVideo.mp4" autoplay loop muted playsinline></video>
+        <video class="about-video" src="./homePage/aboutVideo-framed.mp4" loop muted playsinline preload="none"></video>
         <div class="about-scrim"></div>
         <a class="about-back" href="#"><span class="arrow">←</span> Back</a>
-        <div class="about-content">
-<div class="about-info">
+        <div class="about-content" data-lenis-prevent>
+<div class="about-hello"><h2>Hello</h2></div>
+            <div class="about-info">
                 <div class="about-block">
                     <p class="about-block-label">About</p>
-                    <p class="about-block-text">I am Sasha Mayboroda, a Senior Product Designer who lives and breathes design. With years of experience building design systems and cohesive graphical languages across web, mobile and game platforms, I turn complex products into clear, considered experiences that scale.</p>
+                    <p class="about-block-text">I'm a product designer with 10+ years across B2B and B2C products, spanning hands-on interface design, design leadership and product management. I lead projects end to end, from research and concept to final UI, build design systems that scale, and design AI decisioning, agentic and conversational experiences that stay explainable and keep people in the loop.</p>
+                </div>
+                <div class="about-block about-cv">
+                    <p class="about-block-label">CV</p>
+                    <div class="about-cv-actions">
+                        <a href="./assets/documents/Sasha-Maiboroda-CV.pdf" download="Sasha-Maiboroda-CV.pdf" data-no-transition>Download CV <span aria-hidden="true">↓</span></a>
+                    </div>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Social</p>
                     <div class="about-social">
-                        <a href="https://www.linkedin.com/in/sasha-mayboroda/" target="_blank" rel="noopener">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/sasha-mayboroda-177b17bb/" target="_blank" rel="noopener">LinkedIn<span class="sr-only-new"> (opens in a new tab)</span></a>
                     </div>
                 </div>
                 <div class="about-block">
                     <p class="about-block-label">Contact</p>
                     <p class="about-block-text">
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maybosasha@gmail.com" target="_blank" rel="noopener">maybosasha@gmail.com</a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=maybosasha@gmail.com" target="_blank" rel="noopener">maybosasha@gmail.com<span class="sr-only-new"> (opens in a new tab)</span></a>
                     </p>
                 </div>
             </div>
@@ -82,7 +114,7 @@
                     <h2 class="project-title">AI Decisioning Studio<span class="title-fill">AI Decisioning Studio</span></h2>
                     <a class="project-card" href="ai-decisioning-studio.html">
                         <div class="project-img-wrap is-wide">
-                            <video class="project-video" src="./assets/Opimove/Ai%20studio/flows/hub.mp4" poster="./assets/img/posters/ads.jpg" muted loop playsinline preload="metadata"></video>
+                            <video class="project-video" src="./assets/ai-decisioning-studio/hub.mp4?v=3008" poster="./assets/ai-decisioning-studio/strategy.png?v=039f8a9c8ae7" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
@@ -90,75 +122,32 @@
                 <span class="slide-num">01</span>
             </section>
 
-            <!-- Optimove AI Dedicated Team -->
+            <!-- Streams -->
             <section class="slide" data-ambient="#6b4ef5">
                 <div class="slide-inner">
-                    <h2 class="project-title">Optimove AI Dedicated Team<span class="title-fill">Optimove AI Dedicated Team</span></h2>
+                    <h2 class="project-title">Streams<span class="title-fill">Streams</span></h2>
+                    <a class="project-card" href="streams.html">
+                        <div class="project-img-wrap is-wide">
+                            <video class="project-video" src="./assets/streams/streams-hero.mp4?v=35956b769e55" poster="./assets/streams/streams-hero-poster.png?v=45df80e01aea" muted loop playsinline preload="metadata"></video>
+                        </div>
+                    </a>
+                </div>
+                <span class="project-category">Optimove · Journey orchestration</span>
+                <span class="slide-num">02</span>
+            </section>
+
+            <!-- AI skills for product design -->
+            <section class="slide" data-ambient="#6b4ef5">
+                <div class="slide-inner">
+                    <h2 class="project-title">AI skills for product design<span class="title-fill">AI skills for product design</span></h2>
                     <a class="project-card" href="ai-champion.html">
                         <div class="project-img-wrap is-wide" style="aspect-ratio: 1280 / 720;">
-                            <video class="project-video" src="./assets/ai-champion/ds-skill.mp4" poster="./assets/ai-champion/ds-skill-poster.jpg" muted loop playsinline preload="metadata"></video>
+                            <video class="project-video" src="./assets/ai-champion/generate-ds-ui-1440.mp4" poster="./assets/ai-champion/generate-ds-ui-poster.jpg" muted loop playsinline preload="metadata"></video>
                         </div>
                     </a>
                 </div>
                 <span class="project-category">Optimove · AI Skills</span>
-                <span class="slide-num">02</span>
-            </section>
-
-            <!-- Slide 2 -->
-            <section class="slide" data-ambient="#2aa6ff">
-                <div class="slide-inner">
-                    <h2 class="project-title">Tetris Block Party<span class="title-fill">Tetris Block Party</span></h2>
-                    <a class="project-card" href="tetris-block-party.html">
-                        <div class="project-img-wrap is-wide">
-                            <video class="project-video" data-crop="bottom" poster="./assets/img/posters/tbp.jpg" src="./assets/tetrisblockparty/tbp.mp4" muted loop playsinline preload="metadata"></video>
-                        </div>
-                    </a>
-                </div>
-                <span class="project-category">PLAYSTUDIOS · 2024</span>
                 <span class="slide-num">03</span>
-            </section>
-
-            <!-- Slide 3 -->
-            <section class="slide" data-ambient="#ff7a4a">
-                <div class="slide-inner">
-                    <h2 class="project-title">Lucky Buddies<span class="title-fill">Lucky Buddies</span></h2>
-                    <a class="project-card" href="lucky-buddies.html">
-                        <div class="project-img-wrap is-wide">
-                            <video class="project-video" data-crop="bottom" poster="./assets/img/posters/lucky-buddies.jpg" src="./assets/img/lucky_buddies.mp4" muted loop playsinline preload="metadata"></video>
-                        </div>
-                    </a>
-                </div>
-                <span class="project-category">Everybuddy · 2023</span>
-                <span class="slide-num">04</span>
-            </section>
-
-            <!-- Slide 4 -->
-            <section class="slide" data-ambient="#2f6bff">
-                <div class="slide-inner">
-                    <h2 class="project-title">Player Journey<span class="title-fill">Player Journey</span></h2>
-                    <a class="project-card" href="player-journey.html">
-                        <div class="project-img-wrap is-wide">
-                            <video class="project-video" poster="./assets/img/posters/player-journey.jpg" muted playsinline preload="metadata"
-                                   data-playlist="./assets/playerjoueney/CanvasIntredaction.mp4,./assets/playerjoueney/journeyBuilder.mp4"></video>
-                        </div>
-                    </a>
-                </div>
-                <span class="project-category">Playtech · 2019</span>
-                <span class="slide-num">05</span>
-            </section>
-
-            <!-- Slide 5 — Playground showreel (auto-cut crossfade) -->
-            <section class="slide" data-ambient="#8b6cff">
-                <div class="slide-inner">
-                    <h2 class="project-title">Playground<span class="title-fill">Playground</span></h2>
-                    <a class="project-card" href="playground.html">
-                        <div class="project-img-wrap is-wide" style="aspect-ratio: 3840 / 1620;">
-                            <video class="project-video" poster="./assets/img/posters/playground.jpg" src="./assets/personal/cubickworld_2.mp4" muted loop playsinline preload="metadata"></video>
-                        </div>
-                    </a>
-                </div>
-                <span class="project-category">Motion · 3D · Experiments</span>
-                <span class="slide-num">06</span>
             </section>
 
         </main>
@@ -244,164 +233,6 @@
     <script src="./js/index.js"></script>
     <script src="./js/cinema.js"></script>
 
-    <!-- Video playlists — cycle through data-playlist sources -->
-    <script>
-        document.querySelectorAll('video[data-playlist]').forEach(v => {
-            const items = v.dataset.playlist.split(',').map(s => s.trim()).filter(Boolean);
-            if (!items.length) return;
-            let idx = 0;
-            v.src = items[0];
-            v.addEventListener('ended', () => {
-                idx = (idx + 1) % items.length;
-                v.src = items[idx];
-                v.play().catch(() => {});
-            });
-        });
-    </script>
-
-    <!-- Playground showreel — crossfade-cut between personal clips -->
-    <script>
-        document.querySelectorAll('.pg-reel').forEach(reel => {
-            const clips = [
-                './assets/personal/fish_bot.mp4',
-                './assets/personal/cubickworld_2.mp4',
-                './assets/personal/robot_360.mp4',
-                './assets/personal/robot_withEffects.mp4',
-            ];
-            const layers = reel.querySelectorAll('.reel-vid');
-            if (layers.length < 2) return;
-
-            // Single clip: the HTML video already has src + autoplay + loop, so it
-            // plays natively (seamless, no crossfade flash / dark gap). Here we just
-            // pause it while off-screen and resume when it scrolls back in.
-            if (clips.length <= 1) {
-                const v = layers[0];
-                v.loop = true;
-                v.classList.add('is-current');
-                layers[1].classList.remove('is-current');
-                const io1 = new IntersectionObserver(es => es.forEach(e => {
-                    if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); }
-                    else v.pause();
-                }), { threshold: 0.4 });
-                io1.observe(reel);
-                return;
-            }
-
-            const FADE = 700;   // must match the CSS opacity transition (ms)
-            let cur = 0;        // visible layer (0 or 1)
-            let idx = 0;        // clip currently visible
-            let switching = false;
-            let inView = false;
-
-            const setSrc = (layer, src) => {
-                if (!layer.src.endsWith(src.replace('./', ''))) { layer.src = src; layer.load(); }
-            };
-
-            // Resolve once the clip's first frame is actually DECODED. A hidden
-            // (opacity:0) video won't reliably paint via rVFC, so we wait on the
-            // data being ready — that's what kills the black flash.
-            const whenReady = video => new Promise(resolve => {
-                if (video.readyState >= 2 /* HAVE_CURRENT_DATA */) { resolve(); return; }
-                const on = () => {
-                    video.removeEventListener('loadeddata', on);
-                    video.removeEventListener('canplay', on);
-                    resolve();
-                };
-                video.addEventListener('loadeddata', on);
-                video.addEventListener('canplay', on);
-                setTimeout(resolve, 600); // hard cap so we never stall
-            });
-
-            // Prime both layers: clip 0 visible, clip 1 buffered behind it
-            setSrc(layers[0], clips[0]);
-            setSrc(layers[1], clips[1 % clips.length]);
-            layers[0].classList.add('is-current');
-            layers[0].style.zIndex = '2';
-            layers[1].classList.remove('is-current');
-            layers[1].style.zIndex = '1';
-
-            // Advance to the next clip in the list — wraps around so every clip
-            // plays, one after another, forever.
-            function advance() {
-                if (switching || !inView) return;
-                switching = true;
-
-                const next = 1 - cur;
-                const nextIdx = (idx + 1) % clips.length;
-                const v = layers[next];
-                setSrc(v, clips[nextIdx]);
-                try { v.currentTime = 0; } catch (e) {}
-
-                // Wait for the next clip's first frame to be decoded, start it,
-                // give the compositor two frames to actually present that frame,
-                // THEN crossfade. The outgoing clip stays visible underneath the
-                // whole time, so there is never a black gap.
-                whenReady(v).then(() => {
-                    const p = v.play();
-                    if (p) p.catch(() => {});
-                    // incoming on top, fully opaque outgoing stays underneath during the fade
-                    layers[next].style.zIndex = '2';
-                    layers[cur].style.zIndex = '1';
-                    requestAnimationFrame(() => requestAnimationFrame(() => {
-                        layers[next].classList.add('is-current');
-                        const prev = cur;
-                        cur = next;
-                        idx = nextIdx;
-
-                        setTimeout(() => {
-                            // now hide the outgoing clip (it's underneath, so no flash)
-                            layers[prev].classList.remove('is-current');
-                            layers[prev].pause();
-                            // Queue the following clip into the now-hidden layer
-                            // and pre-decode its first frame so the next cut is clean
-                            setSrc(layers[prev], clips[(idx + 1) % clips.length]);
-                            try { layers[prev].load(); } catch (e) {}
-                            switching = false;
-                        }, FADE + 60);
-                    }));
-                }).catch(() => { switching = false; });
-            }
-
-            layers.forEach(v => {
-                // Safety net: if the clip reaches its end, move on regardless
-                v.addEventListener('ended', () => { if (v.classList.contains('is-current')) advance(); });
-                v.addEventListener('timeupdate', () => {
-                    if (!v.classList.contains('is-current')) return;
-                    // Kick off the crossfade early so it lands right as the clip ends
-                    if (v.duration && v.currentTime > v.duration - (FADE / 1000) - 0.15) advance();
-                });
-            });
-
-            // Only run the reel while the slide is on screen
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    inView = e.isIntersecting;
-                    if (inView) {
-                        const p = layers[cur].play();
-                        if (p) p.catch(() => {});
-                    } else {
-                        layers.forEach(l => l.pause());
-                    }
-                });
-            }, { threshold: 0.4 });
-            io.observe(reel);
-        });
-    </script>
-
-    <script>
-        // Side ruler: one labelled tick per project.
-        window.SIDE_RULER_LABEL = 'Projects';
-        window.SIDE_RULER = function () {
-            return Array.from(document.querySelectorAll('.slide')).map(function (s) {
-                const t = s.querySelector('.project-title');
-                // the title carries a duplicate span for the fill effect, so
-                // take the first text node rather than the whole textContent
-                const label = t ? (t.firstChild && t.firstChild.nodeValue || t.textContent).trim() : '';
-                return { el: s, label: label, major: true };
-            });
-        };
-    </script>
-    <script src="./js/sideRuler.js"></script>
     <script src="./js/transitionFade.js"></script>
     <script src="./js/transition.js"></script>
     <script src="./js/workMenu.js"></script>

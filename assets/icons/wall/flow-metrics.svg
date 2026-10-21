@@ -1,0 +1,15 @@
+<svg width="96" height="96" xmlns="http://www.w3.org/2000/svg" viewBox="0.146 1.848 71.006 71.006" fill="none" stroke="#241C8C" stroke-width="1.479" stroke-linecap="round" stroke-linejoin="round">
+  
+  
+  <g id="flow-metrics-body">
+    <rect rx="3.90" x="7.5" y="8.5" width="57" height="57" fill="#FFFFFF"/>
+  </g>
+  <g id="flow-metrics-content">
+    <path d="M16.5 18.5H31.5M13.5 28.5V59.5H57.5" stroke-width="1.479"/>
+    <rect rx="1.29" x="16.5" y="43.5" width="9" height="12" fill="#D9D6FE"/>
+    <rect rx="1.29" x="30.5" y="34.5" width="9" height="21" fill="#C3C3F7"/>
+  </g>
+  <g id="flow-metrics-accent">
+    <rect rx="1.29" x="44.5" y="24.5" width="9" height="31" fill="#CBEF17"/>
+  </g>
+</svg>

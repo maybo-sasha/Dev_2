@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="720" viewBox="0 0 1040 720" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+<defs><clipPath id="win"><rect x="0.5" y="0.5" width="1039" height="719" rx="14"/></clipPath></defs>
+<rect x="0.5" y="0.5" width="1039" height="719" rx="14" fill="#ffffff" stroke="#dadadf"/>
+<g clip-path="url(#win)">
+<rect x="0" y="0" width="1040" height="44" fill="#f7f7f8"/><path d="M0 44.5L1040 44.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<circle cx="22" cy="22" r="4.5" fill="#cfcfd5"/><circle cx="38" cy="22" r="4.5" fill="#cfcfd5"/><circle cx="54" cy="22" r="4.5" fill="#cfcfd5"/>
+<text x="76" y="27" font-size="13.5" font-weight="600" fill="#1b1b1e">Live Stream</text>
+<defs><pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#cfcfd5"/></pattern></defs>
+<text x="28" y="86" font-size="15" font-weight="400" fill="#6d6d75">←</text>
+<text x="52" y="86" font-size="18" font-weight="700" fill="#1b1b1e">High-value cart recovery</text>
+<rect x="306" y="70" width="44" height="22" rx="11.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="328.0" y="84.96" font-size="11" font-weight="600" fill="#3a3a40" text-anchor="middle">Live</text>
+<rect x="902" y="66" width="110" height="30" rx="7" fill="#1b1b1e" stroke="#1b1b1e" stroke-width="1"/><text x="957.0" y="85.5" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="middle">Edit stream</text>
+<text x="28" y="126" font-size="12" font-weight="700" fill="#1b1b1e">Canvas</text>
+<path d="M28 136L72 136" stroke="#1b1b1e" stroke-width="2" fill="none" stroke-linecap="round"/>
+<text x="94" y="126" font-size="12" font-weight="400" fill="#6d6d75">Decisions</text>
+<text x="181" y="126" font-size="12" font-weight="400" fill="#6d6d75">Results</text>
+<text x="254" y="126" font-size="12" font-weight="400" fill="#6d6d75">Audience</text>
+<text x="334" y="126" font-size="12" font-weight="400" fill="#6d6d75">Activity</text>
+<path d="M0 140.5L1040 140.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<rect x="262" y="141" width="514" height="579" rx="0" fill="url(#dots)"/>
+<rect x="16" y="152" width="236" height="556" rx="10" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="28" y="174" font-size="11" font-weight="700" fill="#6d6d75">AI decision</text>
+<rect x="28" y="184" width="212" height="46" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="36" y="194" width="18" height="11" rx="5.5" fill="#1b1b1e"/>
+<text x="36" y="222" font-size="9.5" font-weight="400" fill="#6d6d75">Decisions</text>
+<rect x="106" y="194" width="18" height="11" rx="5.5" fill="#1b1b1e"/>
+<text x="106" y="222" font-size="9.5" font-weight="400" fill="#6d6d75">Autonomous</text>
+<rect x="176" y="194" width="18" height="11" rx="5.5" fill="#1b1b1e"/>
+<text x="176" y="222" font-size="9.5" font-weight="400" fill="#6d6d75">Needs you</text>
+<rect x="28" y="242" width="212" height="222" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<circle cx="42" cy="260" r="7" fill="#f1f1f3" stroke="#d2d2d8"/>
+<text x="56" y="264" font-size="10" font-weight="600" fill="#1b1b1e">Journey Decisioning suggestion</text>
+<rect x="40" y="278" width="168" height="8" rx="4.0" fill="#1b1b1e"/>
+<rect x="40" y="292" width="188" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="40" y="304" width="150" height="6" rx="3.0" fill="#ebebee"/>
+<text x="40" y="330" font-size="10" font-weight="400" fill="#6d6d75">Treatment A</text>
+<rect x="116" y="325" width="112" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="116" y="325" width="42" height="6" rx="3.0" fill="#b4b4bb"/>
+<text x="40" y="348" font-size="10" font-weight="400" fill="#6d6d75">Treatment B</text>
+<rect x="116" y="343" width="112" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="116" y="343" width="70" height="6" rx="3.0" fill="#1b1b1e"/>
+<rect x="40" y="362" width="188" height="28" rx="7" fill="#1b1b1e" stroke="#1b1b1e" stroke-width="1"/><text x="134.0" y="380.5" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="middle">Apply</text>
+<text x="134" y="412" font-size="11.5" font-weight="600" fill="#1b1b1e" text-anchor="middle">Show me</text>
+<rect x="40" y="424" width="188" height="28" rx="7" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="134" y="442" font-size="11.5" font-weight="600" fill="#1b1b1e" text-anchor="middle">Dismiss</text>
+<text x="28" y="490" font-size="12" font-weight="700" fill="#1b1b1e">Decision activity</text>
+<text x="240" y="490" font-size="10" font-weight="400" fill="#6d6d75" text-anchor="end">Newest first</text>
+<rect x="28" y="502" width="212" height="50" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<circle cx="42" cy="518" r="7" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="56" y="514" width="96" height="7" rx="3.5" fill="#cfcfd5"/>
+<rect x="40" y="530" width="58" height="16" rx="8.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="69.0" y="541.24" font-size="9" font-weight="600" fill="#3a3a40" text-anchor="middle">Executed</text>
+<rect x="106" y="535" width="110" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="28" y="560" width="212" height="50" rx="8" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<circle cx="42" cy="576" r="7" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="56" y="572" width="96" height="7" rx="3.5" fill="#cfcfd5"/>
+<rect x="40" y="588" width="58" height="16" rx="8.0" fill="#efeff1" stroke="#d6d6dc" stroke-width="1"/><text x="69.0" y="599.24" font-size="9" font-weight="600" fill="#3a3a40" text-anchor="middle">Executed</text>
+<rect x="106" y="593" width="110" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="28" y="638" width="212" height="58" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<text x="40" y="660" font-size="11" font-weight="400" fill="#6d6d75">Ask about this live Stream</text>
+<rect x="40" y="670" width="76" height="18" rx="9.0" fill="#ffffff" stroke="#dadadf" stroke-width="1"/><text x="78.0" y="682.42" font-size="9.5" font-weight="400" fill="#1b1b1e" text-anchor="middle">Supervised</text>
+<rect x="409" y="156" width="73.2" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="420" y="169" font-size="9" font-weight="700" fill="#6d6d75">AUDIENCE</text>
+<rect x="409" y="174" width="220" height="66" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="421" y="188" width="120" height="9" rx="4.5" fill="#1b1b1e"/>
+<rect x="421" y="204" width="196" height="26" rx="6" fill="#f1f1f3" stroke="#d2d2d8" stroke-width="1"/>
+<circle cx="435" cy="217" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="447" y="213" width="110" height="7" rx="3.5" fill="#cfcfd5"/>
+<path d="M519 240 L519 286" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="497" y="255" width="44" height="16" rx="8.0" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="519.0" y="266.24" font-size="9" font-weight="400" fill="#1b1b1e" text-anchor="middle">246K</text>
+<rect x="409" y="286" width="66.80000000000001" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="420" y="299" font-size="9" font-weight="700" fill="#6d6d75">TRIGGER</text>
+<rect x="409" y="304" width="220" height="38" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="421" y="318" width="140" height="9" rx="4.5" fill="#1b1b1e"/>
+<path d="M519 342 L519 372" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="409" y="372" width="54.0" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="420" y="385" font-size="9" font-weight="700" fill="#6d6d75">SPLIT</text>
+<rect x="409" y="390" width="220" height="64" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="421" y="404" width="150" height="9" rx="4.5" fill="#1b1b1e"/>
+<path d="M409 422.5L629 422.5" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<path d="M519.5 422L519.5 454" stroke="#dadadf" stroke-width="1" fill="none" stroke-linecap="round"/>
+<rect x="431" y="434" width="66" height="7" rx="3.5" fill="#cfcfd5"/>
+<rect x="541" y="434" width="66" height="7" rx="3.5" fill="#cfcfd5"/>
+<path d="M464 454 L464 470 L396 470 L396 500" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M574 454 L574 470 L642 470 L642 500" stroke="#b4b4bb" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="400" y="462" width="58" height="16" rx="8.0" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="429.0" y="473.06" font-size="8.5" font-weight="400" fill="#1b1b1e" text-anchor="middle">123K · 50%</text>
+<rect x="580" y="462" width="58" height="16" rx="8.0" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="609.0" y="473.06" font-size="8.5" font-weight="400" fill="#1b1b1e" text-anchor="middle">123K · 50%</text>
+<rect x="286" y="500" width="47.6" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="297" y="513" font-size="9" font-weight="700" fill="#6d6d75">PUSH</text>
+<rect x="286" y="518" width="220" height="186" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="298" y="530" width="54" height="38" rx="4" fill="#ebebee"/>
+<rect x="360" y="538" width="110" height="8" rx="4.0" fill="#1b1b1e"/>
+<rect x="360" y="552" width="80" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="298" y="580" width="196" height="68" rx="6" fill="#f1f1f3" stroke="#d2d2d8" stroke-width="1"/>
+<text x="308" y="596" font-size="9.5" font-weight="600" fill="#6d6d75">AI decisioning</text>
+<circle cx="314" cy="612" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="326" y="608" width="70" height="7" rx="3.5" fill="#1b1b1e"/>
+<rect x="426" y="609" width="52" height="5" rx="2.5" fill="#cfcfd5"/>
+<circle cx="314" cy="634" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="326" y="630" width="96" height="7" rx="3.5" fill="#1b1b1e"/>
+<rect x="426" y="631" width="52" height="5" rx="2.5" fill="#cfcfd5"/>
+<text x="300" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Delivered</text>
+<rect x="300" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<text x="352" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Opened</text>
+<rect x="352" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<text x="404" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Sent</text>
+<rect x="404" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<text x="456" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Failed</text>
+<rect x="456" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<rect x="532" y="500" width="54.0" height="18" rx="5" fill="#ffffff" stroke="#d2d2d8" stroke-width="1"/><text x="543" y="513" font-size="9" font-weight="700" fill="#6d6d75">EMAIL</text>
+<rect x="532" y="518" width="220" height="186" rx="8" fill="#ffffff" stroke="#1b1b1e" stroke-width="1.2"/>
+<rect x="544" y="530" width="54" height="38" rx="4" fill="#ebebee"/>
+<rect x="606" y="538" width="110" height="8" rx="4.0" fill="#1b1b1e"/>
+<rect x="606" y="552" width="80" height="6" rx="3.0" fill="#ebebee"/>
+<rect x="544" y="580" width="196" height="68" rx="6" fill="#f1f1f3" stroke="#d2d2d8" stroke-width="1"/>
+<text x="554" y="596" font-size="9.5" font-weight="600" fill="#6d6d75">AI decisioning</text>
+<circle cx="560" cy="612" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="572" y="608" width="70" height="7" rx="3.5" fill="#1b1b1e"/>
+<rect x="672" y="609" width="52" height="5" rx="2.5" fill="#cfcfd5"/>
+<circle cx="560" cy="634" r="6" fill="#f1f1f3" stroke="#d2d2d8"/>
+<rect x="572" y="630" width="96" height="7" rx="3.5" fill="#1b1b1e"/>
+<rect x="672" y="631" width="52" height="5" rx="2.5" fill="#cfcfd5"/>
+<text x="546" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Delivered</text>
+<rect x="546" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<text x="598" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Opened</text>
+<rect x="598" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<text x="650" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Sent</text>
+<rect x="650" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<text x="702" y="668" font-size="8.5" font-weight="400" fill="#6d6d75">Failed</text>
+<rect x="702" y="676" width="28" height="9" rx="4.5" fill="#1b1b1e"/>
+<rect x="780" y="152" width="248" height="264" rx="12" fill="#f1f1f3" stroke="#1b1b1e" stroke-width="2"/>
+<circle cx="782" cy="154" r="14" fill="#1b1b1e" stroke="#ffffff" stroke-width="2"/><text x="782" y="159" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2</text><rect x="804" y="140" width="212.0" height="24" rx="12" fill="#1b1b1e"/><text x="910.0" y="156.5" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">The outcome beside the steps</text>
+<rect x="790" y="168" width="228" height="238" rx="10" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<text x="802" y="192" font-size="13" font-weight="700" fill="#1b1b1e">Performance</text>
+<text x="802" y="210" font-size="8.5" font-weight="700" fill="#6d6d75">LIVE BUSINESS OUTCOME</text>
+<rect x="802" y="222" width="98" height="72" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="810" y="234" width="40" height="11" rx="5.5" fill="#1b1b1e"/>
+<text x="810" y="264" font-size="8.5" font-weight="400" fill="#6d6d75">Customers entered</text>
+<rect x="810" y="274" width="52" height="5" rx="2.5" fill="#ebebee"/>
+<rect x="908" y="222" width="98" height="72" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="916" y="234" width="40" height="11" rx="5.5" fill="#1b1b1e"/>
+<text x="916" y="264" font-size="8.5" font-weight="400" fill="#6d6d75">Recovery rate</text>
+<rect x="916" y="274" width="52" height="5" rx="2.5" fill="#ebebee"/>
+<rect x="802" y="304" width="98" height="72" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="810" y="316" width="40" height="11" rx="5.5" fill="#1b1b1e"/>
+<text x="810" y="346" font-size="8.5" font-weight="400" fill="#6d6d75">Recovered revenue</text>
+<rect x="810" y="356" width="52" height="5" rx="2.5" fill="#ebebee"/>
+<rect x="908" y="304" width="98" height="72" rx="6" fill="#ffffff" stroke="#dadadf" stroke-width="1"/>
+<rect x="916" y="316" width="40" height="11" rx="5.5" fill="#1b1b1e"/>
+<text x="916" y="346" font-size="8.5" font-weight="400" fill="#6d6d75">Still in journey</text>
+<rect x="916" y="356" width="52" height="5" rx="2.5" fill="#ebebee"/>
+<text x="802" y="396" font-size="9.5" font-weight="400" fill="#6d6d75">Updates as customers move</text>
+</g></svg>
